@@ -1,0 +1,439 @@
+{
+  "restaurant": {
+    "name": {
+      "fr": "Le 831",
+      "en": "Le 831",
+      "cn": "火焱山"
+    },
+    "nameFull": {
+      "fr": "Le 831 — Restaurant Ouïghour",
+      "en": "Le 831 — Uyghur Restaurant",
+      "cn": "火焱山 — 清真餐厅"
+    },
+    "tagline": {
+      "fr": "Cuisine authentique d'Asie Centrale, au cœur de Paris",
+      "en": "Authentic Central Asian cuisine, in the heart of Paris",
+      "cn": "正宗中亚美食，位于巴黎市中心"
+    },
+    "shortBio": {
+      "fr": "Situé au cœur de Paris sur le Boulevard de Sébastopol, Le 831 vous invite à un voyage culinaire au cœur des traditions d'Asie Centrale. Nos chefs perpétuent un savoir-faire ancestral : nouilles tirées à la main, brochettes d'agneau grillées au feu de bois, ragoûts mijotés longuement. Chaque plat raconte l'histoire d'une culture préservée avec passion.",
+      "en": "Located in the heart of Paris on Boulevard de Sébastopol, Le 831 invites you on a culinary journey through Central Asian traditions. Our chefs carry on ancestral know-how: hand-pulled noodles, lamb skewers grilled over wood fire, slow-cooked stews. Every dish tells the story of a culture preserved with passion.",
+      "cn": "位于巴黎市中心的塞瓦斯托波尔大道，火焱山邀您踏上中亚传统美食之旅。我们的厨师传承古老技艺：手工拉面、木炭烤羊肉串、慢炖菜肴。每一道菜都讲述着一个被热情守护的文化故事。"
+    },
+    "yearEstablished": 2020
+  },
+
+  "brand": {
+    "primaryColor": "#1B4332",
+    "secondaryColor": "#E8A317",
+    "accentColor": "#1a1a1a",
+    "backgroundColor": "#FCFCF9",
+    "fontHeading": "'Noto Serif SC', 'Noto Serif', serif",
+    "fontBody": "'Inter', 'Noto Sans SC', system-ui, sans-serif",
+    "logoText": "火焱山"
+  },
+
+  "colors": {
+    "green": "#1B4332",
+    "amber": "#E8A317",
+    "black": "#1a1a1a",
+    "white": "#FCFCF9"
+  },
+
+  "hero": {
+    "imageDesktop": "assets/images/hero-desktop.jpg",
+    "imageMobile": "assets/images/hero-mobile.jpg",
+    "overlayColor": "rgba(0, 0, 0, 0.55)",
+    "cta": {
+      "fr": "Découvrir notre menu",
+      "en": "Explore our menu",
+      "cn": "查看菜单"
+    }
+  },
+
+  "sections": {
+    "overview": {
+      "enabled": true,
+      "title": {
+        "fr": "Notre Histoire",
+        "en": "Our Story",
+        "cn": "我们的故事"
+      }
+    },
+    "menu": {
+      "enabled": true,
+      "title": {
+        "fr": "Notre Menu",
+        "en": "Our Menu",
+        "cn": "我们的菜单"
+      },
+      "categories": [
+        {
+          "id": "entrees",
+          "name": {
+            "fr": "Entrées & Salades",
+            "en": "Appetizers & Salads",
+            "cn": "前菜与沙拉"
+          },
+          "items": [
+            {
+              "name": {
+                "fr": "Salade de concombre pimenté",
+                "en": "Spicy Cucumber Salad",
+                "cn": "凉拌黄瓜"
+              },
+              "price": "5.50 €",
+              "desc": {
+                "fr": "Concombre frais, ail, piment, vinaigre et huile de sésame",
+                "en": "Fresh cucumber, garlic, chili, vinegar and sesame oil",
+                "cn": "新鲜黄瓜、蒜、辣椒、醋和芝麻油"
+              },
+              "badge": "🌿",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Nems de bœuf",
+                "en": "Beef Spring Rolls",
+                "cn": "牛肉春卷"
+              },
+              "price": "7.00 €",
+              "desc": {
+                "fr": "Rouleaux croustillants farcis au bœuf épicé, sauce aigre-douce",
+                "en": "Crispy rolls filled with spiced beef, sweet and sour sauce",
+                "cn": "酥脆卷，内馅香辣牛肉，配酸甜酱"
+              },
+              "badge": "🔥",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Salade de chou épicée",
+                "en": "Spicy Cabbage Salad",
+                "cn": "辣拌卷心菜"
+              },
+              "price": "5.00 €",
+              "desc": {
+                "fr": "Chou râpé, carotte, coriandre, vinaigrette pimentée",
+                "en": "Shredded cabbage, carrot, cilantro, spicy dressing",
+                "cn": "卷心菜丝、胡萝卜、香菜、辣味调料"
+              },
+              "badge": "🌿",
+              "image": null
+            }
+          ]
+        },
+        {
+          "id": "grillades",
+          "name": {
+            "fr": "Grillades & Brochettes",
+            "en": "Grills & Skewers",
+            "cn": "烧烤与串"
+          },
+          "items": [
+            {
+              "name": {
+                "fr": "Brochettes d'agneau (5 pièces)",
+                "en": "Lamb Skewers (5 pcs)",
+                "cn": "羊肉串（5串）"
+              },
+              "price": "12.00 €",
+              "desc": {
+                "fr": "Agneau mariné aux épices secrètes, grillé au feu de bois — notre spécialité",
+                "en": "Lamb marinated in secret spices, grilled over wood fire — our specialty",
+                "cn": "秘制香料腌制的羊肉，炭火烤制 — 我们的招牌"
+              },
+              "badge": "🔥 ⭐",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Brochettes de poulet",
+                "en": "Chicken Skewers",
+                "cn": "鸡肉串"
+              },
+              "price": "10.00 €",
+              "desc": {
+                "fr": "Blanc de poulet mariné, grillé aux épices d'Asie Centrale",
+                "en": "Marinated chicken breast, grilled with Central Asian spices",
+                "cn": "腌制的鸡胸肉，配中亚香料烤制"
+              },
+              "badge": "🔥",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Poivrons et légumes grillés",
+                "en": "Grilled Peppers & Vegetables",
+                "cn": "烤蔬菜"
+              },
+              "price": "7.00 €",
+              "desc": {
+                "fr": "Légumes de saison grillés, huile d'olive et épices",
+                "en": "Seasonal grilled vegetables, olive oil and spices",
+                "cn": "时令烤蔬菜，橄榄油和香料"
+              },
+              "badge": "🌿",
+              "image": null
+            }
+          ]
+        },
+        {
+          "id": "plats",
+          "name": {
+            "fr": "Plats Principaux",
+            "en": "Main Courses",
+            "cn": "主菜"
+          },
+          "items": [
+            {
+              "name": {
+                "fr": "Poulet aux pommes de terre (Dapanji)",
+                "en": "Chicken with Potatoes (Dapanji)",
+                "cn": "大盘鸡"
+              },
+              "price": "16.00 €",
+              "desc": {
+                "fr": "Ragoût de poulet mijoté, pommes de terre, poivrons, sauce épicée — notre plat signature",
+                "en": "Slow-cooked chicken stew, potatoes, peppers, spicy sauce — our signature dish",
+                "cn": "慢炖鸡肉、土豆、青椒、辣酱 — 我们的招牌菜"
+              },
+              "badge": "🔥 ⭐",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Nouilles tirées à la main sauté au bœuf",
+                "en": "Hand-Pulled Noodles with Beef",
+                "cn": "牛肉拉面"
+              },
+              "price": "14.00 €",
+              "desc": {
+                "fr": "Nouilles fraîches faites maison, sauté au wok avec bœuf et légumes",
+                "en": "Fresh homemade hand-pulled noodles, wok-fried with beef and vegetables",
+                "cn": "新鲜手工拉面，与牛肉和蔬菜翻炒"
+              },
+              "badge": "⭐",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Nouilles tirées à la main sauté à l'agneau",
+                "en": "Hand-Pulled Noodles with Lamb",
+                "cn": "羊肉拉面"
+              },
+              "price": "15.00 €",
+              "desc": {
+                "fr": "Nouilles fraîches maison sauté au wok avec agneau et oignons",
+                "en": "Fresh homemade hand-pulled noodles, wok-fried with lamb and onions",
+                "cn": "新鲜手工拉面，与羊肉和洋葱翻炒"
+              },
+              "badge": "🔥",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Riz pilaf à l'agneau (Polo)",
+                "en": "Lamb Pilaf (Polo)",
+                "cn": "羊肉抓饭"
+              },
+              "price": "13.00 €",
+              "desc": {
+                "fr": "Riz parfumé cuit avec agneau, carottes et épices d'Asie Centrale",
+                "en": "Fragrant rice cooked with lamb, carrots and Central Asian spices",
+                "cn": "香米饭，配羊肉、胡萝卜和中亚香料"
+              },
+              "badge": null,
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Raviolis ouïghours (Manta)",
+                "en": "Uyghur Dumplings (Manta)",
+                "cn": "薄皮包子"
+              },
+              "price": "11.00 €",
+              "desc": {
+                "fr": "Raviolis vapeur farcis à l'agneau et oignons, sauce vinaigre-piment",
+                "en": "Steamed dumplings filled with lamb and onions, vinegar-chili sauce",
+                "cn": "羊肉洋葱馅蒸饺，配醋辣酱"
+              },
+              "badge": "⭐",
+              "image": null
+            }
+          ]
+        },
+        {
+          "id": "pains",
+          "name": {
+            "fr": "Pains",
+            "en": "Breads",
+            "cn": "馕"
+          },
+          "items": [
+            {
+              "name": {
+                "fr": "Pain traditionnel (Nan)",
+                "en": "Traditional Naan Bread",
+                "cn": "传统烤馕"
+              },
+              "price": "3.00 €",
+              "desc": {
+                "fr": "Pain plat cuit au four, graines de sésame et épices",
+                "en": "Oven-baked flatbread with sesame seeds and spices",
+                "cn": "烤箱烤制的扁平面包，配芝麻和香料"
+              },
+              "badge": "🌿",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Nan à l'agneau",
+                "en": "Lamb Naan",
+                "cn": "羊肉烤馕"
+              },
+              "price": "6.00 €",
+              "desc": {
+                "fr": "Pain farci à l'agneau haché épicé, cuit au four",
+                "en": "Bread stuffed with spiced minced lamb, oven-baked",
+                "cn": "辣味碎羊肉馅烤馕"
+              },
+              "badge": "🔥",
+              "image": null
+            }
+          ]
+        },
+        {
+          "id": "boissons",
+          "name": {
+            "fr": "Boissons",
+            "en": "Drinks",
+            "cn": "饮品"
+          },
+          "items": [
+            {
+              "name": {
+                "fr": "Thé d'Asie Centrale",
+                "en": "Central Asian Tea",
+                "cn": "中亚茶"
+              },
+              "price": "3.50 €",
+              "desc": {
+                "fr": "Thé noir parfumé importé directement d'Asie Centrale",
+                "en": "Fragrant black tea imported directly from Central Asia",
+                "cn": "从中亚直接进口的香浓红茶"
+              },
+              "badge": "⭐",
+              "image": null
+            },
+            {
+              "name": {
+                "fr": "Bière sans alcool au lait",
+                "en": "Non-Alcoholic Milk Beer",
+                "cn": "格瓦斯"
+              },
+              "price": "4.00 €",
+              "desc": {
+                "fr": "Boisson lactée pétillante traditionnelle — une spécialité unique",
+                "en": "Traditional sparkling milk drink — a unique specialty",
+                "cn": "传统气泡奶制饮品 — 独特特色"
+              },
+              "badge": null,
+              "image": null
+            }
+          ]
+        }
+      ]
+    },
+    "contact": {
+      "enabled": true,
+      "title": {
+        "fr": "Nous Contacter",
+        "en": "Contact Us",
+        "cn": "联系我们"
+      },
+      "address": {
+        "street": "93 Boulevard de Sébastopol",
+        "city": "Paris",
+        "postalCode": "75002",
+        "country": "France",
+        "full": {
+          "fr": "93 Boulevard de Sébastopol, 75002 Paris",
+          "en": "93 Boulevard de Sébastopol, 75002 Paris, France",
+          "cn": "法国巴黎塞瓦斯托波尔大道93号，邮编75002"
+        }
+      },
+      "phone": "09 79 26 25 57",
+      "email": "",
+      "mapsUrl": "https://maps.google.com/?q=Le+831+Paris",
+      "mapsEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.5!2d2.35!3d48.865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDjCsDUxJzU0LjAiTiAywrAyMScwMC4wIkU!5e0!3m2!1sfr!2sfr!4v1",
+      "hours": [
+        {
+          "days": {
+            "fr": "Lun - Ven",
+            "en": "Mon - Fri",
+            "cn": "周一至周五"
+          },
+          "hours": {
+            "fr": "11:30 – 15:00 · 18:00 – 22:30",
+            "en": "11:30 – 15:00 · 18:00 – 22:30",
+            "cn": "11:30 – 15:00 · 18:00 – 22:30"
+          }
+        },
+        {
+          "days": {
+            "fr": "Sam - Dim",
+            "en": "Sat - Sun",
+            "cn": "周六至周日"
+          },
+          "hours": {
+            "fr": "11:30 – 22:30 (service continu)",
+            "en": "11:30 – 22:30 (continuous service)",
+            "cn": "11:30 – 22:30（连续营业）"
+          }
+        }
+      ],
+      "googlePage": "https://maps.app.goo.gl/Psdp99bscibE9jUB7",
+      "googlePlaceId": "0x47e66f8832abc369:0x7c58aedc7e7e3fd5",
+      "googleApiKey": "",
+      "googleRating": 4.5,
+      "googleReviewsCount": 0,
+      "reviews": [],
+      "socials": {
+        "instagram": "",
+        "facebook": "",
+        "wechat": ""
+      }
+    }
+  },
+
+  "cacheVersion": 1,
+
+  "seo": {
+    "title": {
+      "fr": "Le 831 | Restaurant Ouïghour Halal — Paris 2e",
+      "en": "Le 831 | Uyghur Halal Restaurant — Paris 2nd",
+      "cn": "火焱山 | 巴黎清真维吾尔餐厅"
+    },
+    "description": {
+      "fr": "Restaurant ouïghour halal à Paris. Brochettes d'agneau grillées, nouilles faites main, dapanji. Cuisine authentique d'Asie Centrale. 93 Bd de Sébastopol, 75002.",
+      "en": "Uyghur halal restaurant in Paris. Grilled lamb skewers, hand-pulled noodles, dapanji. Authentic Central Asian cuisine. 93 Bd de Sébastopol, 75002 Paris.",
+      "cn": "巴黎维吾尔清真餐厅。炭烤羊肉串、手工拉面、大盘鸡。正宗中亚美食。地址：塞瓦斯托波尔大道93号，巴黎75002。"
+    },
+    "keywords": [
+      "restaurant ouïghour Paris",
+      "cuisine d'Asie centrale halal",
+      "brochettes d'agneau Paris",
+      "nouilles faites main Paris",
+      "Le 831 Paris",
+      "火焱山 巴黎",
+      "维吾尔餐厅 巴黎",
+      "dapanji Paris",
+      "halal Paris 2"
+    ],
+    "areaServed": "Paris, France",
+    "priceRange": "€€",
+    "cuisine": "Uyghur, Central Asian",
+    "image": "assets/images/og-image.jpg"
+  }
+}
