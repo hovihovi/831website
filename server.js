@@ -18,6 +18,7 @@ const HOST = "0.0.0.0";
 const TLS_CERT = process.env.LE831_TLS_CERT;
 const TLS_KEY = process.env.LE831_TLS_KEY;
 const TLS_PORT = Number(process.env.LE831_TLS_PORT) || 8444;
+const TLS_PUBLIC_PORT = Number(process.env.LE831_TLS_PUBLIC_PORT) || 443;
 let tlsActive = false;
 const ROOT = __dirname;
 const MENU_PATH = path.join(ROOT, "data", "menu.json");
@@ -430,8 +431,9 @@ function handleRequest(req, res) {
   // et uniquement pour les requêtes HTTP — pas de boucle sur le serveur TLS).
   if (tlsActive && !req.socket.encrypted && url.pathname === "/admin.html") {
     const host = url.hostname || "localhost";
+    const suffix = TLS_PUBLIC_PORT === 443 ? "" : ":" + TLS_PUBLIC_PORT;
     res.writeHead(301, {
-      "Location": "https://" + host + ":" + TLS_PORT + "/admin.html"
+      "Location": "https://" + host + suffix + "/admin.html"
     });
     res.end();
     return;
