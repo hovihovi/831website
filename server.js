@@ -8,12 +8,17 @@
 "use strict";
 
 const http = require("http");
+const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
 const PORT = Number(process.env.PORT) || 3000;
 const HOST = "0.0.0.0";
+const TLS_CERT = process.env.LE831_TLS_CERT;
+const TLS_KEY = process.env.LE831_TLS_KEY;
+const TLS_PORT = Number(process.env.LE831_TLS_PORT) || 8444;
+let tlsActive = false;
 const ROOT = __dirname;
 const MENU_PATH = path.join(ROOT, "data", "menu.json");
 const DEFAULT_MENU_PATH = path.join(ROOT, "data", "menu.default.json");
@@ -416,10 +421,21 @@ function serveStatic(req, res, url) {
   });
 }
 
-/* ---------- Serveur ---------- */
-const server = http.createServer((req, res) => {
+/* ---------- Handler de requêtes (partagé HTTP + HTTPS) ---------- */
+function handleRequest(req, res) {
   const url = new URL(req.url, "http://" + (req.headers.host || "localhost"));
   console.log(req.method + " " + url.pathname);
+
+  // Redirection de l'interface d'admin vers HTTPS (uniquement si TLS actif
+  // et uniquement pour les requêtes HTTP — pas de boucle sur le serveur TLS).
+  if (tlsActive && !req.socket.encrypted && url.pathname === "/admin.html") {
+    const host = url.hostname || "localhost";
+    res.writeHead(301, {
+      "Location": "https://" + host + ":" + TLS_PORT + "/admin.html"
+    });
+    res.end();
+    return;
+  }
 
   if (url.pathname.startsWith("/api/")) {
     if (handleApi(req, res, url)) return;
@@ -428,7 +444,10 @@ const server = http.createServer((req, res) => {
   }
 
   serveStatic(req, res, url);
-});
+}
+
+/* ---------- Serveur ---------- */
+const server = http.createServer(handleRequest);
 
 server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
@@ -439,12 +458,44 @@ server.on("error", (err) => {
   process.exit(1);
 });
 
+/* ---------- Serveur HTTPS (optionnel) ---------- */
+let tlsServer = null;
+
+function setupTLS() {
+  if (!TLS_CERT || !TLS_KEY) {
+    console.warn("[le831] HTTPS désactivé (LE831_TLS_CERT / LE831_TLS_KEY non définis).");
+    return;
+  }
+  let cert, key;
+  try {
+    cert = fs.readFileSync(TLS_CERT);
+    key = fs.readFileSync(TLS_KEY);
+  } catch (e) {
+    console.warn("[le831] Impossible de lire les certificats TLS (" + e.message + ") — HTTPS désactivé, HTTP seul.");
+    return;
+  }
+  tlsServer = https.createServer({ cert, key }, handleRequest);
+  tlsServer.on("error", (err) => {
+    console.error("[le831] Erreur serveur HTTPS :", err.message);
+  });
+  tlsServer.listen(TLS_PORT, HOST, () => {
+    tlsActive = true;
+    console.log("[le831] HTTPS démarré sur https://" + HOST + ":" + TLS_PORT);
+  });
+}
+
 function shutdown() {
   console.log("\n[le831] Arrêt du serveur…");
-  server.close(() => {
-    console.log("[le831] Serveur arrêté.");
-    process.exit(0);
-  });
+  let pending = 1;
+  const done = () => {
+    pending--;
+    if (pending <= 0) {
+      console.log("[le831] Serveur arrêté.");
+      process.exit(0);
+    }
+  };
+  server.close(done);
+  if (tlsServer) tlsServer.close(done);
   setTimeout(() => process.exit(0), 1500).unref();
 }
 
@@ -457,3 +508,5 @@ server.listen(PORT, HOST, () => {
   console.log("[le831] Serveur démarré sur http://" + HOST + ":" + PORT);
   console.log("[le831] API : /api/menu (GET/POST), /api/login (POST), /api/health (GET)");
 });
+
+setupTLS();
