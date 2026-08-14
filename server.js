@@ -2,7 +2,7 @@
 /* ============================================================
    LE 831 — 火焱山 · serveur Node (module http natif, zéro dépendance)
    - Sert les fichiers statiques du site
-   - API : GET /api/menu, POST /api/menu (auth token), GET /api/health
+   - API : GET /api/menu, POST /api/menu (auth token), POST /api/login, GET /api/health
    - Persistance atomique dans data/menu.json
    ============================================================ */
 "use strict";
@@ -21,6 +21,9 @@ const DATA_DIR = path.dirname(MENU_PATH);
 
 const DEV_TOKEN = "le831admin";
 const ADMIN_TOKEN = process.env.LE831_ADMIN_TOKEN || DEV_TOKEN;
+
+const ADMIN_USER = process.env.LE831_ADMIN_USER || "admin";
+const ADMIN_PASS = process.env.LE831_ADMIN_PASS || "le831admin";
 
 if (!process.env.LE831_ADMIN_TOKEN) {
   console.warn("[le831] ⚠ LE831_ADMIN_TOKEN non défini — utilisation du token de DEV « " + DEV_TOKEN + " ».");
@@ -278,6 +281,32 @@ function handleApi(req, res, url) {
     return true;
   }
 
+  if (pathname === "/api/login") {
+    if (req.method !== "POST") {
+      sendJSON(res, 405, { error: "Méthode non autorisée." });
+      return true;
+    }
+    readBody(req).then((buf) => {
+      let body = {};
+      try {
+        body = JSON.parse(buf.toString("utf8") || "{}");
+      } catch (e) {
+        sendJSON(res, 401, { error: "Identifiants invalides." });
+        return;
+      }
+      const username = typeof body.username === "string" ? body.username : "";
+      const password = typeof body.password === "string" ? body.password : "";
+      if (username !== ADMIN_USER || !safeEqual(password, ADMIN_PASS)) {
+        sendJSON(res, 401, { error: "Identifiants invalides." });
+        return;
+      }
+      sendJSON(res, 200, { token: ADMIN_TOKEN }, { "Cache-Control": "no-store" });
+    }).catch(() => {
+      sendJSON(res, 400, { error: "Erreur de lecture du corps." });
+    });
+    return true;
+  }
+
   if (pathname === "/api/menu") {
     if (req.method === "GET") {
       fs.readFile(MENU_PATH, (err, buf) => {
@@ -426,5 +455,5 @@ ensureLocalMenu();
 
 server.listen(PORT, HOST, () => {
   console.log("[le831] Serveur démarré sur http://" + HOST + ":" + PORT);
-  console.log("[le831] API : /api/menu (GET/POST), /api/health (GET)");
+  console.log("[le831] API : /api/menu (GET/POST), /api/login (POST), /api/health (GET)");
 });

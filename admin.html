@@ -354,6 +354,22 @@
 </head>
 <body>
 
+  <!-- ============ Écran de connexion ============ -->
+  <div id="login-screen" class="login">
+    <div class="login-card">
+      <h1>Le 831 <span class="zh">火焱山</span></h1>
+      <p class="login-sub" data-i18n="login.title">Administration du menu</p>
+      <form id="login-form">
+        <label for="login-username" data-i18n="login.username">Identifiant</label>
+        <input id="login-username" type="text" autocomplete="username" required>
+        <label for="login-password" data-i18n="login.password">Mot de passe</label>
+        <input id="login-password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="err" hidden></p>
+        <button type="submit" class="btn btn-solid" data-i18n="login.submit">Se connecter</button>
+      </form>
+    </div>
+  </div>
+
   <!-- ============ Application ============ -->
   <div id="app" hidden>
     <div class="publish-note" data-i18n="note.publish">Les modifications sont publiées immédiatement sur le site.</div>
@@ -513,28 +529,6 @@
         </footer>
       </div>
     </div>
-
-    <!-- Token administrateur -->
-    <div id="token-modal" class="overlay" role="dialog" aria-modal="true" hidden>
-      <div class="modal" style="max-width: 460px;">
-        <header class="modal-head">
-          <h2 data-i18n="token.title">Token administrateur</h2>
-          <button type="button" class="icon-btn" data-close-token title="Fermer" data-i18n-attr="title:common.close">✕</button>
-        </header>
-        <div class="modal-body">
-          <p class="hint" data-i18n="token.hint">Saisissez le mot de passe d'administration pour publier vos modifications. Il n'est conservé que pour cette session.</p>
-          <fieldset class="fieldset">
-            <legend data-i18n="field.password">Mot de passe</legend>
-            <label><input id="token-input" type="password" autocomplete="current-password"></label>
-          </fieldset>
-          <p id="token-error" class="err" hidden></p>
-        </div>
-        <footer class="modal-foot">
-          <button type="button" class="btn btn-line" data-close-token data-i18n="btn.cancel">Annuler</button>
-          <button type="button" class="btn btn-solid" id="btn-token-save" data-i18n="btn.validate">Valider</button>
-        </footer>
-      </div>
-    </div>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -555,6 +549,11 @@
     const I18N_ADMIN = {
       fr: {
         title: "Administration du menu — Le 831",
+        "login.title": "Administration du menu",
+        "login.username": "Identifiant",
+        "login.password": "Mot de passe",
+        "login.submit": "Se connecter",
+        "login.error": "Identifiants invalides.",
         "brand.admin": "Administration",
         "note.publish": "Les modifications sont publiées immédiatement sur le site.",
         "btn.save": "Enregistrer",
@@ -663,6 +662,11 @@
       },
       en: {
         title: "Menu Administration — Le 831",
+        "login.title": "Menu administration",
+        "login.username": "Username",
+        "login.password": "Password",
+        "login.submit": "Sign in",
+        "login.error": "Invalid credentials.",
         "brand.admin": "Administration",
         "note.publish": "Changes are published immediately on the website.",
         "btn.save": "Save",
@@ -771,6 +775,11 @@
       },
       cn: {
         title: "菜单管理 — 火焱山 Le 831",
+        "login.title": "菜单管理",
+        "login.username": "用户名",
+        "login.password": "密码",
+        "login.submit": "登录",
+        "login.error": "用户名或密码错误。",
         "brand.admin": "管理",
         "note.publish": "修改会立即发布到网站。",
         "btn.save": "保存",
@@ -879,6 +888,11 @@
       },
       ar: {
         title: "إدارة القائمة — Le 831",
+        "login.title": "إدارة القائمة",
+        "login.username": "اسم المستخدم",
+        "login.password": "كلمة المرور",
+        "login.submit": "تسجيل الدخول",
+        "login.error": "بيانات الدخول غير صالحة.",
         "brand.admin": "الإدارة",
         "note.publish": "تُنشر التعديلات فورًا على الموقع.",
         "btn.save": "حفظ",
@@ -1677,23 +1691,57 @@
     function setToken(t) {
       try { sessionStorage.setItem(TOKEN_KEY, t); } catch (e) {}
     }
-    var tokenResolve = null;
-    function openTokenModal(onSubmit) {
-      $("token-input").value = getToken();
-      $("token-error").hidden = true;
-      tokenResolve = onSubmit;
-      $("token-modal").hidden = false;
-      $("token-input").focus();
+
+    /* ---------- Connexion (login / mot de passe) ---------- */
+    function showLogin() {
+      setToken("");
+      elApp.hidden = true;
+      $("login-error").hidden = true;
+      $("login-password").value = "";
+      $("login-screen").hidden = false;
+      $("login-username").focus();
     }
-    $("btn-token-save").addEventListener("click", function () {
-      var v = $("token-input").value.trim();
-      if (!v) { $("token-error").textContent = t("token.required"); $("token-error").hidden = false; return; }
-      setToken(v);
-      $("token-modal").hidden = true;
-      if (tokenResolve) { var cb = tokenResolve; tokenResolve = null; cb(); }
-    });
-    document.querySelectorAll("[data-close-token]").forEach(function (b) {
-      b.addEventListener("click", function () { $("token-modal").hidden = true; tokenResolve = null; });
+    function showApp() {
+      $("login-screen").hidden = true;
+      elApp.hidden = false;
+      if (state) render();
+    }
+    function doLogin(username, password) {
+      $("login-error").hidden = true;
+      fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: username, password: password })
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (body) {
+            return { ok: res.ok, status: res.status, body: body };
+          });
+        })
+        .then(function (r) {
+          if (r.ok && r.body && r.body.token) {
+            setToken(r.body.token);
+            showApp();
+          } else {
+            $("login-error").textContent = t("login.error");
+            $("login-error").hidden = false;
+          }
+        })
+        .catch(function () {
+          $("login-error").textContent = t("login.error");
+          $("login-error").hidden = false;
+        });
+    }
+    $("login-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var u = $("login-username").value.trim();
+      var p = $("login-password").value;
+      if (!u || !p) {
+        $("login-error").textContent = t("login.error");
+        $("login-error").hidden = false;
+        return;
+      }
+      doLogin(u, p);
     });
 
     function doSaveToServer(token) {
@@ -1718,8 +1766,7 @@
             updateStatus(t("status.error") + " : " + msg, true);
             toast(t("status.error") + " : " + msg);
             if (r.status === 401) {
-              setToken("");
-              openTokenModal(function () { saveToServer(); });
+              showLogin();
             }
           }
         })
@@ -1729,14 +1776,11 @@
         });
     }
     function saveToServer() {
-      var token = getToken();
-      if (!token) { openTokenModal(function () { saveToServer(); }); return; }
-      doSaveToServer(token);
+      doSaveToServer(getToken());
     }
     $("btn-save").addEventListener("click", saveToServer);
     $("btn-logout").addEventListener("click", function () {
-      try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
-      toast(t("toast.tokenCleared"));
+      showLogin();
     });
 
     /* ---------- Fermeture des overlays (fond + Échap) ---------- */
@@ -1751,7 +1795,6 @@
       if (!$("cat-editor").hidden) closeCatEditor();
       if (!$("gallery-picker").hidden) $("gallery-picker").hidden = true;
       if (!$("import-panel").hidden) $("import-panel").hidden = true;
-      if (!$("token-modal").hidden) { $("token-modal").hidden = true; tokenResolve = null; }
     });
 
     /* ---------- Langue ---------- */
@@ -1826,8 +1869,7 @@
       applyAdminLang(lang);
       loadServerMenu().then(function () {
         state = deepClone(serverDefault);
-        elApp.hidden = false;
-        render();
+        if (!elApp.hidden) render();
       });
     }
     init();
