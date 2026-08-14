@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 /* ============================================================
-   LE 831 — 火焱山 · serveur Node (module http natif, zéro dépendance)
+   LE 831 — 火焱山 · hôte Node (module http natif, zéro dépendance)
    - Sert les fichiers statiques du site
-   - API : GET /api/menu, POST /api/menu (auth token), POST /api/login, GET /api/health
-   - Persistance atomique dans data/menu.json
+   - Services communs : TLS, login (POST /api/login), GET /api/health,
+     redirection admin HTTP→HTTPS
+   - Chargeur de modules : lit modules.json, monte les routes API et
+     les assets de chaque lib versionnée (libs/<name>/<version>/)
    ============================================================ */
 "use strict";
 
@@ -21,9 +23,10 @@ const TLS_PORT = Number(process.env.LE831_TLS_PORT) || 8444;
 const TLS_PUBLIC_PORT = Number(process.env.LE831_TLS_PUBLIC_PORT) || 443;
 let tlsActive = false;
 const ROOT = __dirname;
-const MENU_PATH = path.join(ROOT, "data", "menu.json");
-const DEFAULT_MENU_PATH = path.join(ROOT, "data", "menu.default.json");
-const DATA_DIR = path.dirname(MENU_PATH);
+const DATA_DIR = path.join(ROOT, "data");
+const MENU_PATH = path.join(DATA_DIR, "menu.json");
+const MODULES_PATH = path.join(ROOT, "modules.json");
+const LIBS_DIR = path.join(ROOT, "libs");
 
 const DEV_TOKEN = "le831admin";
 const ADMIN_TOKEN = process.env.LE831_ADMIN_TOKEN || DEV_TOKEN;
@@ -34,21 +37,6 @@ const ADMIN_PASS = process.env.LE831_ADMIN_PASS || "le831admin";
 if (!process.env.LE831_ADMIN_TOKEN) {
   console.warn("[le831] ⚠ LE831_ADMIN_TOKEN non défini — utilisation du token de DEV « " + DEV_TOKEN + " ».");
 }
-
-const ALLOWED_TAGS = ["spicy", "veggie", "signature"];
-
-// Liste fermée des allergènes (codes EU INCO). L'ordre définit l'ordre d'affichage.
-const ALLOWED_ALLERGENS = [
-  "gluten", "crustaces", "oeufs", "poisson", "arachides", "soja", "lait",
-  "fruitscoque", "celeri", "moutarde", "sesame", "sulfites", "mollusques", "lupin"
-];
-
-// Tailles standard proposées par l'admin (labels trilingues fixes).
-const SIZE_PRESETS = [
-  { fr: "Petite", en: "Small", cn: "小份" },
-  { fr: "Moyenne", en: "Medium", cn: "中份" },
-  { fr: "Grande", en: "Large", cn: "大份" }
-];
 
 const MAX_BODY = 25 * 1024 * 1024; // 25 Mo (photos en data URI)
 
@@ -83,132 +71,6 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(ap, bp);
 }
 
-/* ---------- Validation du schéma ---------- */
-function isValidPrice(s) {
-  // Accepte "5,50 €", "5.5", "7", "14,00 €", "3,50"…
-  return typeof s === "string" && /^\s*\d+(?:[.,]\d{1,2})?\s*(?:€|EUR)?\s*$/i.test(s);
-}
-
-function isValidSize(sz) {
-  if (sz === null || sz === undefined) return true; // taille vide autorisée (prix unique)
-  return !!sz && typeof sz === "object" && !Array.isArray(sz) &&
-    typeof sz.fr === "string" && typeof sz.en === "string" && typeof sz.cn === "string";
-}
-
-function sizeKey(sz) {
-  if (!sz) return "__null__";
-  return sz.fr + "\u0001" + sz.en + "\u0001" + sz.cn;
-}
-
-function validatePrices(it, where) {
-  if (Array.isArray(it.prices)) {
-    if (it.prices.length < 1 || it.prices.length > 3) {
-      return where + " : « prices » doit contenir entre 1 et 3 entrées.";
-    }
-    const seen = new Set();
-    for (let k = 0; k < it.prices.length; k++) {
-      const p = it.prices[k];
-      if (!p || typeof p !== "object" || Array.isArray(p)) {
-        return where + " : entrée de prix #" + (k + 1) + " invalide.";
-      }
-      if (!isValidPrice(p.price)) {
-        return where + " : prix #" + (k + 1) + " manquant ou invalide.";
-      }
-      if (!isValidSize(p.size)) {
-        return where + " : taille #" + (k + 1) + " invalide (fr/en/cn requis, ou null).";
-      }
-      if (it.prices.length > 1 && p.size == null) {
-        return where + " : la taille ne peut être vide que pour un prix unique.";
-      }
-      const key = sizeKey(p.size || null);
-      if (seen.has(key)) return where + " : tailles en double.";
-      seen.add(key);
-    }
-    return null;
-  }
-  // Rétrocompat : ancien champ « price » (string) → migré en prix unique sans taille.
-  if (typeof it.price === "string") {
-    if (!isValidPrice(it.price)) return where + " : prix manquant ou invalide.";
-    return null;
-  }
-  return where + " : champ « prices » manquant (ou ancien « price » absent).";
-}
-
-function validateMenu(data) {
-  if (!data || typeof data !== "object" || Array.isArray(data)) return "Objet JSON attendu.";
-  if (data.categories === undefined || !Array.isArray(data.categories)) {
-    return "Champ « categories » manquant ou non-tableau.";
-  }
-  for (let i = 0; i < data.categories.length; i++) {
-    const c = data.categories[i];
-    if (!c || typeof c !== "object" || Array.isArray(c)) return "Catégorie #" + (i + 1) + " : objet attendu.";
-    if (typeof c.id !== "string" || !c.id) return "Catégorie #" + (i + 1) + " : identifiant (id) manquant.";
-    if (!c.label || typeof c.label.fr !== "string" || typeof c.label.en !== "string" || typeof c.label.cn !== "string") {
-      return "Catégorie « " + c.id + " » : libellés FR/EN/CN requis.";
-    }
-    if (!Array.isArray(c.items)) return "Catégorie « " + c.id + " » : champ « items » manquant.";
-    for (let j = 0; j < c.items.length; j++) {
-      const it = c.items[j];
-      if (!it || typeof it !== "object" || Array.isArray(it)) return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : objet attendu.";
-      if (!it.name || typeof it.name.fr !== "string" || typeof it.name.en !== "string" || typeof it.name.cn !== "string") {
-        return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : nom FR/EN/CN requis.";
-      }
-      if (!it.desc || typeof it.desc.fr !== "string" || typeof it.desc.en !== "string" || typeof it.desc.cn !== "string") {
-        return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : description FR/EN/CN requise.";
-      }
-      const priceErr = validatePrices(it, "Catégorie « " + c.id + " », plat #" + (j + 1) + "");
-      if (priceErr) return priceErr;
-      if (it.allergens !== undefined) {
-        if (!Array.isArray(it.allergens)) {
-          return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : « allergens » doit être un tableau.";
-        }
-        for (const a of it.allergens) {
-          if (ALLOWED_ALLERGENS.indexOf(a) === -1) {
-            return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : allergène « " + a + " » inconnu.";
-          }
-        }
-      }
-      if (it.tags !== undefined) {
-        if (!Array.isArray(it.tags)) return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : « tags » doit être un tableau.";
-        for (const t of it.tags) {
-          if (ALLOWED_TAGS.indexOf(t) === -1) return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : tag « " + t + " » non autorisé.";
-        }
-      }
-      if (it.photo !== undefined && it.photo !== null) {
-        if (typeof it.photo !== "object" || Array.isArray(it.photo) || typeof it.photo.src !== "string" || !it.photo.src) {
-          return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : photo.src manquant.";
-        }
-        if (it.photo.alt !== undefined && it.photo.alt !== null) {
-          if (typeof it.photo.alt !== "object" || typeof it.photo.alt.fr !== "string" || typeof it.photo.alt.en !== "string" || typeof it.photo.alt.cn !== "string") {
-            return "Catégorie « " + c.id + " », plat #" + (j + 1) + " : photo.alt FR/EN/CN requis.";
-          }
-        }
-      }
-    }
-  }
-  return null;
-}
-
-/* ---------- Migration / normalisation v4 ---------- */
-/* Convertit l'ancien champ « price » en « prices », ajoute « allergens » si absent,
-   et supprime le champ legacy. Renvoie le même objet (muté).
-   NB : les clés « ar » (nom/description/libellé/taille/allergènes) sont optionnelles
-   et sont conservées telles quelles. */
-function normalizeMenu(data) {
-  (data.categories || []).forEach((c) => {
-    (c.items || []).forEach((it) => {
-      if (!Array.isArray(it.prices)) {
-        it.prices = (typeof it.price === "string")
-          ? [{ size: null, price: it.price }]
-          : [];
-      }
-      delete it.price;
-      if (!Array.isArray(it.allergens)) it.allergens = [];
-    });
-  });
-  return data;
-}
-
 /* ---------- Écriture atomique ---------- */
 function atomicWrite(filePath, content) {
   const tmp = filePath + ".tmp-" + process.pid + "-" + Date.now();
@@ -216,21 +78,18 @@ function atomicWrite(filePath, content) {
   fs.renameSync(tmp, filePath);
 }
 
-/* ---------- Initialisation du stockage local ---------- */
-/* Si data/menu.json (état runtime local par instance) n'existe pas, on le crée
-   en copiant le seed commité data/menu.default.json. Cela garantit que chaque
-   instance (DEV = workspace, PRD = clone) démarre avec son propre menu
-   persistant, jamais écrasé par un git pull. */
-function ensureLocalMenu() {
-  if (fs.existsSync(MENU_PATH)) return;
+/* ---------- Stockage du menu (fourni au module via ctx) ---------- */
+function readMenu() {
   try {
-    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-    const seed = fs.readFileSync(DEFAULT_MENU_PATH, "utf8");
-    atomicWrite(MENU_PATH, seed);
-    console.log("[le831] data/menu.json absent — copie du seed data/menu.default.json créée.");
+    return JSON.parse(fs.readFileSync(MENU_PATH, "utf8"));
   } catch (e) {
-    console.error("[le831] Impossible d'initialiser data/menu.json depuis data/menu.default.json :", e.message);
+    return null;
   }
+}
+
+function writeMenu(data) {
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  atomicWrite(MENU_PATH, JSON.stringify(data, null, 2) + "\n");
 }
 
 /* ---------- Réponse HTTP ---------- */
@@ -265,20 +124,77 @@ function readBody(req) {
   });
 }
 
-/* ---------- Réponse menu ---------- */
-function serveMenu(res, buf) {
-  let data;
+/* ---------- Contexte partagé avec les modules ---------- */
+const ctx = {
+  storagePath: DATA_DIR,
+  readMenu: readMenu,
+  writeMenu: writeMenu,
+  adminToken: ADMIN_TOKEN,
+  safeEqual: safeEqual,
+  send: send,
+  sendJSON: sendJSON,
+  readBody: readBody
+};
+
+/* ---------- Loader de modules ---------- */
+const apiRoutes = {};   // pathname -> { METHOD: handler }
+const assetRoutes = {}; // pathname -> chemin absolu du fichier
+
+function loadModules() {
+  let modules;
   try {
-    data = JSON.parse(buf.toString("utf8"));
-    normalizeMenu(data); // garantit le format v4 même si le fichier est encore en v2/v3
+    modules = JSON.parse(fs.readFileSync(MODULES_PATH, "utf8"));
   } catch (e) {
-    sendJSON(res, 500, { error: "data/menu.json invalide : " + e.message });
-    return;
+    console.error("[le831] Impossible de lire modules.json :", e.message);
+    process.exit(1);
   }
-  sendJSON(res, 200, data, { "Cache-Control": "no-store" });
+
+  for (const name of Object.keys(modules)) {
+    const version = modules[name];
+    const libDir = path.join(LIBS_DIR, name, version);
+    const manifestPath = path.join(libDir, "manifest.json");
+    const serverPath = path.join(libDir, "server.js");
+
+    let manifest;
+    try {
+      manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    } catch (e) {
+      console.error("[le831] Impossible de charger " + manifestPath + " :", e.message);
+      process.exit(1);
+    }
+
+    let lib;
+    try {
+      lib = require(serverPath);
+    } catch (e) {
+      console.error("[le831] Impossible de charger " + serverPath + " :", e.message);
+      process.exit(1);
+    }
+
+    if (lib && lib.routes && typeof lib.routes === "object") {
+      for (const routePath of Object.keys(lib.routes)) {
+        apiRoutes[routePath] = lib.routes[routePath];
+      }
+    }
+
+    if (manifest.assets && Array.isArray(manifest.assets)) {
+      for (const asset of manifest.assets) {
+        const rel = String(asset).replace(/^\/+/, "");
+        const filePath = path.join(libDir, rel);
+        assetRoutes[String(asset)] = filePath;                                   // alias propre (/admin.html)
+        assetRoutes["/libs/" + name + "/" + version + "/" + rel] = filePath;     // chemin complet versionné
+      }
+    }
+
+    if (lib && typeof lib.init === "function") {
+      lib.init(ctx);
+    }
+
+    console.log("[le831] Module « " + name + " » v" + version + " chargé.");
+  }
 }
 
-/* ---------- Routage API ---------- */
+/* ---------- Routage API (services communs + modules) ---------- */
 function handleApi(req, res, url) {
   const pathname = url.pathname;
 
@@ -313,72 +229,43 @@ function handleApi(req, res, url) {
     return true;
   }
 
-  if (pathname === "/api/menu") {
-    if (req.method === "GET") {
-      fs.readFile(MENU_PATH, (err, buf) => {
-        if (err) {
-          // Fallback : menu local absent/corrompu → on sert le seed commité.
-          fs.readFile(DEFAULT_MENU_PATH, (err2, buf2) => {
-            if (err2) {
-              sendJSON(res, 500, { error: "Impossible de lire data/menu.json" });
-              return;
-            }
-            serveMenu(res, buf2);
-          });
-          return;
-        }
-        serveMenu(res, buf);
-      });
-      return true;
+  const route = apiRoutes[pathname];
+  if (route) {
+    const handler = route[req.method];
+    if (typeof handler === "function") {
+      handler(req, res, ctx);
+    } else {
+      sendJSON(res, 405, { error: "Méthode non autorisée." });
     }
-
-    if (req.method === "POST") {
-      const provided = req.headers["x-admin-token"];
-      if (!provided || !safeEqual(provided, ADMIN_TOKEN)) {
-        sendJSON(res, 401, { error: "Token administrateur manquant ou invalide." });
-        return true;
-      }
-      readBody(req).then((buf) => {
-        let data;
-        try {
-          data = JSON.parse(buf.toString("utf8") || "{}");
-        } catch (e) {
-          sendJSON(res, 400, { error: "JSON invalide : " + e.message });
-          return;
-        }
-        const err = validateMenu(data);
-        if (err) {
-          sendJSON(res, 400, { error: err });
-          return;
-        }
-        normalizeMenu(data); // migre l'ancien « price » et ajoute « allergens » si besoin
-        data.version = 4;
-        data.updatedAt = new Date().toISOString();
-        try {
-          if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-          atomicWrite(MENU_PATH, JSON.stringify(data, null, 2) + "\n");
-        } catch (e) {
-          console.error("[le831] Erreur d'écriture menu.json :", e.message);
-          sendJSON(res, 500, { error: "Échec de l'écriture du menu : " + e.message });
-          return;
-        }
-        console.log("[le831] Menu mis à jour (" + data.categories.length + " catégories)");
-        sendJSON(res, 200, data);
-      }).catch((e) => {
-        if (e && e.message === "body_too_large") sendJSON(res, 413, { error: "Corps trop volumineux." });
-        else sendJSON(res, 400, { error: "Erreur de lecture du corps." });
-      });
-      return true;
-    }
-
-    sendJSON(res, 405, { error: "Méthode non autorisée." });
     return true;
   }
 
   return false;
 }
 
-/* ---------- Servir les fichiers statiques ---------- */
+/* ---------- Servir un fichier ---------- */
+function serveFile(filePath, res) {
+  fs.stat(filePath, (err, stats) => {
+    if (err || !stats.isFile()) {
+      send(res, 404, "404 — Not Found");
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    const type = MIME[ext] || "application/octet-stream";
+    res.writeHead(200, {
+      "Content-Type": type,
+      "Content-Length": stats.size,
+      "X-Content-Type-Options": "nosniff"
+    });
+    const stream = fs.createReadStream(filePath);
+    stream.on("error", () => {
+      res.destroy();
+    });
+    stream.pipe(res);
+  });
+}
+
+/* ---------- Servir les fichiers statiques du site ---------- */
 function serveStatic(req, res, url) {
   let pathname;
   try {
@@ -402,24 +289,7 @@ function serveStatic(req, res, url) {
     return;
   }
 
-  fs.stat(filePath, (err, stats) => {
-    if (err || !stats.isFile()) {
-      send(res, 404, "404 — Not Found");
-      return;
-    }
-    const ext = path.extname(filePath).toLowerCase();
-    const type = MIME[ext] || "application/octet-stream";
-    res.writeHead(200, {
-      "Content-Type": type,
-      "Content-Length": stats.size,
-      "X-Content-Type-Options": "nosniff"
-    });
-    const stream = fs.createReadStream(filePath);
-    stream.on("error", () => {
-      res.destroy();
-    });
-    stream.pipe(res);
-  });
+  serveFile(filePath, res);
 }
 
 /* ---------- Handler de requêtes (partagé HTTP + HTTPS) ---------- */
@@ -442,6 +312,12 @@ function handleRequest(req, res) {
   if (url.pathname.startsWith("/api/")) {
     if (handleApi(req, res, url)) return;
     sendJSON(res, 404, { error: "API introuvable." });
+    return;
+  }
+
+  // Assets servis par les modules (alias + chemin versionné).
+  if (assetRoutes[url.pathname]) {
+    serveFile(assetRoutes[url.pathname], res);
     return;
   }
 
@@ -504,7 +380,7 @@ function shutdown() {
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
 
-ensureLocalMenu();
+loadModules();
 
 server.listen(PORT, HOST, () => {
   console.log("[le831] Serveur démarré sur http://" + HOST + ":" + PORT);

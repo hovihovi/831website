@@ -1,0 +1,8 @@
+{
+  "name": "menu",
+  "version": "1.0.0",
+  "api": [
+    { "path": "/api/menu", "methods": ["GET", "POST"] }
+  ],
+  "assets": ["/admin.html"]
+}

@@ -1,2 +1,3 @@
-# État runtime local par instance — jamais commité (seed = data/menu.default.json)
+# État runtime local par instance — jamais commité
+# (seed = libs/menu/<version>/seed/menu.default.json, copié au premier démarrage)
 data/menu.json
