@@ -912,7 +912,7 @@
     });
   }
 
-  /* ---------- Chargement du menu : /api/menu → data/menu.json → embarqué ---------- */
+  /* ---------- Chargement du menu : /api/menu → data/menu.default.json → embarqué ---------- */
   /* Le tableau MENU ci-dessus sert de secours ultime (hors-ligne, 404, JSON invalide). */
   function isValidMenuData(data) {
     return !!(data && Array.isArray(data.categories) && data.categories.length &&
@@ -957,7 +957,7 @@
         throw new Error("schema invalide");
       })
       .catch(() => {
-        fetch("data/menu.json?v=" + Date.now())
+        fetch("data/menu.default.json?v=" + Date.now())
           .then((res) => {
             if (!res.ok) throw new Error("HTTP " + res.status);
             return res.json();
@@ -1186,5 +1186,5 @@
 
   /* Init */
   applyLang(lang); // aligne textes, menu et nav mobile (le FR statique sert de base SEO/no-JS)
-  loadMenu(); // remplace le fallback embarqué par /api/menu (puis data/menu.json) si disponible
+  loadMenu(); // remplace le fallback embarqué par /api/menu (puis data/menu.default.json) si disponible
 })();

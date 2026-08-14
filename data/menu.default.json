@@ -1,0 +1,442 @@
+{
+  "categories": [
+    {
+      "id": "entrees",
+      "label": {
+        "fr": "Entrées & Salades",
+        "en": "Appetizers & Salads",
+        "cn": "前菜与沙拉",
+        "ar": "المقبلات والسلطات"
+      },
+      "items": [
+        {
+          "name": {
+            "fr": "Salade de concombre pimenté",
+            "en": "Spicy Cucumber Salad",
+            "cn": "凉拌黄瓜",
+            "ar": "سلطة الخيار الحارة"
+          },
+          "desc": {
+            "fr": "Concombre frais, ail, piment, vinaigre et huile de sésame",
+            "en": "Fresh cucumber, garlic, chili, vinegar and sesame oil",
+            "cn": "新鲜黄瓜、蒜、辣椒、醋和芝麻油",
+            "ar": "خيار طازج، ثوم، فلفل حار، خل وزيت سمسم"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "5,50 €"
+            }
+          ],
+          "tags": [
+            "veggie"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Nems de bœuf",
+            "en": "Beef Spring Rolls",
+            "cn": "牛肉春卷",
+            "ar": "نيمس اللحم البقري"
+          },
+          "desc": {
+            "fr": "Rouleaux croustillants farcis au bœuf épicé, sauce aigre-douce",
+            "en": "Crispy rolls filled with spiced beef, sweet and sour sauce",
+            "cn": "酥脆卷，内馅香辣牛肉，配酸甜酱",
+            "ar": "لفائف مقرمشة محشوة بلحم بقري حار، صلصة حلوة وحامضة"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "7,00 €"
+            }
+          ],
+          "tags": [
+            "spicy"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Salade de chou épicée",
+            "en": "Spicy Cabbage Salad",
+            "cn": "辣拌卷心菜",
+            "ar": "سلطة الملفوف الحارة"
+          },
+          "desc": {
+            "fr": "Chou râpé, carotte, coriandre, vinaigrette pimentée",
+            "en": "Shredded cabbage, carrot, cilantro, spicy dressing",
+            "cn": "卷心菜丝、胡萝卜、香菜、辣味调料",
+            "ar": "ملفوف مبشور، جزر، كزبرة، صلصة حارة"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "5,00 €"
+            }
+          ],
+          "tags": [
+            "veggie"
+          ],
+          "allergens": [],
+          "photo": null
+        }
+      ]
+    },
+    {
+      "id": "grillades",
+      "label": {
+        "fr": "Grillades & Brochettes",
+        "en": "Grills & Skewers",
+        "cn": "烧烤与串",
+        "ar": "المشويات والأسياخ"
+      },
+      "items": [
+        {
+          "name": {
+            "fr": "Brochettes d'agneau (5 pièces)",
+            "en": "Lamb Skewers (5 pcs)",
+            "cn": "羊肉串（5串）",
+            "ar": "أسياخ لحم الضأن (5 قطع)"
+          },
+          "desc": {
+            "fr": "Agneau mariné aux épices secrètes, grillé au feu de bois — notre spécialité",
+            "en": "Lamb marinated in secret spices, grilled over wood fire — our specialty",
+            "cn": "秘制香料腌制的羊肉，炭火烤制 — 我们的招牌",
+            "ar": "ضأن متبل ببهارات سرية، مشوي على نار الخشب — تخصصنا"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "12,00 €"
+            }
+          ],
+          "tags": [
+            "spicy",
+            "signature"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Brochettes de poulet",
+            "en": "Chicken Skewers",
+            "cn": "鸡肉串",
+            "ar": "أسياخ الدجاج"
+          },
+          "desc": {
+            "fr": "Blanc de poulet mariné, grillé aux épices d'Asie Centrale",
+            "en": "Marinated chicken breast, grilled with Central Asian spices",
+            "cn": "腌制的鸡胸肉，配中亚香料烤制",
+            "ar": "صدر دجاج متبل، مشوي ببهارات آسيا الوسطى"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "10,00 €"
+            }
+          ],
+          "tags": [
+            "spicy"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Poivrons et légumes grillés",
+            "en": "Grilled Peppers & Vegetables",
+            "cn": "烤蔬菜",
+            "ar": "فلفل وخضروات مشوية"
+          },
+          "desc": {
+            "fr": "Légumes de saison grillés, huile d'olive et épices",
+            "en": "Seasonal grilled vegetables, olive oil and spices",
+            "cn": "时令烤蔬菜，橄榄油和香料",
+            "ar": "خضروات موسمية مشوية، زيت زيتون وبهارات"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "7,00 €"
+            }
+          ],
+          "tags": [
+            "veggie"
+          ],
+          "allergens": [],
+          "photo": null
+        }
+      ]
+    },
+    {
+      "id": "plats",
+      "label": {
+        "fr": "Plats Principaux",
+        "en": "Main Courses",
+        "cn": "主菜",
+        "ar": "الأطباق الرئيسية"
+      },
+      "items": [
+        {
+          "name": {
+            "fr": "Poulet aux pommes de terre (Dapanji)",
+            "en": "Chicken with Potatoes (Dapanji)",
+            "cn": "大盘鸡",
+            "ar": "دجاج مع البطاطس (دابانجي)"
+          },
+          "desc": {
+            "fr": "Ragoût de poulet mijoté, pommes de terre, poivrons, sauce épicée — notre plat signature",
+            "en": "Slow-cooked chicken stew, potatoes, peppers, spicy sauce — our signature dish",
+            "cn": "慢炖鸡肉、土豆、青椒、辣酱 — 我们的招牌菜",
+            "ar": "يخنة دجاج مطهوة ببطء، بطاطس، فلفل، صلصة حارة — طبقنا المميز"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "16,00 €"
+            }
+          ],
+          "tags": [
+            "spicy",
+            "signature"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Nouilles tirées à la main sauté au bœuf",
+            "en": "Hand-Pulled Noodles with Beef",
+            "cn": "牛肉拉面",
+            "ar": "نودلز مشدودة باليد مقلية مع اللحم البقري"
+          },
+          "desc": {
+            "fr": "Nouilles fraîches faites maison, sauté au wok avec bœuf et légumes",
+            "en": "Fresh homemade hand-pulled noodles, wok-fried with beef and vegetables",
+            "cn": "新鲜手工拉面，与牛肉和蔬菜翻炒",
+            "ar": "نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع اللحم البقري والخضروات"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "14,00 €"
+            }
+          ],
+          "tags": [
+            "signature"
+          ],
+          "allergens": [],
+          "photo": {
+            "src": "assets/images/plat/nouilles-boeuf.jpg",
+            "alt": {
+              "fr": "Nouilles tirées à la main sautées au bœuf, poivrons rouges et verts",
+              "en": "Hand-pulled noodles wok-fried with beef, red and green peppers",
+              "cn": "牛肉手工拉面，配红绿彩椒",
+              "ar": "نودلز مشدودة باليد مقلية مع اللحم البقري والفلفل الأحمر والأخضر"
+            }
+          }
+        },
+        {
+          "name": {
+            "fr": "Nouilles tirées à la main sauté à l'agneau",
+            "en": "Hand-Pulled Noodles with Lamb",
+            "cn": "羊肉拉面",
+            "ar": "نودلز مشدودة باليد مقلية مع لحم الضأن"
+          },
+          "desc": {
+            "fr": "Nouilles fraîches maison sauté au wok avec agneau et oignons",
+            "en": "Fresh homemade hand-pulled noodles, wok-fried with lamb and onions",
+            "cn": "新鲜手工拉面，与羊肉和洋葱翻炒",
+            "ar": "نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع لحم الضأن والبصل"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "15,00 €"
+            }
+          ],
+          "tags": [
+            "spicy"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Riz pilaf à l'agneau (Polo)",
+            "en": "Lamb Pilaf (Polo)",
+            "cn": "羊肉抓饭",
+            "ar": "أرز بيلاف مع لحم الضأن (بولو)"
+          },
+          "desc": {
+            "fr": "Riz parfumé cuit avec agneau, carottes et épices d'Asie Centrale",
+            "en": "Fragrant rice cooked with lamb, carrots and Central Asian spices",
+            "cn": "香米饭，配羊肉、胡萝卜和中亚香料",
+            "ar": "أرز معطّر مطبوخ مع لحم الضأن والجزر وبهارات آسيا الوسطى"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "13,00 €"
+            }
+          ],
+          "tags": [],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Raviolis ouïghours (Manta)",
+            "en": "Uyghur Dumplings (Manta)",
+            "cn": "薄皮包子",
+            "ar": "مانتو (رافيولي الويغور)"
+          },
+          "desc": {
+            "fr": "Raviolis vapeur farcis à l'agneau et oignons, sauce vinaigre-piment",
+            "en": "Steamed dumplings filled with lamb and onions, vinegar-chili sauce",
+            "cn": "羊肉洋葱馅蒸饺，配醋辣酱",
+            "ar": "مانتو مطهو على البخار محشو بلحم الضأن والبصل، صلصة الخل والفلفل"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "11,00 €"
+            }
+          ],
+          "tags": [
+            "signature"
+          ],
+          "allergens": [],
+          "photo": null
+        }
+      ]
+    },
+    {
+      "id": "pains",
+      "label": {
+        "fr": "Pains",
+        "en": "Breads",
+        "cn": "馕",
+        "ar": "الخبز"
+      },
+      "items": [
+        {
+          "name": {
+            "fr": "Pain traditionnel (Nan)",
+            "en": "Traditional Naan Bread",
+            "cn": "传统烤馕",
+            "ar": "خبز النان التقليدي"
+          },
+          "desc": {
+            "fr": "Pain plat cuit au four, graines de sésame et épices",
+            "en": "Oven-baked flatbread with sesame seeds and spices",
+            "cn": "烤箱烤制的扁平面包，配芝麻和香料",
+            "ar": "خبز مسطّح مخبوز في الفرن، حبات سمسم وبهارات"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "3,00 €"
+            }
+          ],
+          "tags": [
+            "veggie"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Nan à l'agneau",
+            "en": "Lamb Naan",
+            "cn": "羊肉烤馕",
+            "ar": "نان بلحم الضأن"
+          },
+          "desc": {
+            "fr": "Pain farci à l'agneau haché épicé, cuit au four",
+            "en": "Bread stuffed with spiced minced lamb, oven-baked",
+            "cn": "辣味碎羊肉馅烤馕",
+            "ar": "خبز محشو بلحم ضأن مفروم حار، مخبوز في الفرن"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "6,00 €"
+            }
+          ],
+          "tags": [
+            "spicy"
+          ],
+          "allergens": [],
+          "photo": null
+        }
+      ]
+    },
+    {
+      "id": "boissons",
+      "label": {
+        "fr": "Boissons",
+        "en": "Drinks",
+        "cn": "饮品",
+        "ar": "المشروبات"
+      },
+      "items": [
+        {
+          "name": {
+            "fr": "Thé d'Asie Centrale",
+            "en": "Central Asian Tea",
+            "cn": "中亚茶",
+            "ar": "شاي آسيا الوسطى"
+          },
+          "desc": {
+            "fr": "Thé noir parfumé importé directement d'Asie Centrale",
+            "en": "Fragrant black tea imported directly from Central Asia",
+            "cn": "从中亚直接进口的香浓红茶",
+            "ar": "شاي أسود معطّر مستورد مباشرة من آسيا الوسطى"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "3,50 €"
+            }
+          ],
+          "tags": [
+            "signature"
+          ],
+          "allergens": [],
+          "photo": null
+        },
+        {
+          "name": {
+            "fr": "Bière sans alcool au lait",
+            "en": "Non-Alcoholic Milk Beer",
+            "cn": "格瓦斯",
+            "ar": "مشروب الحليب الفوار"
+          },
+          "desc": {
+            "fr": "Boisson lactée pétillante traditionnelle — une spécialité unique",
+            "en": "Traditional sparkling milk drink — a unique specialty",
+            "cn": "传统气泡奶制饮品 — 独特特色",
+            "ar": "مشروب حليبي فوار تقليدي — تخصص فريد"
+          },
+          "prices": [
+            {
+              "size": null,
+              "price": "4,00 €"
+            }
+          ],
+          "tags": [],
+          "allergens": [],
+          "photo": null
+        }
+      ]
+    }
+  ],
+  "version": 4,
+  "updatedAt": "2026-08-14T11:30:49.249Z"
+}

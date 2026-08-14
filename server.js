@@ -16,6 +16,7 @@ const PORT = Number(process.env.PORT) || 3000;
 const HOST = "0.0.0.0";
 const ROOT = __dirname;
 const MENU_PATH = path.join(ROOT, "data", "menu.json");
+const DEFAULT_MENU_PATH = path.join(ROOT, "data", "menu.default.json");
 const DATA_DIR = path.dirname(MENU_PATH);
 
 const DEV_TOKEN = "le831admin";
@@ -206,6 +207,23 @@ function atomicWrite(filePath, content) {
   fs.renameSync(tmp, filePath);
 }
 
+/* ---------- Initialisation du stockage local ---------- */
+/* Si data/menu.json (état runtime local par instance) n'existe pas, on le crée
+   en copiant le seed commité data/menu.default.json. Cela garantit que chaque
+   instance (DEV = workspace, PRD = clone) démarre avec son propre menu
+   persistant, jamais écrasé par un git pull. */
+function ensureLocalMenu() {
+  if (fs.existsSync(MENU_PATH)) return;
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    const seed = fs.readFileSync(DEFAULT_MENU_PATH, "utf8");
+    atomicWrite(MENU_PATH, seed);
+    console.log("[le831] data/menu.json absent — copie du seed data/menu.default.json créée.");
+  } catch (e) {
+    console.error("[le831] Impossible d'initialiser data/menu.json depuis data/menu.default.json :", e.message);
+  }
+}
+
 /* ---------- Réponse HTTP ---------- */
 function send(res, status, body, headers) {
   res.writeHead(status, Object.assign({
@@ -238,6 +256,19 @@ function readBody(req) {
   });
 }
 
+/* ---------- Réponse menu ---------- */
+function serveMenu(res, buf) {
+  let data;
+  try {
+    data = JSON.parse(buf.toString("utf8"));
+    normalizeMenu(data); // garantit le format v4 même si le fichier est encore en v2/v3
+  } catch (e) {
+    sendJSON(res, 500, { error: "data/menu.json invalide : " + e.message });
+    return;
+  }
+  sendJSON(res, 200, data, { "Cache-Control": "no-store" });
+}
+
 /* ---------- Routage API ---------- */
 function handleApi(req, res, url) {
   const pathname = url.pathname;
@@ -251,18 +282,17 @@ function handleApi(req, res, url) {
     if (req.method === "GET") {
       fs.readFile(MENU_PATH, (err, buf) => {
         if (err) {
-          sendJSON(res, 500, { error: "Impossible de lire data/menu.json" });
+          // Fallback : menu local absent/corrompu → on sert le seed commité.
+          fs.readFile(DEFAULT_MENU_PATH, (err2, buf2) => {
+            if (err2) {
+              sendJSON(res, 500, { error: "Impossible de lire data/menu.json" });
+              return;
+            }
+            serveMenu(res, buf2);
+          });
           return;
         }
-        let data;
-        try {
-          data = JSON.parse(buf.toString("utf8"));
-          normalizeMenu(data); // garantit le format v4 même si le fichier est encore en v2/v3
-        } catch (e) {
-          sendJSON(res, 500, { error: "data/menu.json invalide : " + e.message });
-          return;
-        }
-        sendJSON(res, 200, data, { "Cache-Control": "no-store" });
+        serveMenu(res, buf);
       });
       return true;
     }
@@ -391,6 +421,8 @@ function shutdown() {
 
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
+
+ensureLocalMenu();
 
 server.listen(PORT, HOST, () => {
   console.log("[le831] Serveur démarré sur http://" + HOST + ":" + PORT);
