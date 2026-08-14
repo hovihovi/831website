@@ -60,6 +60,10 @@ section { scroll-margin-top: var(--header-h); }
 ::selection { background: var(--gold); color: var(--ink); }
 
 html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-serif; }
+html[lang="ar"] body { font-family: "Noto Sans Arabic", "Inter", system-ui, sans-serif; }
+html[lang="ar"] .section-title,
+html[lang="ar"] .brand-name,
+html[lang="ar"] .hero-name { font-family: "Noto Naskh Arabic", "Cormorant Garamond", serif; }
 
 :focus-visible {
   outline: 3px solid var(--gold-soft);
@@ -694,6 +698,32 @@ html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-
   white-space: nowrap;
 }
 
+/* Prix multi-tailles : ligne compacte « Petite 5,50 € · Moyenne 7,00 € » */
+.dish-price-multi {
+  white-space: normal;
+  text-align: right;
+  font-size: 1.08rem;
+  line-height: 1.35;
+}
+.dish-price-multi .p-size {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: rgba(23, 19, 16, 0.62);
+}
+.dish-price-multi .p-price { white-space: nowrap; }
+.dish-price-multi .p-sep { color: rgba(23, 19, 16, 0.38); font-weight: 400; }
+
+/* Allergènes : ligne discrète sous la description */
+.dish-allergens {
+  grid-column: 1 / 2;
+  font-size: 0.72rem;
+  color: rgba(23, 19, 16, 0.55);
+  opacity: 0.6;
+  line-height: 1.4;
+  margin-top: 0.15rem;
+}
+
 /* Plat en vedette (avec photo) */
 .dish-featured {
   display: grid;
@@ -717,6 +747,7 @@ html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-
 .dish-featured .dish-name { font-size: 1.5rem; }
 .dish-featured .dish-desc { font-size: 0.98rem; }
 .dish-featured .dish-price { font-size: 1.5rem; grid-column: auto; grid-row: auto; justify-self: start; }
+.dish-featured .dish-price-multi { text-align: left; font-size: 1.18rem; }
 .dish-featured .featured-flag {
   justify-self: start;
   font-size: 0.72rem;
@@ -1056,6 +1087,8 @@ html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-
 }
 .hours th { font-weight: 500; }
 .hours td { font-weight: 600; color: var(--jade); }
+.hours-note { font-weight: 500; opacity: 0.7; }
+.hours-note::before { content: " · "; }
 
 .contact-ctas { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.2rem; }
 
@@ -1135,6 +1168,112 @@ html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-
 .to-top { color: var(--gold-pale); text-decoration: none; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.75rem; }
 .to-top:hover { color: var(--gold-soft); }
 
+/* ---------- Halal ---------- */
+.halal {
+  background:
+    radial-gradient(90% 80% at 0% 0%, rgba(196, 146, 59, 0.16), transparent 55%),
+    linear-gradient(160deg, var(--jade-deep), var(--ink));
+  color: var(--ivory);
+}
+.halal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--pattern-stars);
+  background-size: 96px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+.halal-grid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+}
+@media (min-width: 900px) {
+  .halal-grid {
+    grid-template-columns: auto 1fr auto;
+    gap: 3.5rem;
+    text-align: start;
+    justify-items: start;
+  }
+}
+.halal-badge {
+  width: 140px;
+  height: 140px;
+  filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.45));
+}
+.halal-badge img { width: 100%; height: 100%; }
+.halal .overline { color: var(--gold-soft); }
+.halal .section-title { color: var(--gold-soft); }
+.halal-text {
+  max-width: 52ch;
+  margin-top: 1rem;
+  color: rgba(246, 240, 226, 0.85);
+}
+
+.halal-cert {
+  margin-top: 1.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+@media (min-width: 900px) {
+  .halal-cert { align-items: flex-start; }
+  html[dir="rtl"] .halal-cert { align-items: flex-end; }
+}
+.halal-cert-logo {
+  display: block;
+  width: 96px;
+  height: auto;
+  background: var(--paper);
+  padding: 0.55rem 0.65rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.6);
+}
+.halal-cert-text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: rgba(246, 240, 226, 0.85);
+  opacity: 0.85;
+  max-width: 52ch;
+}
+
+.halal-certificate {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(196, 146, 59, 0.45);
+  box-shadow: var(--shadow);
+}
+.halal-certificate a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+}
+.halal-certificate img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 12px 26px -16px rgba(23, 19, 16, 0.55);
+  transition: transform 0.4s var(--ease);
+}
+.halal-certificate a:hover img { transform: scale(1.03); }
+.halal-certificate figcaption {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  text-align: center;
+  color: var(--jade);
+}
+
 /* ---------- Reveal on scroll ---------- */
 .reveal {
   opacity: 0;
@@ -1150,6 +1289,39 @@ html[lang="zh-CN"] body { font-family: "Noto Sans SC", "Inter", system-ui, sans-
   .main-nav { display: flex; }
   .header-cta { display: inline-flex; }
   .nav-toggle, .mobile-nav { display: none; }
+}
+
+/* ---------- RTL (Arabic) ---------- */
+html[dir="rtl"] { direction: rtl; }
+
+html[dir="rtl"] .brand { margin-right: 0; margin-left: auto; }
+html[dir="rtl"] .overline::before { margin-right: 0; margin-left: 0.8rem; }
+html[dir="rtl"] .main-nav a::after { transform-origin: right; }
+
+html[dir="rtl"] .floating-img { right: auto; left: -6%; }
+html[dir="rtl"] .framed-img::after { inset: 14px 14px -14px -14px; }
+html[dir="rtl"] .story-badge { left: auto; right: -10px; }
+html[dir="rtl"] .story-points li { padding-left: 0; padding-right: 1.7rem; }
+html[dir="rtl"] .story-points li::before { left: auto; right: 0; }
+
+html[dir="rtl"] .dish-name .dish-cn { margin-left: 0; margin-right: 0.5rem; }
+html[dir="rtl"] .dish-tags { margin-left: 0; margin-right: 0.4rem; }
+html[dir="rtl"] .menu-tab .zh { margin-left: 0; margin-right: 0.35em; }
+
+html[dir="rtl"] .gallery-item { text-align: right; }
+html[dir="rtl"] .gallery-item::after { right: auto; left: 0.6rem; }
+
+html[dir="rtl"] .room-zh { right: auto; left: 0.6rem; }
+
+html[dir="rtl"] .hours th, html[dir="rtl"] .hours td { text-align: right; }
+
+html[dir="rtl"] .footer-name span { margin-left: 0; margin-right: 0.4rem; }
+
+html[dir="rtl"] .lightbox-prev { left: auto; right: 0; }
+html[dir="rtl"] .lightbox-next { right: auto; left: 0; }
+@media (min-width: 620px) {
+  html[dir="rtl"] .lightbox-prev { left: auto; right: -0.5rem; }
+  html[dir="rtl"] .lightbox-next { right: auto; left: -0.5rem; }
 }
 
 /* ---------- Reduced motion ---------- */

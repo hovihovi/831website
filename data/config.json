@@ -22,7 +22,6 @@
     },
     "yearEstablished": 2020
   },
-
   "brand": {
     "primaryColor": "#1B4332",
     "secondaryColor": "#E8A317",
@@ -32,14 +31,12 @@
     "fontBody": "'Inter', 'Noto Sans SC', system-ui, sans-serif",
     "logoText": "火焱山"
   },
-
   "colors": {
     "green": "#1B4332",
     "amber": "#E8A317",
     "black": "#1a1a1a",
     "white": "#FCFCF9"
   },
-
   "hero": {
     "imageDesktop": "assets/images/hero-desktop.jpg",
     "imageMobile": "assets/images/hero-mobile.jpg",
@@ -50,7 +47,6 @@
       "cn": "查看菜单"
     }
   },
-
   "sections": {
     "overview": {
       "enabled": true,
@@ -370,26 +366,30 @@
       "hours": [
         {
           "days": {
-            "fr": "Lun - Ven",
-            "en": "Mon - Fri",
-            "cn": "周一至周五"
+            "fr": "Autres jours",
+            "en": "Other days",
+            "cn": "其他日期",
+            "ar": "أيام أخرى"
           },
           "hours": {
-            "fr": "11:30 – 15:00 · 18:00 – 22:30",
-            "en": "11:30 – 15:00 · 18:00 – 22:30",
-            "cn": "11:30 – 15:00 · 18:00 – 22:30"
+            "fr": "11:30 – 23:00 (service continu)",
+            "en": "11:30 – 23:00 (continuous service)",
+            "cn": "11:30 – 23:00（连续营业）",
+            "ar": "11:30 – 23:00 (خدمة متواصلة)"
           }
         },
         {
           "days": {
-            "fr": "Sam - Dim",
-            "en": "Sat - Sun",
-            "cn": "周六至周日"
+            "fr": "Mardi & Jeudi",
+            "en": "Tuesday & Thursday",
+            "cn": "周二和周四",
+            "ar": "الثلاثاء والخميس"
           },
           "hours": {
-            "fr": "11:30 – 22:30 (service continu)",
-            "en": "11:30 – 22:30 (continuous service)",
-            "cn": "11:30 – 22:30（连续营业）"
+            "fr": "11:30 – 15:30 · 17:30 – 23:00",
+            "en": "11:30 – 15:30 · 17:30 – 23:00",
+            "cn": "11:30 – 15:30 · 17:30 – 23:00",
+            "ar": "11:30 – 15:30 · 17:30 – 23:00"
           }
         }
       ],
@@ -406,9 +406,7 @@
       }
     }
   },
-
   "cacheVersion": 1,
-
   "seo": {
     "title": {
       "fr": "Le 831 | Restaurant Ouïghour Halal — Paris 2e",

@@ -26,7 +26,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="assets/css/style.css">
 
@@ -42,6 +42,7 @@
     "image": "https://hovihovi.github.io/831website/assets/images/salle/vue-ensemble-02.jpg",
     "servesCuisine": ["Ouïghoure", "Uyghur", "Cuisine d'Asie Centrale", "Halal"],
     "priceRange": "€€",
+    "availableLanguage": ["fr", "en", "zh", "ar"],
     "telephone": "+33979262557",
     "address": {
       "@type": "PostalAddress",
@@ -54,18 +55,18 @@
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "11:30", "closes": "15:00"
+        "dayOfWeek": ["Monday","Wednesday","Friday","Saturday","Sunday"],
+        "opens": "11:30", "closes": "23:00"
       },
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
-        "opens": "18:00", "closes": "22:30"
+        "dayOfWeek": ["Tuesday","Thursday"],
+        "opens": "11:30", "closes": "15:30"
       },
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday","Sunday"],
-        "opens": "11:30", "closes": "22:30"
+        "dayOfWeek": ["Tuesday","Thursday"],
+        "opens": "17:30", "closes": "23:00"
       }
     ],
     "acceptsReservations": "True",
@@ -103,8 +104,9 @@
           <button type="button" data-lang="fr" aria-pressed="true">FR</button>
           <button type="button" data-lang="en" aria-pressed="false">EN</button>
           <button type="button" data-lang="cn" aria-pressed="false">中文</button>
+          <button type="button" data-lang="ar" aria-pressed="false">AR</button>
         </div>
-        <a class="btn btn-solid header-cta" href="tel:+33979262557" data-i18n="nav.reserve">Réserver</a>
+        <a class="btn btn-solid header-cta" href="https://maps.app.goo.gl/Z8gd32H4v7ZuUEQQA?g_st=ic" target="_blank" rel="noopener" data-i18n="nav.reserve">Réserver</a>
         <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
@@ -196,6 +198,32 @@
           </ul>
           <p class="story-sign reveal" lang="zh">火焱山 <span data-i18n="story.sign">— « la montagne de feu »</span></p>
         </div>
+      </div>
+    </section>
+
+    <!-- ============ HALAL ============ -->
+    <section class="section halal" id="halal">
+      <div class="container halal-grid">
+        <div class="halal-badge reveal">
+          <img src="assets/images/halal-badge.svg" alt="Badge halal — Le 831" width="140" height="140" loading="lazy" decoding="async">
+        </div>
+        <div class="halal-body reveal">
+          <p class="overline reveal" data-i18n="halal.overline">Certifié 100&nbsp;% halal</p>
+          <h2 class="section-title reveal" data-i18n="halal.title">Halal</h2>
+          <p class="halal-text reveal" data-i18n="halal.text">Chez Le 831, toutes nos viandes sont halal, fournies par un producteur certifié HQC. Une cuisine authentique d'Asie Centrale, 100&nbsp;% halal, préparée avec soin — brochettes, ragoûts et nouilles, sans compromis.</p>
+          <div class="halal-cert">
+            <img src="assets/images/halal/hqc-logo.png" alt="HQC — Halal Quality Control" class="halal-cert-logo" loading="lazy" decoding="async">
+            <p class="halal-cert-text" data-i18n="halal.certText">Viandes certifiées HQC — Halal Quality Control. Fournisseur : CARSIVA MEAT SOLUTIONS (Portugal) · Certificat n° ES10910900571 · Norme OIC/SMIIC 1:2019 · Valable jusqu'au 15/01/2029.</p>
+          </div>
+        </div>
+        <figure class="halal-certificate reveal">
+          <a href="https://view.page/p/T2pBd3" target="_blank" rel="noopener"
+             data-i18n-attr="aria-label:halal.certLink">
+            <img src="assets/images/halal/certificat-hqc-web.jpg"
+                 alt="Certificat halal HQC n° ES10910900571" loading="lazy" decoding="async">
+            <figcaption data-i18n="halal.certLink">Voir le certificat</figcaption>
+          </a>
+        </figure>
       </div>
     </section>
 
@@ -362,7 +390,7 @@
           </article>
         </div>
         <p class="rooms-cta reveal">
-          <a class="btn btn-gold" href="tel:+33979262557" data-i18n="rooms.cta">Réserver un salon</a>
+          <a class="btn btn-gold" href="https://maps.app.goo.gl/Z8gd32H4v7ZuUEQQA?g_st=ic" target="_blank" rel="noopener" data-i18n="rooms.cta">Réserver un salon</a>
           <span class="rooms-note" data-i18n="rooms.note">Sur réservation — 09 79 26 25 57</span>
         </p>
       </div>
@@ -399,12 +427,12 @@
             <table>
               <tbody>
                 <tr>
-                  <th scope="row" data-i18n="contact.daysWeek">Lundi – Vendredi</th>
-                  <td>11:30 – 15:00<br>18:00 – 22:30</td>
+                  <th scope="row" data-i18n="contact.daysOthers">Autres jours</th>
+                  <td>11:30 – 23:00<span class="hours-note" data-i18n="contact.daysWeekend">service continu</span></td>
                 </tr>
                 <tr>
-                  <th scope="row" data-i18n="contact.daysWeekend">Samedi – Dimanche</th>
-                  <td>11:30 – 22:30</td>
+                  <th scope="row" data-i18n="contact.daysWeek">Mardi &amp; Jeudi</th>
+                  <td>11:30 – 15:30<br>17:30 – 23:00</td>
                 </tr>
               </tbody>
             </table>

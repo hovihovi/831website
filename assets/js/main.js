@@ -19,6 +19,10 @@
     cn: {
       title: "Le 831 火焱山 | 巴黎维吾尔清真餐厅",
       desc: "巴黎清真维吾尔餐厅：炭火羊肉串、手工拉面、大盘鸡。正宗中亚美食。地址：巴黎塞瓦斯托波尔大道93号，75002。"
+    },
+    ar: {
+      title: "Le 831 | مطعم ويغوري حلال — باريس 2",
+      desc: "مطعم ويغوري حلال في باريس. أسياخ لحم الضأن المشوية، نودلز يدوية الصنع، دابانجي. مأكولات آسيا الوسطى الأصيلة. 93 شارع سيباستوبول، 75002."
     }
   };
 
@@ -54,6 +58,7 @@
       "menu.overline": "La carte", "menu.title": "Le menu du 831",
       "menu.legendSpicy": "Épicé", "menu.legendVeggie": "Végétarien", "menu.legendSignature": "Signature",
       "menu.featured": "Plat signature · photo réelle",
+      "dish.allergens": "Allergènes",
       "banner.quote": "« Chaque plat raconte l'histoire d'une culture préservée avec passion. »",
       "gallery.overline": "Galerie", "gallery.title": "L'ambiance du 831",
       "gallery.cap1": "La salle", "gallery.cap2": "Table dressée", "gallery.cap3": "Lumières d'ambre",
@@ -75,11 +80,15 @@
       "contact.metroLabel": "Métro", "contact.metro": "Réaumur-Sébastopol — Lignes 3 &amp; 4",
       "contact.payLabel": "Paiements", "contact.pay": "Carte bancaire · Espèces · Tickets Restaurant",
       "contact.hoursTitle": "Horaires",
-      "contact.daysWeek": "Lundi – Vendredi", "contact.daysWeekend": "Samedi – Dimanche",
+      "contact.daysWeek": "Mardi & Jeudi", "contact.daysOthers": "Autres jours", "contact.daysWeekend": "Service continu",
       "contact.call": "Appeler le restaurant", "contact.directions": "Itinéraire ↗",
       "footer.tagline": "Cuisine authentique d'Asie Centrale, au cœur de Paris",
       "footer.rights": "Tous droits réservés.", "footer.top": "Haut de page ↑",
-      "badge.spicy": "Épicé", "badge.veggie": "Végétarien", "badge.signature": "Signature"
+      "badge.spicy": "Épicé", "badge.veggie": "Végétarien", "badge.signature": "Signature",
+      "halal.overline": "Certifié 100&nbsp;% halal", "halal.title": "Halal",
+      "halal.text": "Chez Le 831, toutes nos viandes sont halal, fournies par un producteur certifié HQC. Une cuisine authentique d'Asie Centrale, 100&nbsp;% halal, préparée avec soin — brochettes, ragoûts et nouilles, sans compromis.",
+      "halal.certText": "Viandes certifiées HQC — Halal Quality Control. Fournisseur : CARSIVA MEAT SOLUTIONS (Portugal) · Certificat n° ES10910900571 · Norme OIC/SMIIC 1:2019 · Valable jusqu'au 15/01/2029.",
+      "halal.certLink": "Voir le certificat"
     },
     en: {
       "a11y.skip": "Skip to content",
@@ -112,6 +121,7 @@
       "menu.overline": "The Menu", "menu.title": "Le 831 Menu",
       "menu.legendSpicy": "Spicy", "menu.legendVeggie": "Vegetarian", "menu.legendSignature": "Signature",
       "menu.featured": "Signature dish · real photo",
+      "dish.allergens": "Allergens",
       "banner.quote": "“Every dish tells the story of a culture preserved with passion.”",
       "gallery.overline": "Gallery", "gallery.title": "The 831 atmosphere",
       "gallery.cap1": "The dining room", "gallery.cap2": "Dressed table", "gallery.cap3": "Amber lights",
@@ -133,11 +143,15 @@
       "contact.metroLabel": "Metro", "contact.metro": "Réaumur-Sébastopol — Lines 3 &amp; 4",
       "contact.payLabel": "Payments", "contact.pay": "Credit card · Cash · Tickets Restaurant",
       "contact.hoursTitle": "Opening hours",
-      "contact.daysWeek": "Monday – Friday", "contact.daysWeekend": "Saturday – Sunday",
+      "contact.daysWeek": "Tuesday & Thursday", "contact.daysOthers": "Other days", "contact.daysWeekend": "Continuous service",
       "contact.call": "Call the restaurant", "contact.directions": "Directions ↗",
       "footer.tagline": "Authentic Central Asian cuisine, in the heart of Paris",
       "footer.rights": "All rights reserved.", "footer.top": "Back to top ↑",
-      "badge.spicy": "Spicy", "badge.veggie": "Vegetarian", "badge.signature": "Signature"
+      "badge.spicy": "Spicy", "badge.veggie": "Vegetarian", "badge.signature": "Signature",
+      "halal.overline": "100% halal certified", "halal.title": "Halal",
+      "halal.text": "At Le 831, all our meats are halal, supplied by an HQC-certified producer. Authentic Central Asian cuisine, 100% halal, prepared with care — skewers, stews and noodles, without compromise.",
+      "halal.certText": "HQC-certified meats — Halal Quality Control. Supplier: CARSIVA MEAT SOLUTIONS (Portugal) · Certificate No. ES10910900571 · Standard OIC/SMIIC 1:2019 · Valid until 15/01/2029.",
+      "halal.certLink": "View certificate"
     },
     cn: {
       "a11y.skip": "跳到内容",
@@ -170,6 +184,7 @@
       "menu.overline": "菜单", "menu.title": "火焱山菜单",
       "menu.legendSpicy": "辣", "menu.legendVeggie": "素食", "menu.legendSignature": "招牌",
       "menu.featured": "招牌菜 · 实拍照片",
+      "dish.allergens": "过敏原",
       "banner.quote": "「每一道菜都讲述着一个被热情守护的文化故事。」",
       "gallery.overline": "图片", "gallery.title": "火焱山的氛围",
       "gallery.cap1": "大厅", "gallery.cap2": "摆台", "gallery.cap3": "琥珀灯光",
@@ -191,190 +206,520 @@
       "contact.metroLabel": "地铁", "contact.metro": "Réaumur-Sébastopol — 3号线与4号线",
       "contact.payLabel": "支付方式", "contact.pay": "银行卡 · 现金 · 餐券",
       "contact.hoursTitle": "营业时间",
-      "contact.daysWeek": "周一至周五", "contact.daysWeekend": "周六至周日",
+      "contact.daysWeek": "周二和周四", "contact.daysOthers": "其他日期", "contact.daysWeekend": "连续营业",
       "contact.call": "致电餐厅", "contact.directions": "路线 ↗",
       "footer.tagline": "正宗中亚美食，位于巴黎市中心",
       "footer.rights": "版权所有。", "footer.top": "回到顶部 ↑",
-      "badge.spicy": "辣", "badge.veggie": "素食", "badge.signature": "招牌"
+      "badge.spicy": "辣", "badge.veggie": "素食", "badge.signature": "招牌",
+      "halal.overline": "100%清真认证", "halal.title": "清真",
+      "halal.text": "在火焱山，我们的肉类全部为清真，由HQC认证的生产商供应。正宗中亚美食，100%清真，用心烹制——烤串、炖菜和拉面，绝无妥协。",
+      "halal.certText": "HQC认证肉类 — Halal Quality Control。供应商：CARSIVA MEAT SOLUTIONS（葡萄牙）· 证书编号 ES10910900571 · 标准 OIC/SMIIC 1:2019 · 有效期至 2029年1月15日。",
+      "halal.certLink": "查看证书"
+    },
+    ar: {
+      "a11y.skip": "تخطي إلى المحتوى",
+      "nav.story": "قصتنا", "nav.craft": "حرفيتنا", "nav.menu": "القائمة",
+      "nav.gallery": "المعرض", "nav.rooms": "الصالونات الخاصة", "nav.contact": "اتصل بنا",
+      "nav.reserve": "احجز طاولة",
+      "hero.kicker": "مطعم ويغوري حلال — باريس 2",
+      "hero.tagline": "مأكولات آسيا الوسطى الأصيلة، في قلب باريس",
+      "hero.ctaMenu": "اكتشف القائمة", "hero.ctaCall": "09 79 26 25 57",
+      "hero.metro": "مترو Réaumur-Sébastopol · الخطان 3 و 4",
+      "hero.halal": "حلال 100%", "hero.since": "منذ 2020",
+      "story.overline": "قصتنا", "story.title": "مائدة من آسيا الوسطى",
+      "story.titleAccent": "火焱山 · جبل النار",
+      "story.p1": "يقع مطعم Le 831 في قلب باريس في شارع بوليفارد سيباستوبول، ويدعوكم في رحلة طهي عبر تقاليد آسيا الوسطى. ينقل طهاةُنا مهاراتِ أجدادهم: نودلز تُشدّ باليد، أسياخ لحم الضأن المشوية على نار الخشب، ويخنات تُطهى ببطء. كل طبق يحكي قصة ثقافة حُفظت بشغف.",
+      "story.f1": "نودلز تُشدّ باليد، تُحضّر عند الطلب",
+      "story.f2": "مشويات على نار الخشب",
+      "story.f3": "لحوم حلال 100%",
+      "story.badgeTop": "منذ",
+      "story.sign": "— « جبل النار »",
+      "craft.overline": "حرفيتنا", "craft.title": "النودلز المشدودة باليد",
+      "craft.sub": "أربع حركات، إرث واحد: كل حصة نودلز تولد أمام عينيك، من العجين إلى المقلاة.",
+      "craft.s1t": "العجن", "craft.s1d": "دقيق وماء ومهارة — يُعجن العجين حتى الكمال المطاطي.",
+      "craft.s2t": "الراحة", "craft.s2d": "يترك العجين مغطىً ليكتسب مرونته الطبيعية.",
+      "craft.s3t": "الشدّ", "craft.s3d": "يُشدّ ويُطوى ويُشدّ مجددًا — يتحول العجين إلى مئات الخيوط الحريرية.",
+      "craft.s4t": "التذوق", "craft.s4d": "تُقلّى في المقلاة مع اللحم البقري والخضروات، كل قضمة رحلة.",
+      "craft.alt1": "في المطبخ، يجهّز الطاهي المكونات بالسكين",
+      "craft.alt2": "نودلز طازجة تُسكب في المقلاة الغالية",
+      "craft.alt3": "النودلز تغوص في المقلاة قبل القلي",
+      "craft.alt4": "نودلز مشدودة باليد مقلية مع اللحم والفلفل، جاهزة للتقديم",
+      "menu.overline": "القائمة", "menu.title": "قائمة المطعم",
+      "menu.legendSpicy": "حار", "menu.legendVeggie": "نباتي", "menu.legendSignature": "توقيع",
+      "menu.featured": "طبق التوقيع · صورة حقيقية",
+      "dish.allergens": "مسببات الحساسية:",
+      "banner.quote": "« كل طبق يحكي قصة ثقافة حُفظت بشغف. »",
+      "gallery.overline": "المعرض", "gallery.title": "أجواء المطعم",
+      "gallery.cap1": "قاعة الطعام", "gallery.cap2": "طاولة معدة", "gallery.cap3": "أضواء كهرمانية",
+      "gallery.cap4": "التراس", "gallery.cap5": "تفاصيل", "gallery.cap6": "في المطبخ",
+      "gallery.cap7": "المنضدة", "gallery.cap8": "مع الأصدقاء", "gallery.cap9": "الواجهة",
+      "gallery.cap10": "باريس 2",
+      "gallery.open": "تكبير الصورة", "gallery.close": "إغلاق",
+      "gallery.prev": "السابق", "gallery.next": "التالي",
+      "gallery.count": "الصورة {current} من {total}",
+      "gallery.hint": "انقر على الصورة لفتح المعرض",
+      "rooms.overline": "الصالونات الخاصة", "rooms.title": "كاريوكي وصالونات خاصة",
+      "rooms.sub": "في الطابق السفلي، صالونان معزولان صوتيًا ومكيفان مع كاريوكي — لأمسياتك مع الأصدقاء وأعياد الميلاد وعشاء العمل.",
+      "rooms.jade": "صالون اليشم", "rooms.jadeCap": "حتى 10 أشخاص", "rooms.jadeMin": "الحد الأدنى للاستهلاك: 198 €",
+      "rooms.rubis": "صالون الياقوت", "rooms.rubisCap": "حتى 15 شخصًا", "rooms.rubisMin": "الحد الأدنى للاستهلاك: 238 €",
+      "rooms.featKtv": "كاريوكي KTV", "rooms.featSound": "عزل صوتي", "rooms.featAc": "مكيف",
+      "rooms.cta": "احجز صالونًا", "rooms.note": "بالحجز — 09 79 26 25 57",
+      "contact.overline": "الاتصال والوصول", "contact.title": "تعالوا إلينا",
+      "contact.address": "العنوان", "contact.phone": "الهاتف",
+      "contact.metroLabel": "المترو", "contact.metro": "Réaumur-Sébastopol — الخطان 3 و 4",
+      "contact.payLabel": "وسائل الدفع", "contact.pay": "بطاقة بنكية · نقدًا · قسائم وجبات",
+      "contact.hoursTitle": "ساعات العمل",
+      "contact.daysWeek": "الثلاثاء والخميس", "contact.daysOthers": "أيام أخرى", "contact.daysWeekend": "خدمة متواصلة",
+      "contact.call": "اتصل بالمطعم", "contact.directions": "الاتجاهات ↗",
+      "footer.tagline": "مأكولات آسيا الوسطى الأصيلة، في قلب باريس",
+      "footer.rights": "جميع الحقوق محفوظة.", "footer.top": "العودة إلى الأعلى ↑",
+      "badge.spicy": "حار", "badge.veggie": "نباتي", "badge.signature": "توقيع",
+      "halal.overline": "حلال معتمد 100%", "halal.title": "حلال",
+      "halal.text": "في Le 831، جميع لحومنا حلال، مقدَّمة من مورد معتمد من HQC. مأكولات آسيا الوسطى الأصيلة، حلال 100%، محضّرة بعناية — أسياخ ويخنات ونودلز، دون أي تنازل.",
+      "halal.certText": "لحوم معتمدة من HQC — Halal Quality Control. المورد: CARSIVA MEAT SOLUTIONS (البرتغال) · رقم الشهادة ES10910900571 · المعيار OIC/SMIIC 1:2019 · صالحة حتى 15/01/2029.",
+      "halal.certLink": "عرض الشهادة"
     }
   };
 
-  /* ---------- Données du menu (15 plats, trilingue) ---------- */
+  /* ---------- Données du menu (15 plats, quadrilingue) ---------- */
   const MENU = [
-    {
-      id: "entrees",
-      label: { fr: "Entrées & Salades", en: "Appetizers & Salads", cn: "前菜与沙拉" },
-      items: [
-        {
-          name: { fr: "Salade de concombre pimenté", en: "Spicy Cucumber Salad", cn: "凉拌黄瓜" },
-          desc: {
-            fr: "Concombre frais, ail, piment, vinaigre et huile de sésame",
-            en: "Fresh cucumber, garlic, chili, vinegar and sesame oil",
-            cn: "新鲜黄瓜、蒜、辣椒、醋和芝麻油"
-          },
-          price: "5,50 €", tags: ["veggie"]
-        },
-        {
-          name: { fr: "Nems de bœuf", en: "Beef Spring Rolls", cn: "牛肉春卷" },
-          desc: {
-            fr: "Rouleaux croustillants farcis au bœuf épicé, sauce aigre-douce",
-            en: "Crispy rolls filled with spiced beef, sweet and sour sauce",
-            cn: "酥脆卷，内馅香辣牛肉，配酸甜酱"
-          },
-          price: "7,00 €", tags: ["spicy"]
-        },
-        {
-          name: { fr: "Salade de chou épicée", en: "Spicy Cabbage Salad", cn: "辣拌卷心菜" },
-          desc: {
-            fr: "Chou râpé, carotte, coriandre, vinaigrette pimentée",
-            en: "Shredded cabbage, carrot, cilantro, spicy dressing",
-            cn: "卷心菜丝、胡萝卜、香菜、辣味调料"
-          },
-          price: "5,00 €", tags: ["veggie"]
-        }
-      ]
+  {
+    "id": "entrees",
+    "label": {
+      "fr": "Entrées & Salades",
+      "en": "Appetizers & Salads",
+      "cn": "前菜与沙拉",
+      "ar": "المقبلات والسلطات"
     },
-    {
-      id: "grillades",
-      label: { fr: "Grillades & Brochettes", en: "Grills & Skewers", cn: "烧烤与串" },
-      items: [
-        {
-          name: { fr: "Brochettes d'agneau (5 pièces)", en: "Lamb Skewers (5 pcs)", cn: "羊肉串（5串）" },
-          desc: {
-            fr: "Agneau mariné aux épices secrètes, grillé au feu de bois — notre spécialité",
-            en: "Lamb marinated in secret spices, grilled over wood fire — our specialty",
-            cn: "秘制香料腌制的羊肉，炭火烤制 — 我们的招牌"
-          },
-          price: "12,00 €", tags: ["spicy", "signature"]
+    "items": [
+      {
+        "name": {
+          "fr": "Salade de concombre pimenté",
+          "en": "Spicy Cucumber Salad",
+          "cn": "凉拌黄瓜",
+          "ar": "سلطة الخيار الحارة"
         },
-        {
-          name: { fr: "Brochettes de poulet", en: "Chicken Skewers", cn: "鸡肉串" },
-          desc: {
-            fr: "Blanc de poulet mariné, grillé aux épices d'Asie Centrale",
-            en: "Marinated chicken breast, grilled with Central Asian spices",
-            cn: "腌制的鸡胸肉，配中亚香料烤制"
-          },
-          price: "10,00 €", tags: ["spicy"]
+        "desc": {
+          "fr": "Concombre frais, ail, piment, vinaigre et huile de sésame",
+          "en": "Fresh cucumber, garlic, chili, vinegar and sesame oil",
+          "cn": "新鲜黄瓜、蒜、辣椒、醋和芝麻油",
+          "ar": "خيار طازج، ثوم، فلفل حار، خل وزيت سمسم"
         },
-        {
-          name: { fr: "Poivrons et légumes grillés", en: "Grilled Peppers & Vegetables", cn: "烤蔬菜" },
-          desc: {
-            fr: "Légumes de saison grillés, huile d'olive et épices",
-            en: "Seasonal grilled vegetables, olive oil and spices",
-            cn: "时令烤蔬菜，橄榄油和香料"
-          },
-          price: "7,00 €", tags: ["veggie"]
-        }
-      ]
-    },
-    {
-      id: "plats",
-      label: { fr: "Plats Principaux", en: "Main Courses", cn: "主菜" },
-      items: [
-        {
-          name: { fr: "Poulet aux pommes de terre (Dapanji)", en: "Chicken with Potatoes (Dapanji)", cn: "大盘鸡" },
-          desc: {
-            fr: "Ragoût de poulet mijoté, pommes de terre, poivrons, sauce épicée — notre plat signature",
-            en: "Slow-cooked chicken stew, potatoes, peppers, spicy sauce — our signature dish",
-            cn: "慢炖鸡肉、土豆、青椒、辣酱 — 我们的招牌菜"
-          },
-          price: "16,00 €", tags: ["spicy", "signature"]
-        },
-        {
-          name: { fr: "Nouilles tirées à la main sauté au bœuf", en: "Hand-Pulled Noodles with Beef", cn: "牛肉拉面" },
-          desc: {
-            fr: "Nouilles fraîches faites maison, sauté au wok avec bœuf et légumes",
-            en: "Fresh homemade hand-pulled noodles, wok-fried with beef and vegetables",
-            cn: "新鲜手工拉面，与牛肉和蔬菜翻炒"
-          },
-          price: "14,00 €", tags: ["signature"],
-          photo: {
-            src: "assets/images/plat/nouilles-boeuf.jpg",
-            alt: {
-              fr: "Nouilles tirées à la main sautées au bœuf, poivrons rouges et verts",
-              en: "Hand-pulled noodles wok-fried with beef, red and green peppers",
-              cn: "牛肉手工拉面，配红绿彩椒"
-            }
+        "prices": [
+          {
+            "size": null,
+            "price": "5,50 €"
           }
+        ],
+        "tags": [
+          "veggie"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Nems de bœuf",
+          "en": "Beef Spring Rolls",
+          "cn": "牛肉春卷",
+          "ar": "نيمس اللحم البقري"
         },
-        {
-          name: { fr: "Nouilles tirées à la main sauté à l'agneau", en: "Hand-Pulled Noodles with Lamb", cn: "羊肉拉面" },
-          desc: {
-            fr: "Nouilles fraîches maison sauté au wok avec agneau et oignons",
-            en: "Fresh homemade hand-pulled noodles, wok-fried with lamb and onions",
-            cn: "新鲜手工拉面，与羊肉和洋葱翻炒"
-          },
-          price: "15,00 €", tags: ["spicy"]
+        "desc": {
+          "fr": "Rouleaux croustillants farcis au bœuf épicé, sauce aigre-douce",
+          "en": "Crispy rolls filled with spiced beef, sweet and sour sauce",
+          "cn": "酥脆卷，内馅香辣牛肉，配酸甜酱",
+          "ar": "لفائف مقرمشة محشوة بلحم بقري حار، صلصة حلوة وحامضة"
         },
-        {
-          name: { fr: "Riz pilaf à l'agneau (Polo)", en: "Lamb Pilaf (Polo)", cn: "羊肉抓饭" },
-          desc: {
-            fr: "Riz parfumé cuit avec agneau, carottes et épices d'Asie Centrale",
-            en: "Fragrant rice cooked with lamb, carrots and Central Asian spices",
-            cn: "香米饭，配羊肉、胡萝卜和中亚香料"
-          },
-          price: "13,00 €", tags: []
+        "prices": [
+          {
+            "size": null,
+            "price": "7,00 €"
+          }
+        ],
+        "tags": [
+          "spicy"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Salade de chou épicée",
+          "en": "Spicy Cabbage Salad",
+          "cn": "辣拌卷心菜",
+          "ar": "سلطة الملفوف الحارة"
         },
-        {
-          name: { fr: "Raviolis ouïghours (Manta)", en: "Uyghur Dumplings (Manta)", cn: "薄皮包子" },
-          desc: {
-            fr: "Raviolis vapeur farcis à l'agneau et oignons, sauce vinaigre-piment",
-            en: "Steamed dumplings filled with lamb and onions, vinegar-chili sauce",
-            cn: "羊肉洋葱馅蒸饺，配醋辣酱"
-          },
-          price: "11,00 €", tags: ["signature"]
-        }
-      ]
+        "desc": {
+          "fr": "Chou râpé, carotte, coriandre, vinaigrette pimentée",
+          "en": "Shredded cabbage, carrot, cilantro, spicy dressing",
+          "cn": "卷心菜丝、胡萝卜、香菜、辣味调料",
+          "ar": "ملفوف مبشور، جزر، كزبرة، صلصة حارة"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "5,00 €"
+          }
+        ],
+        "tags": [
+          "veggie"
+        ],
+        "allergens": [],
+        "photo": null
+      }
+    ]
+  },
+  {
+    "id": "grillades",
+    "label": {
+      "fr": "Grillades & Brochettes",
+      "en": "Grills & Skewers",
+      "cn": "烧烤与串",
+      "ar": "المشويات والأسياخ"
     },
-    {
-      id: "pains",
-      label: { fr: "Pains", en: "Breads", cn: "馕" },
-      items: [
-        {
-          name: { fr: "Pain traditionnel (Nan)", en: "Traditional Naan Bread", cn: "传统烤馕" },
-          desc: {
-            fr: "Pain plat cuit au four, graines de sésame et épices",
-            en: "Oven-baked flatbread with sesame seeds and spices",
-            cn: "烤箱烤制的扁平面包，配芝麻和香料"
-          },
-          price: "3,00 €", tags: ["veggie"]
+    "items": [
+      {
+        "name": {
+          "fr": "Brochettes d'agneau (5 pièces)",
+          "en": "Lamb Skewers (5 pcs)",
+          "cn": "羊肉串（5串）",
+          "ar": "أسياخ لحم الضأن (5 قطع)"
         },
-        {
-          name: { fr: "Nan à l'agneau", en: "Lamb Naan", cn: "羊肉烤馕" },
-          desc: {
-            fr: "Pain farci à l'agneau haché épicé, cuit au four",
-            en: "Bread stuffed with spiced minced lamb, oven-baked",
-            cn: "辣味碎羊肉馅烤馕"
-          },
-          price: "6,00 €", tags: ["spicy"]
-        }
-      ]
+        "desc": {
+          "fr": "Agneau mariné aux épices secrètes, grillé au feu de bois — notre spécialité",
+          "en": "Lamb marinated in secret spices, grilled over wood fire — our specialty",
+          "cn": "秘制香料腌制的羊肉，炭火烤制 — 我们的招牌",
+          "ar": "ضأن متبل ببهارات سرية، مشوي على نار الخشب — تخصصنا"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "12,00 €"
+          }
+        ],
+        "tags": [
+          "spicy",
+          "signature"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Brochettes de poulet",
+          "en": "Chicken Skewers",
+          "cn": "鸡肉串",
+          "ar": "أسياخ الدجاج"
+        },
+        "desc": {
+          "fr": "Blanc de poulet mariné, grillé aux épices d'Asie Centrale",
+          "en": "Marinated chicken breast, grilled with Central Asian spices",
+          "cn": "腌制的鸡胸肉，配中亚香料烤制",
+          "ar": "صدر دجاج متبل، مشوي ببهارات آسيا الوسطى"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "10,00 €"
+          }
+        ],
+        "tags": [
+          "spicy"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Poivrons et légumes grillés",
+          "en": "Grilled Peppers & Vegetables",
+          "cn": "烤蔬菜",
+          "ar": "فلفل وخضروات مشوية"
+        },
+        "desc": {
+          "fr": "Légumes de saison grillés, huile d'olive et épices",
+          "en": "Seasonal grilled vegetables, olive oil and spices",
+          "cn": "时令烤蔬菜，橄榄油和香料",
+          "ar": "خضروات موسمية مشوية، زيت زيتون وبهارات"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "7,00 €"
+          }
+        ],
+        "tags": [
+          "veggie"
+        ],
+        "allergens": [],
+        "photo": null
+      }
+    ]
+  },
+  {
+    "id": "plats",
+    "label": {
+      "fr": "Plats Principaux",
+      "en": "Main Courses",
+      "cn": "主菜",
+      "ar": "الأطباق الرئيسية"
     },
-    {
-      id: "boissons",
-      label: { fr: "Boissons", en: "Drinks", cn: "饮品" },
-      items: [
-        {
-          name: { fr: "Thé d'Asie Centrale", en: "Central Asian Tea", cn: "中亚茶" },
-          desc: {
-            fr: "Thé noir parfumé importé directement d'Asie Centrale",
-            en: "Fragrant black tea imported directly from Central Asia",
-            cn: "从中亚直接进口的香浓红茶"
-          },
-          price: "3,50 €", tags: ["signature"]
+    "items": [
+      {
+        "name": {
+          "fr": "Poulet aux pommes de terre (Dapanji)",
+          "en": "Chicken with Potatoes (Dapanji)",
+          "cn": "大盘鸡",
+          "ar": "دجاج مع البطاطس (دابانجي)"
         },
-        {
-          name: { fr: "Bière sans alcool au lait", en: "Non-Alcoholic Milk Beer", cn: "格瓦斯" },
-          desc: {
-            fr: "Boisson lactée pétillante traditionnelle — une spécialité unique",
-            en: "Traditional sparkling milk drink — a unique specialty",
-            cn: "传统气泡奶制饮品 — 独特特色"
-          },
-          price: "4,00 €", tags: []
+        "desc": {
+          "fr": "Ragoût de poulet mijoté, pommes de terre, poivrons, sauce épicée — notre plat signature",
+          "en": "Slow-cooked chicken stew, potatoes, peppers, spicy sauce — our signature dish",
+          "cn": "慢炖鸡肉、土豆、青椒、辣酱 — 我们的招牌菜",
+          "ar": "يخنة دجاج مطهوة ببطء، بطاطس، فلفل، صلصة حارة — طبقنا المميز"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "16,00 €"
+          }
+        ],
+        "tags": [
+          "spicy",
+          "signature"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Nouilles tirées à la main sauté au bœuf",
+          "en": "Hand-Pulled Noodles with Beef",
+          "cn": "牛肉拉面",
+          "ar": "نودلز مشدودة باليد مقلية مع اللحم البقري"
+        },
+        "desc": {
+          "fr": "Nouilles fraîches faites maison, sauté au wok avec bœuf et légumes",
+          "en": "Fresh homemade hand-pulled noodles, wok-fried with beef and vegetables",
+          "cn": "新鲜手工拉面，与牛肉和蔬菜翻炒",
+          "ar": "نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع اللحم البقري والخضروات"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "14,00 €"
+          }
+        ],
+        "tags": [
+          "signature"
+        ],
+        "allergens": [],
+        "photo": {
+          "src": "assets/images/plat/nouilles-boeuf.jpg",
+          "alt": {
+            "fr": "Nouilles tirées à la main sautées au bœuf, poivrons rouges et verts",
+            "en": "Hand-pulled noodles wok-fried with beef, red and green peppers",
+            "cn": "牛肉手工拉面，配红绿彩椒",
+            "ar": "نودلز مشدودة باليد مقلية مع اللحم البقري والفلفل الأحمر والأخضر"
+          }
         }
-      ]
-    }
-  ];
+      },
+      {
+        "name": {
+          "fr": "Nouilles tirées à la main sauté à l'agneau",
+          "en": "Hand-Pulled Noodles with Lamb",
+          "cn": "羊肉拉面",
+          "ar": "نودلز مشدودة باليد مقلية مع لحم الضأن"
+        },
+        "desc": {
+          "fr": "Nouilles fraîches maison sauté au wok avec agneau et oignons",
+          "en": "Fresh homemade hand-pulled noodles, wok-fried with lamb and onions",
+          "cn": "新鲜手工拉面，与羊肉和洋葱翻炒",
+          "ar": "نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع لحم الضأن والبصل"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "15,00 €"
+          }
+        ],
+        "tags": [
+          "spicy"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Riz pilaf à l'agneau (Polo)",
+          "en": "Lamb Pilaf (Polo)",
+          "cn": "羊肉抓饭",
+          "ar": "أرز بيلاف مع لحم الضأن (بولو)"
+        },
+        "desc": {
+          "fr": "Riz parfumé cuit avec agneau, carottes et épices d'Asie Centrale",
+          "en": "Fragrant rice cooked with lamb, carrots and Central Asian spices",
+          "cn": "香米饭，配羊肉、胡萝卜和中亚香料",
+          "ar": "أرز معطّر مطبوخ مع لحم الضأن والجزر وبهارات آسيا الوسطى"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "13,00 €"
+          }
+        ],
+        "tags": [],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Raviolis ouïghours (Manta)",
+          "en": "Uyghur Dumplings (Manta)",
+          "cn": "薄皮包子",
+          "ar": "مانتو (رافيولي الويغور)"
+        },
+        "desc": {
+          "fr": "Raviolis vapeur farcis à l'agneau et oignons, sauce vinaigre-piment",
+          "en": "Steamed dumplings filled with lamb and onions, vinegar-chili sauce",
+          "cn": "羊肉洋葱馅蒸饺，配醋辣酱",
+          "ar": "مانتو مطهو على البخار محشو بلحم الضأن والبصل، صلصة الخل والفلفل"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "11,00 €"
+          }
+        ],
+        "tags": [
+          "signature"
+        ],
+        "allergens": [],
+        "photo": null
+      }
+    ]
+  },
+  {
+    "id": "pains",
+    "label": {
+      "fr": "Pains",
+      "en": "Breads",
+      "cn": "馕",
+      "ar": "الخبز"
+    },
+    "items": [
+      {
+        "name": {
+          "fr": "Pain traditionnel (Nan)",
+          "en": "Traditional Naan Bread",
+          "cn": "传统烤馕",
+          "ar": "خبز النان التقليدي"
+        },
+        "desc": {
+          "fr": "Pain plat cuit au four, graines de sésame et épices",
+          "en": "Oven-baked flatbread with sesame seeds and spices",
+          "cn": "烤箱烤制的扁平面包，配芝麻和香料",
+          "ar": "خبز مسطّح مخبوز في الفرن، حبات سمسم وبهارات"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "3,00 €"
+          }
+        ],
+        "tags": [
+          "veggie"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Nan à l'agneau",
+          "en": "Lamb Naan",
+          "cn": "羊肉烤馕",
+          "ar": "نان بلحم الضأن"
+        },
+        "desc": {
+          "fr": "Pain farci à l'agneau haché épicé, cuit au four",
+          "en": "Bread stuffed with spiced minced lamb, oven-baked",
+          "cn": "辣味碎羊肉馅烤馕",
+          "ar": "خبز محشو بلحم ضأن مفروم حار، مخبوز في الفرن"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "6,00 €"
+          }
+        ],
+        "tags": [
+          "spicy"
+        ],
+        "allergens": [],
+        "photo": null
+      }
+    ]
+  },
+  {
+    "id": "boissons",
+    "label": {
+      "fr": "Boissons",
+      "en": "Drinks",
+      "cn": "饮品",
+      "ar": "المشروبات"
+    },
+    "items": [
+      {
+        "name": {
+          "fr": "Thé d'Asie Centrale",
+          "en": "Central Asian Tea",
+          "cn": "中亚茶",
+          "ar": "شاي آسيا الوسطى"
+        },
+        "desc": {
+          "fr": "Thé noir parfumé importé directement d'Asie Centrale",
+          "en": "Fragrant black tea imported directly from Central Asia",
+          "cn": "从中亚直接进口的香浓红茶",
+          "ar": "شاي أسود معطّر مستورد مباشرة من آسيا الوسطى"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "3,50 €"
+          }
+        ],
+        "tags": [
+          "signature"
+        ],
+        "allergens": [],
+        "photo": null
+      },
+      {
+        "name": {
+          "fr": "Bière sans alcool au lait",
+          "en": "Non-Alcoholic Milk Beer",
+          "cn": "格瓦斯",
+          "ar": "مشروب الحليب الفوار"
+        },
+        "desc": {
+          "fr": "Boisson lactée pétillante traditionnelle — une spécialité unique",
+          "en": "Traditional sparkling milk drink — a unique specialty",
+          "cn": "传统气泡奶制饮品 — 独特特色",
+          "ar": "مشروب حليبي فوار تقليدي — تخصص فريد"
+        },
+        "prices": [
+          {
+            "size": null,
+            "price": "4,00 €"
+          }
+        ],
+        "tags": [],
+        "allergens": [],
+        "photo": null
+      }
+    ]
+  }
+];
 
   const TAG_META = {
     spicy: { icon: "🔥", key: "badge.spicy" },
@@ -382,15 +727,33 @@
     signature: { icon: "⭐", key: "badge.signature" }
   };
 
+  /* Liste fermée des allergènes (codes → libellés trilingues) */
+  const ALLERGEN_LABELS = {
+    gluten:      { fr: "Gluten", en: "Gluten", cn: "麸质", ar: "غلوتين" },
+    crustaces:   { fr: "Crustacés", en: "Crustaceans", cn: "甲壳类", ar: "قشريات" },
+    oeufs:       { fr: "Œufs", en: "Eggs", cn: "蛋类", ar: "بيض" },
+    poisson:     { fr: "Poisson", en: "Fish", cn: "鱼类", ar: "سمك" },
+    arachides:   { fr: "Arachides", en: "Peanuts", cn: "花生", ar: "فول سوداني" },
+    soja:        { fr: "Soja", en: "Soy", cn: "大豆", ar: "صويا" },
+    lait:        { fr: "Lait", en: "Milk", cn: "乳制品", ar: "حليب" },
+    fruitscoque: { fr: "Fruits à coque", en: "Tree nuts", cn: "坚果", ar: "مكسرات" },
+    celeri:      { fr: "Céleri", en: "Celery", cn: "芹菜", ar: "كرفس" },
+    moutarde:    { fr: "Moutarde", en: "Mustard", cn: "芥末", ar: "خردل" },
+    sesame:      { fr: "Sésame", en: "Sesame", cn: "芝麻", ar: "سمسم" },
+    sulfites:    { fr: "Sulfites", en: "Sulphites", cn: "亚硫酸盐", ar: "كبريتيتات" },
+    mollusques:  { fr: "Mollusques", en: "Molluscs", cn: "软体动物", ar: "رخويات" },
+    lupin:       { fr: "Lupin", en: "Lupin", cn: "羽扇豆", ar: "ترمس" }
+  };
+
   /* ---------- État ---------- */
-  const SUPPORTED = ["fr", "en", "cn"];
+  const SUPPORTED = ["fr", "en", "cn", "ar"];
   let lang = "fr";
   try {
     const saved = localStorage.getItem("le831-lang");
     if (saved && SUPPORTED.includes(saved)) lang = saved;
     else {
       const nav = (navigator.language || "").slice(0, 2).toLowerCase();
-      if (nav === "en" || nav === "zh") lang = nav === "zh" ? "cn" : nav;
+      if (nav === "en" || nav === "zh" || nav === "ar") lang = nav === "zh" ? "cn" : nav;
     }
   } catch (e) { /* nav optimiseur */ }
 
@@ -401,7 +764,8 @@
     lang = next;
     const dict = I18N[lang];
 
-    document.documentElement.lang = lang === "cn" ? "zh-CN" : lang;
+    document.documentElement.lang = lang === "cn" ? "zh-CN" : lang === "ar" ? "ar" : lang;
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
     document.title = META[lang].title;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", META[lang].desc);
@@ -445,25 +809,59 @@
       .join("");
   }
 
+  function itemPrices(item) {
+    if (Array.isArray(item.prices) && item.prices.length) return item.prices;
+    if (typeof item.price === "string" && item.price) return [{ size: null, price: item.price }];
+    return [];
+  }
+
+  function priceHTML(item) {
+    const prices = itemPrices(item);
+    if (prices.length <= 1) {
+      return `<p class="dish-price">${prices.length ? prices[0].price : ""}</p>`;
+    }
+    const parts = prices.map((p) => {
+      const sizeLabel = p.size && (p.size[lang] || p.size.fr);
+      const s = sizeLabel ? `<span class="p-size">${sizeLabel}</span> ` : "";
+      return `<span class="p-price">${s}${p.price}</span>`;
+    });
+    return `<p class="dish-price dish-price-multi">${parts.join('<span class="p-sep"> · </span>')}</p>`;
+  }
+
+  function allergensHTML(item) {
+    const list = Array.isArray(item.allergens)
+      ? item.allergens.filter((a) => ALLERGEN_LABELS[a])
+      : [];
+    if (!list.length) return "";
+    const names = list.map((a) => ALLERGEN_LABELS[a][lang] || ALLERGEN_LABELS[a].fr).join(", ");
+    return `<p class="dish-allergens">${t("dish.allergens")}&nbsp;: ${names}</p>`;
+  }
+
   function dishHTML(item) {
+    const name = item.name[lang] || item.name.fr || "";
+    const desc = item.desc[lang] || item.desc.fr || "";
     const zhName = lang !== "cn" && item.name.cn ? `<span class="dish-cn" lang="zh">${item.name.cn}</span>` : "";
+    const price = priceHTML(item);
+    const allergens = allergensHTML(item);
     if (item.photo) {
       return `
         <article class="dish dish-featured">
           <figure><img src="${item.photo.src}" alt="${item.photo.alt[lang] || item.photo.alt.fr}" loading="lazy" decoding="async"></figure>
           <div class="dish-body">
             <span class="featured-flag">${t("menu.featured")}</span>
-            <h4 class="dish-name">${item.name[lang]}${zhName} <span class="dish-tags">${tagChips(item.tags)}</span></h4>
-            <p class="dish-desc">${item.desc[lang]}</p>
-            <p class="dish-price">${item.price}</p>
+            <h4 class="dish-name">${name}${zhName} <span class="dish-tags">${tagChips(item.tags)}</span></h4>
+            <p class="dish-desc">${desc}</p>
+            ${allergens}
+            ${price}
           </div>
         </article>`;
     }
     return `
       <article class="dish">
-        <h4 class="dish-name">${item.name[lang]}${zhName} <span class="dish-tags">${tagChips(item.tags)}</span></h4>
-        <p class="dish-desc">${item.desc[lang]}</p>
-        <p class="dish-price">${item.price}</p>
+        <h4 class="dish-name">${name}${zhName} <span class="dish-tags">${tagChips(item.tags)}</span></h4>
+        <p class="dish-desc">${desc}</p>
+        ${allergens}
+        ${price}
       </article>`;
   }
 
@@ -471,10 +869,11 @@
     if (!tabsWrap || !panelsWrap) return;
 
     tabsWrap.innerHTML = MENU.map((cat) => {
+      const label = cat.label[lang] || cat.label.fr;
       const zh = lang !== "cn" ? `<span class="zh" lang="zh">${cat.label.cn}</span>` : "";
       return `<button type="button" class="menu-tab" role="tab" id="tab-${cat.id}"
         aria-selected="${cat.id === activeCat}" aria-controls="panel-${cat.id}"
-        tabindex="${cat.id === activeCat ? "0" : "-1"}">${cat.label[lang]}${zh}</button>`;
+        tabindex="${cat.id === activeCat ? "0" : "-1"}">${label}${zh}</button>`;
     }).join("");
 
     panelsWrap.innerHTML = MENU.map((cat) => `
@@ -513,6 +912,63 @@
     });
   }
 
+  /* ---------- Chargement du menu : /api/menu → data/menu.json → embarqué ---------- */
+  /* Le tableau MENU ci-dessus sert de secours ultime (hors-ligne, 404, JSON invalide). */
+  function isValidMenuData(data) {
+    return !!(data && Array.isArray(data.categories) && data.categories.length &&
+      data.categories.every((cat) =>
+        cat && typeof cat.id === "string" && cat.id &&
+        cat.label && cat.label.fr && cat.label.en && cat.label.cn &&
+        Array.isArray(cat.items) && cat.items.every((it) =>
+          it && it.name && it.name.fr && it.name.en && it.name.cn &&
+          (Array.isArray(it.prices) || typeof it.price === "string"))));
+  }
+
+  function applyMenuData(data) {
+    MENU.length = 0;
+    data.categories.forEach((cat) => {
+      MENU.push({
+        id: cat.id,
+        label: cat.label,
+        items: (cat.items || []).map((it) => ({
+          name: it.name,
+          desc: it.desc || { fr: "", en: "", cn: "" },
+          prices: Array.isArray(it.prices)
+            ? it.prices
+            : (typeof it.price === "string" ? [{ size: null, price: it.price }] : []),
+          tags: Array.isArray(it.tags) ? it.tags : [],
+          allergens: Array.isArray(it.allergens) ? it.allergens : [],
+          photo: it.photo || null
+        }))
+      });
+    });
+    if (!MENU.some((cat) => cat.id === activeCat)) activeCat = MENU[0].id;
+    renderMenu();
+  }
+
+  function loadMenu() {
+    fetch("/api/menu?v=" + Date.now())
+      .then((res) => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then((data) => {
+        if (isValidMenuData(data)) { applyMenuData(data); return; }
+        throw new Error("schema invalide");
+      })
+      .catch(() => {
+        fetch("data/menu.json?v=" + Date.now())
+          .then((res) => {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then((data) => {
+            if (isValidMenuData(data)) applyMenuData(data);
+          })
+          .catch(() => { /* silencieux : on garde le MENU embarqué */ });
+      });
+  }
+
   /* ---------- Header sticky ---------- */
   const header = document.querySelector(".site-header");
   const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 24);
@@ -533,7 +989,7 @@
       Array.from(mainNav.querySelectorAll("a"))
         .map((a) => `<a href="${a.getAttribute("href")}" data-i18n="${a.getAttribute("data-i18n")}">${a.innerHTML}</a>`)
         .join("") +
-      `<a class="btn btn-gold" href="tel:+33979262557" data-i18n="nav.reserve"></a>`;
+      `<a class="btn btn-gold" href="https://maps.app.goo.gl/Z8gd32H4v7ZuUEQQA?g_st=ic" target="_blank" rel="noopener" data-i18n="nav.reserve"></a>`;
     header.after(mobileNav);
     toggle.setAttribute("aria-controls", "mobile-nav");
 
@@ -730,4 +1186,5 @@
 
   /* Init */
   applyLang(lang); // aligne textes, menu et nav mobile (le FR statique sert de base SEO/no-JS)
+  loadMenu(); // remplace le fallback embarqué par /api/menu (puis data/menu.json) si disponible
 })();

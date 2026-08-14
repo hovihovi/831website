@@ -1,0 +1,1832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administration du menu — Le 831</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ============ Administration — Braise & Jade (reprend les vars de style.css) ============ */
+    body { background: var(--paper); }
+    [hidden] { display: none !important; }
+
+    .login {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+      background:
+        radial-gradient(90% 70% at 100% 0%, rgba(196, 83, 30, 0.18), transparent 60%),
+        radial-gradient(90% 70% at 0% 100%, rgba(196, 146, 59, 0.16), transparent 55%),
+        var(--ivory);
+    }
+    .login-card {
+      width: min(420px, 100%);
+      padding: 2.4rem 2rem;
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .login-card h1 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--jade);
+    }
+    .login-card .zh { font-family: "Noto Serif SC", serif; color: var(--gold); letter-spacing: 0.3em; }
+    .login-sub { font-size: 0.9rem; color: rgba(23,19,16,0.6); margin: 0.4rem 0 1.6rem; }
+    .login-card label { display: block; text-align: left; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ember); margin-bottom: 0.35rem; }
+    .login-card input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font: inherit;
+      border: 1.5px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--ivory);
+      margin-bottom: 1.1rem;
+    }
+    .login-card input:focus { border-color: var(--jade); outline: none; }
+    .login-card .btn { width: 100%; }
+
+    .admin-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.7rem 1rem;
+      padding: 0.8rem clamp(1rem, 4vw, 2rem);
+      background: rgba(15, 61, 46, 0.96);
+      backdrop-filter: blur(10px);
+      color: var(--ivory);
+      box-shadow: 0 1px 0 rgba(246,240,226,0.08), 0 12px 30px -18px rgba(0,0,0,0.6);
+    }
+    .admin-bar-brand {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-right: auto;
+      color: var(--ivory);
+    }
+    .admin-bar-brand span { font-family: "Noto Serif SC", serif; color: var(--gold-soft); letter-spacing: 0.2em; margin-left: 0.3rem; }
+    .admin-bar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+    .admin-bar .btn { padding: 0.55rem 1.1rem; font-size: 0.85rem; }
+    .admin-bar .btn-line { border-color: rgba(246,240,226,0.35); color: var(--ivory); }
+    .admin-bar .btn-line:hover { border-color: var(--gold-soft); color: var(--gold-pale); }
+    .status { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--gold-pale); padding: 0.4rem 0.7rem; border: 1px solid rgba(227,166,59,0.4); border-radius: 999px; white-space: nowrap; }
+    .status.err { color: var(--ember); border-color: rgba(196,83,30,0.5); }
+    .publish-note { background: var(--ivory); border-bottom: 1px solid var(--line); color: var(--jade); font-size: 0.82rem; padding: 0.5rem clamp(1rem, 4vw, 2rem); text-align: center; letter-spacing: 0.02em; }
+
+    .admin-main { width: min(1080px, 100% - 2rem); margin-inline: auto; padding-block: 2.4rem 5rem; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.6rem; }
+    .toolbar h2 { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; color: var(--jade); }
+
+    .cat-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: var(--paper);
+      box-shadow: 0 14px 34px -26px rgba(23,19,16,0.5);
+      margin-bottom: 1.4rem;
+      overflow: hidden;
+    }
+    .cat-head {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 1.3rem;
+      background: linear-gradient(155deg, var(--jade), var(--jade-deep));
+      color: var(--ivory);
+    }
+    .cat-title { margin-right: auto; }
+    .cat-name { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; }
+    .cat-name-en { font-size: 0.88rem; opacity: 0.75; margin-left: 0.5rem; }
+    .cat-zh { font-family: "Noto Serif SC", serif; color: var(--gold-soft); letter-spacing: 0.1em; }
+    .cat-id { font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--gold-pale); background: rgba(246,240,226,0.12); padding: 0.15rem 0.5rem; border-radius: 999px; margin-left: 0.5rem; }
+    .cat-actions { display: flex; gap: 0.3rem; }
+
+    .icon-btn {
+      display: inline-grid;
+      place-items: center;
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: transparent;
+      font-size: 1rem;
+      line-height: 1;
+      color: var(--ink);
+      transition: all 0.2s var(--ease);
+    }
+    .cat-head .icon-btn { border-color: rgba(246,240,226,0.3); color: var(--ivory); }
+    .icon-btn:hover { border-color: var(--gold-soft); color: var(--gold-soft); transform: translateY(-1px); }
+    .icon-btn.danger:hover { border-color: var(--ember); color: var(--ember); background: rgba(196,83,30,0.1); }
+
+    .items { padding: 0.6rem 1.1rem; }
+    .item {
+      display: grid;
+      grid-template-columns: 44px 1fr auto auto;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 0.4rem;
+      border-bottom: 1px dashed var(--line);
+    }
+    .item:last-child { border-bottom: none; }
+    .item-thumb {
+      width: 44px; height: 44px;
+      border-radius: 9px;
+      overflow: hidden;
+      background: var(--ivory);
+      border: 1px solid var(--line);
+      display: grid; place-items: center;
+      color: rgba(23,19,16,0.3);
+      font-size: 1.2rem;
+    }
+    .item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .item-info { min-width: 0; }
+    .item-name { font-weight: 600; }
+    .item-name-en { font-size: 0.82rem; opacity: 0.6; font-weight: 400; margin-left: 0.4rem; }
+    .item-cn { display: block; font-family: "Noto Serif SC", serif; font-size: 0.82rem; color: rgba(23,19,16,0.55); }
+    .item-tags { font-size: 0.85rem; }
+    .item-allergens { display: block; font-size: 0.72rem; color: rgba(23,19,16,0.5); margin-top: 0.1rem; }
+    .item-price { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--ember); white-space: nowrap; }
+    .item-actions { display: flex; gap: 0.25rem; }
+    .add-item { margin: 0.4rem 1.1rem 1.1rem; }
+
+    .empty { color: rgba(23,19,16,0.5); font-style: italic; padding: 0.4rem 0.4rem; }
+
+    /* Overlays / modals */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(23,19,16,0.72);
+      backdrop-filter: blur(6px);
+      overflow-y: auto;
+    }
+    .modal {
+      width: min(760px, 100%);
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
+      background: var(--paper);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--line);
+    }
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid var(--line);
+      background: var(--ivory);
+    }
+    .modal-head h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--jade); }
+    .modal-body { padding: 1.4rem; }
+    .modal-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.6rem;
+      padding: 1rem 1.4rem;
+      border-top: 1px solid var(--line);
+      background: var(--ivory);
+    }
+    .fieldset { border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem 1.2rem; margin-bottom: 1.1rem; }
+    .fieldset legend { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ember); padding: 0 0.5rem; }
+    .fieldset label { display: block; font-size: 0.82rem; font-weight: 600; color: rgba(23,19,16,0.75); margin-bottom: 0.9rem; }
+    .fieldset input[type="text"], .fieldset input[type="url"], .fieldset textarea {
+      width: 100%;
+      margin-top: 0.3rem;
+      padding: 0.6rem 0.8rem;
+      font: inherit;
+      font-size: 0.95rem;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--ivory);
+      resize: vertical;
+    }
+    .fieldset input:focus, .fieldset textarea:focus { border-color: var(--jade); outline: none; }
+    .grid-3 { display: grid; gap: 0.9rem; }
+    .grid-2 { display: grid; gap: 0.9rem; }
+    .grid-4 { display: grid; gap: 0.9rem; }
+    @media (min-width: 720px) { .grid-3 { grid-template-columns: 1fr 1fr 1fr; } .grid-2 { grid-template-columns: 1fr 1fr; } .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+    .chk { display: flex !important; align-items: center; gap: 0.5rem; font-weight: 500 !important; font-size: 0.95rem !important; color: var(--ink) !important; }
+    .chk input { accent-color: var(--jade); width: auto; }
+    .hint { font-size: 0.8rem; color: rgba(23,19,16,0.55); margin-top: 0.4rem; }
+
+    /* Prix par taille */
+    .price-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 34px;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    .price-row select, .price-row input[type="text"] {
+      width: 100%;
+      padding: 0.55rem 0.7rem;
+      font: inherit;
+      font-size: 0.92rem;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--ivory);
+    }
+    .price-row select:focus, .price-row input:focus { border-color: var(--jade); outline: none; }
+    .price-row select:disabled { color: rgba(23,19,16,0.4); background: rgba(23,19,16,0.04); }
+    .price-row .icon-btn { border-color: var(--line); }
+    .price-row .icon-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .add-size { margin-top: 0.4rem; }
+
+    /* Allergènes (chips) */
+    .allergen-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .allergen-chip {
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1.5px solid var(--line);
+      background: var(--paper);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+      transition: all 0.2s var(--ease);
+    }
+    .allergen-chip:hover { border-color: var(--jade); }
+    .allergen-chip[aria-pressed="true"] {
+      background: var(--jade);
+      border-color: var(--jade);
+      color: var(--ivory);
+    }
+
+    .photo-row { display: grid; gap: 1rem; }
+    @media (min-width: 720px) { .photo-row { grid-template-columns: 180px 1fr; } }
+    .photo-preview {
+      aspect-ratio: 4 / 3;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--ivory);
+      color: rgba(23,19,16,0.35);
+    }
+    .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-modes { display: flex; flex-direction: column; gap: 0.7rem; }
+    .photo-modes .btn { align-self: flex-start; }
+
+    .gallery-grid-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0.6rem;
+    }
+    .gallery-thumb {
+      padding: 0;
+      border: 2px solid transparent;
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--jade-deep);
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-thumb:hover, .gallery-thumb:focus-visible { border-color: var(--gold-soft); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .gallery-thumb span {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 0.9rem 0.4rem 0.3rem;
+      font-size: 0.68rem;
+      color: var(--ivory);
+      background: linear-gradient(transparent, rgba(23,19,16,0.8));
+      text-align: left;
+    }
+
+    .import-box textarea {
+      width: 100%;
+      min-height: 180px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.82rem;
+      padding: 0.8rem;
+      border: 1.5px solid var(--line);
+      border-radius: 9px;
+      background: var(--ivory);
+      resize: vertical;
+    }
+    .import-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+
+    .err { color: var(--ember); font-size: 0.85rem; margin: 0.5rem 0 0.8rem; }
+    .ok { color: var(--jade); font-size: 0.85rem; margin: 0.5rem 0 0.8rem; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 1.5rem;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--jade);
+      color: var(--ivory);
+      padding: 0.7rem 1.3rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+      z-index: 400;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    .btn-danger { background: var(--ember); color: var(--ivory); }
+    .btn-danger:hover { background: var(--clay); }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <!-- ============ Application ============ -->
+  <div id="app" hidden>
+    <div class="publish-note" data-i18n="note.publish">Les modifications sont publiées immédiatement sur le site.</div>
+    <header class="admin-bar">
+      <div class="admin-bar-brand">Le 831 <span>火焱山</span> · <span data-i18n="brand.admin">Administration</span></div>
+      <div class="admin-bar-actions">
+        <div class="lang-switch" role="group" aria-label="Language selector / Sélecteur de langue / 语言选择">
+          <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="cn" aria-pressed="false">中文</button>
+          <button type="button" data-lang="ar" aria-pressed="false">AR</button>
+        </div>
+        <span id="status" class="status">—</span>
+        <button id="btn-save" class="btn btn-solid btn-sm" data-i18n="btn.save">Enregistrer</button>
+        <button id="btn-export" class="btn btn-line btn-sm" data-i18n="btn.export">Exporter menu.json</button>
+        <button id="btn-import" class="btn btn-line btn-sm" data-i18n="btn.import">Importer</button>
+        <button id="btn-reset" class="btn btn-line btn-sm" data-i18n="btn.reset">Réinitialiser</button>
+        <button id="btn-logout" class="btn btn-line btn-sm" data-i18n="btn.logout">Déconnexion</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="toolbar">
+        <h2 data-i18n="list.categories">Catégories</h2>
+        <button id="btn-add-cat" class="btn btn-gold btn-sm" data-i18n="btn.addCat">+ Ajouter une catégorie</button>
+      </div>
+      <div id="categories"></div>
+    </main>
+
+    <!-- Éditeur de plat -->
+    <div id="editor" class="overlay" role="dialog" aria-modal="true" hidden>
+      <div class="modal">
+        <header class="modal-head">
+          <h2 id="editor-title">Ajouter un plat</h2>
+          <button type="button" class="icon-btn" data-close-editor title="Fermer" data-i18n-attr="title:common.close">✕</button>
+        </header>
+        <div class="modal-body">
+          <fieldset class="fieldset">
+            <legend data-i18n="field.name">Nom</legend>
+            <div class="grid-4">
+              <label><span data-i18n="field.fr">Français</span> <input id="f-name-fr" type="text"></label>
+              <label><span data-i18n="field.en">English</span> <input id="f-name-en" type="text"></label>
+              <label><span data-i18n="field.cn">中文</span> <input id="f-name-cn" type="text" lang="zh"></label>
+              <label><span data-i18n="field.ar">العربية</span> <input id="f-name-ar" type="text" lang="ar" dir="rtl"></label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend data-i18n="field.desc">Description</legend>
+            <div class="grid-4">
+              <label><span data-i18n="field.fr">Français</span> <textarea id="f-desc-fr" rows="3"></textarea></label>
+              <label><span data-i18n="field.en">English</span> <textarea id="f-desc-en" rows="3"></textarea></label>
+              <label><span data-i18n="field.cn">中文</span> <textarea id="f-desc-cn" rows="3" lang="zh"></textarea></label>
+              <label><span data-i18n="field.ar">العربية</span> <textarea id="f-desc-ar" rows="3" lang="ar" dir="rtl"></textarea></label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend data-i18n="field.prices">Prix par taille</legend>
+            <div id="price-rows"></div>
+            <button type="button" class="btn btn-line btn-sm add-size" id="btn-add-size" data-i18n="btn.addSize">+ Ajouter une taille</button>
+            <p class="hint" data-i18n="hint.prices">1 à 3 tailles par plat. Une seule taille = prix affiché seul, sans mention. Virgule ou point acceptés — exporté au format « X,XX € ».</p>
+          </fieldset>
+          <div class="grid-2">
+            <fieldset class="fieldset">
+              <legend data-i18n="field.badges">Badges</legend>
+              <label class="chk"><input type="checkbox" id="f-tag-spicy"> 🔥 <span data-i18n="badge.spicy">Épicé</span></label>
+              <label class="chk"><input type="checkbox" id="f-tag-veggie"> 🌿 <span data-i18n="badge.veggie">Végétarien</span></label>
+              <label class="chk"><input type="checkbox" id="f-tag-signature"> ⭐ <span data-i18n="badge.signature">Signature</span></label>
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend data-i18n="field.allergens">Allergènes</legend>
+              <div id="allergen-chips" class="allergen-chips"></div>
+              <p class="hint" data-i18n="hint.allergens">Sélectionnez les allergènes présents dans le plat (optionnel).</p>
+            </fieldset>
+          </div>
+          <fieldset class="fieldset">
+            <legend data-i18n="field.photo">Photo</legend>
+            <div class="photo-row">
+              <div class="photo-preview" id="photo-preview"><span>—</span></div>
+              <div class="photo-modes">
+                <button type="button" class="btn btn-line btn-sm" id="btn-gallery" data-i18n="btn.gallery">🖼 Choisir parmi les images du site</button>
+                <label><span data-i18n="field.url">URL externe</span> <input id="f-photo-url" type="url" placeholder="https://…"></label>
+                <label><span data-i18n="field.upload">Upload local (redimensionné)</span> <input id="f-photo-file" type="file" accept="image/*"></label>
+                <button type="button" class="btn btn-line btn-sm" id="btn-photo-clear" data-i18n="btn.removePhoto">Retirer la photo</button>
+              </div>
+            </div>
+            <p class="hint" data-i18n="hint.photo">Note : préférez un chemin existant ou une URL pour la performance ; un upload est stocké en data URI (gonfle le fichier JSON).</p>
+          </fieldset>
+        </div>
+        <footer class="modal-foot">
+          <button type="button" class="btn btn-line" data-close-editor data-i18n="btn.cancel">Annuler</button>
+          <button type="button" class="btn btn-solid" id="btn-editor-save" data-i18n="btn.saveDish">Enregistrer le plat</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Éditeur de catégorie -->
+    <div id="cat-editor" class="overlay" role="dialog" aria-modal="true" hidden>
+      <div class="modal" style="max-width: 560px;">
+        <header class="modal-head">
+          <h2 id="cat-editor-title">Catégorie</h2>
+          <button type="button" class="icon-btn" data-close-cat title="Fermer" data-i18n-attr="title:common.close">✕</button>
+        </header>
+        <div class="modal-body">
+          <fieldset class="fieldset">
+            <legend data-i18n="field.label">Libellé</legend>
+            <div class="grid-4">
+              <label><span data-i18n="field.fr">Français</span> <input id="c-label-fr" type="text"></label>
+              <label><span data-i18n="field.en">English</span> <input id="c-label-en" type="text"></label>
+              <label><span data-i18n="field.cn">中文</span> <input id="c-label-cn" type="text" lang="zh"></label>
+              <label><span data-i18n="field.ar">العربية</span> <input id="c-label-ar" type="text" lang="ar" dir="rtl"></label>
+            </div>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend data-i18n="field.slug">Identifiant (slug)</legend>
+            <label><input id="c-id" type="text" placeholder="auto"></label>
+            <p class="hint" data-i18n="hint.slug">Généré automatiquement depuis le libellé FR ; modifiable à la main (unique, sans espaces).</p>
+          </fieldset>
+        </div>
+        <footer class="modal-foot">
+          <button type="button" class="btn btn-line" data-close-cat data-i18n="btn.cancel">Annuler</button>
+          <button type="button" class="btn btn-solid" id="btn-cat-save" data-i18n="btn.save">Enregistrer</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Galerie d'images existantes -->
+    <div id="gallery-picker" class="overlay" role="dialog" aria-modal="true" hidden>
+      <div class="modal">
+        <header class="modal-head">
+          <h2 data-i18n="gallery.title">Choisir une image</h2>
+          <button type="button" class="icon-btn" data-close-gallery title="Fermer" data-i18n-attr="title:common.close">✕</button>
+        </header>
+        <div class="modal-body">
+          <div class="gallery-grid-admin" id="gallery-grid-admin"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Importer -->
+    <div id="import-panel" class="overlay" role="dialog" aria-modal="true" hidden>
+      <div class="modal">
+        <header class="modal-head">
+          <h2 data-i18n="import.title">Importer un menu.json</h2>
+          <button type="button" class="icon-btn" data-close-import title="Fermer" data-i18n-attr="title:common.close">✕</button>
+        </header>
+        <div class="modal-body">
+          <div class="import-box">
+            <p class="hint" data-i18n="import.hint">Collez le contenu JSON, ou choisissez un fichier :</p>
+            <textarea id="import-text" placeholder='{ "version": 2, "categories": [ … ] }'></textarea>
+            <input type="file" id="import-file" accept=".json,application/json">
+            <p id="import-msg" hidden></p>
+          </div>
+        </div>
+        <footer class="modal-foot">
+          <button type="button" class="btn btn-line" data-close-import data-i18n="btn.cancel">Annuler</button>
+          <button type="button" class="btn btn-solid" id="btn-import-apply" data-i18n="btn.import">Importer</button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Token administrateur -->
+    <div id="token-modal" class="overlay" role="dialog" aria-modal="true" hidden>
+      <div class="modal" style="max-width: 460px;">
+        <header class="modal-head">
+          <h2 data-i18n="token.title">Token administrateur</h2>
+          <button type="button" class="icon-btn" data-close-token title="Fermer" data-i18n-attr="title:common.close">✕</button>
+        </header>
+        <div class="modal-body">
+          <p class="hint" data-i18n="token.hint">Saisissez le mot de passe d'administration pour publier vos modifications. Il n'est conservé que pour cette session.</p>
+          <fieldset class="fieldset">
+            <legend data-i18n="field.password">Mot de passe</legend>
+            <label><input id="token-input" type="password" autocomplete="current-password"></label>
+          </fieldset>
+          <p id="token-error" class="err" hidden></p>
+        </div>
+        <footer class="modal-foot">
+          <button type="button" class="btn btn-line" data-close-token data-i18n="btn.cancel">Annuler</button>
+          <button type="button" class="btn btn-solid" id="btn-token-save" data-i18n="btn.validate">Valider</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ============ Internationalisation FR / EN / 中文 ============ */
+    const LANG_KEY = "le831-admin-lang";
+    const SUPPORTED_LANGS = ["fr", "en", "cn", "ar"];
+    var lang = "fr";
+    try {
+      var savedLang = localStorage.getItem(LANG_KEY);
+      if (savedLang && SUPPORTED_LANGS.indexOf(savedLang) !== -1) lang = savedLang;
+    } catch (e) { /* stockage indisponible */ }
+
+    const I18N_ADMIN = {
+      fr: {
+        title: "Administration du menu — Le 831",
+        "brand.admin": "Administration",
+        "note.publish": "Les modifications sont publiées immédiatement sur le site.",
+        "btn.save": "Enregistrer",
+        "btn.export": "Exporter menu.json",
+        "btn.import": "Importer",
+        "btn.reset": "Réinitialiser",
+        "btn.logout": "Déconnexion",
+        "btn.addCat": "+ Ajouter une catégorie",
+        "btn.addItem": "+ Ajouter un plat",
+        "btn.addSize": "+ Ajouter une taille",
+        "btn.cancel": "Annuler",
+        "btn.saveDish": "Enregistrer le plat",
+        "btn.validate": "Valider",
+        "btn.gallery": "🖼 Choisir parmi les images du site",
+        "btn.removePhoto": "Retirer la photo",
+        "btn.up": "Monter",
+        "btn.down": "Descendre",
+        "btn.edit": "Modifier",
+        "btn.delete": "Supprimer",
+        "btn.rename": "Renommer",
+        "btn.removeSize": "Retirer la taille",
+        "list.categories": "Catégories",
+        "editor.add": "Ajouter un plat",
+        "editor.edit": "Modifier le plat",
+        "cat.title": "Catégorie",
+        "cat.rename": "Renommer la catégorie",
+        "cat.new": "Nouvelle catégorie",
+        "field.name": "Nom",
+        "field.desc": "Description",
+        "field.prices": "Prix par taille",
+        "field.badges": "Badges",
+        "field.allergens": "Allergènes",
+        "field.photo": "Photo",
+        "field.label": "Libellé",
+        "field.slug": "Identifiant (slug)",
+        "field.password": "Mot de passe",
+        "field.url": "URL externe",
+        "field.upload": "Upload local (redimensionné)",
+        "field.fr": "Français",
+        "field.en": "English",
+        "field.cn": "中文",
+        "field.ar": "العربية",
+        "badge.spicy": "Épicé",
+        "badge.veggie": "Végétarien",
+        "badge.signature": "Signature",
+        "hint.prices": "1 à 3 tailles par plat. Une seule taille = prix affiché seul, sans mention. Virgule ou point acceptés — exporté au format « X,XX € ».",
+        "hint.allergens": "Sélectionnez les allergènes présents dans le plat (optionnel).",
+        "hint.photo": "Note : préférez un chemin existant ou une URL pour la performance ; un upload est stocké en data URI (gonfle le fichier JSON).",
+        "hint.slug": "Généré automatiquement depuis le libellé FR ; modifiable à la main (unique, sans espaces).",
+        "import.hint": "Collez le contenu JSON, ou choisissez un fichier :",
+        "import.title": "Importer un menu.json",
+        "import.empty": "Veuillez coller du JSON ou choisir un fichier.",
+        "import.invalidJson": "JSON invalide : {err}",
+        "import.invalidSchema": "Schéma invalide — {err}",
+        "token.title": "Token administrateur",
+        "token.hint": "Saisissez le mot de passe d'administration pour publier vos modifications. Il n'est conservé que pour cette session.",
+        "token.required": "Veuillez saisir un token.",
+        "gallery.title": "Choisir une image",
+        "common.close": "Fermer",
+        "photo.preview": "Aperçu",
+        "size.none": "— sans taille —",
+        "status.saved": "✓ Enregistré",
+        "status.dirty": "● Modifié (non publié)",
+        "status.loading": "Rechargement…",
+        "status.saving": "Enregistrement…",
+        "status.error": "Erreur",
+        "status.network": "réseau (API injoignable)",
+        "toast.fileImage": "Fichier image requis",
+        "toast.resized": "Image redimensionnée ({w}×{h})",
+        "toast.readImage": "Impossible de lire l'image",
+        "toast.nameRequired": "Le nom FR est requis",
+        "toast.priceRequired": "Le prix #{n} est requis",
+        "toast.priceInvalid": "Prix #{n} invalide",
+        "toast.sizeRequired": "Choisissez une taille pour chaque ligne",
+        "toast.duplicateSize": "Tailles en double",
+        "toast.exported": "menu.json téléchargé",
+        "toast.imported": "Menu importé ✓",
+        "toast.reloaded": "Menu rechargé depuis le serveur",
+        "toast.labelRequired": "Le libellé FR est requis",
+        "toast.duplicateId": "Identifiant déjà utilisé : {id}",
+        "toast.published": "Menu publié ✓",
+        "toast.network": "Erreur réseau — API injoignable",
+        "toast.tokenCleared": "Token effacé — il sera redemandé à la prochaine publication.",
+        "confirm.deleteCategory": "Supprimer la catégorie « {name} » et ses {n} plat(s) ?",
+        "confirm.deleteDish": "Supprimer le plat « {name} » ?",
+        "confirm.reload": "Recharger la version publiée du serveur ? Vos modifications non publiées seront perdues.",
+        "empty.noItems": "Aucun plat.",
+        "empty.noCategory": "Aucune catégorie. Cliquez sur « + Ajouter une catégorie ».",
+        "dish.allergens": "Allergènes",
+        "val.notObject": "Format invalide : objet JSON attendu.",
+        "val.noCategories": "Champ « categories » manquant ou non-tableau.",
+        "val.empty": "Aucune catégorie dans le fichier.",
+        "val.catIdMissing": "Catégorie #{n} : identifiant (id) manquant.",
+        "val.catLabel": "Catégorie « {id} » : libellés FR/EN/CN requis.",
+        "val.catItems": "Catégorie « {id} » : champ « items » manquant.",
+        "val.itemObject": "Catégorie « {id} », plat #{n} : objet attendu.",
+        "val.itemName": "Catégorie « {id} », plat #{n} : nom FR/EN/CN requis.",
+        "val.itemDesc": "Catégorie « {id} », plat #{n} : description FR/EN/CN requise.",
+        "val.itemPrices": "Catégorie « {id} », plat #{n} : champ « prices » (1 à 3 tailles) ou ancien « price » manquant.",
+        "val.pricesCount": "Catégorie « {id} », plat #{n} : « prices » doit contenir entre 1 et 3 entrées.",
+        "val.priceMissing": "Catégorie « {id} », plat #{n} : prix #{k} manquant.",
+        "val.sizeInvalid": "Catégorie « {id} », plat #{n} : taille #{k} invalide.",
+        "val.allergensArray": "Catégorie « {id} », plat #{n} : « allergens » doit être un tableau.",
+        "val.tagsArray": "Catégorie « {id} », plat #{n} : « tags » doit être un tableau.",
+        "val.photoSrc": "Catégorie « {id} », plat #{n} : photo.src manquant."
+      },
+      en: {
+        title: "Menu Administration — Le 831",
+        "brand.admin": "Administration",
+        "note.publish": "Changes are published immediately on the website.",
+        "btn.save": "Save",
+        "btn.export": "Export menu.json",
+        "btn.import": "Import",
+        "btn.reset": "Reset",
+        "btn.logout": "Log out",
+        "btn.addCat": "+ Add a category",
+        "btn.addItem": "+ Add a dish",
+        "btn.addSize": "+ Add a size",
+        "btn.cancel": "Cancel",
+        "btn.saveDish": "Save dish",
+        "btn.validate": "Validate",
+        "btn.gallery": "🖼 Choose from site images",
+        "btn.removePhoto": "Remove photo",
+        "btn.up": "Move up",
+        "btn.down": "Move down",
+        "btn.edit": "Edit",
+        "btn.delete": "Delete",
+        "btn.rename": "Rename",
+        "btn.removeSize": "Remove size",
+        "list.categories": "Categories",
+        "editor.add": "Add a dish",
+        "editor.edit": "Edit dish",
+        "cat.title": "Category",
+        "cat.rename": "Rename category",
+        "cat.new": "New category",
+        "field.name": "Name",
+        "field.desc": "Description",
+        "field.prices": "Price by size",
+        "field.badges": "Badges",
+        "field.allergens": "Allergens",
+        "field.photo": "Photo",
+        "field.label": "Label",
+        "field.slug": "Identifier (slug)",
+        "field.password": "Password",
+        "field.url": "External URL",
+        "field.upload": "Local upload (resized)",
+        "field.fr": "French",
+        "field.en": "English",
+        "field.cn": "Chinese",
+        "field.ar": "Arabic",
+        "badge.spicy": "Spicy",
+        "badge.veggie": "Vegetarian",
+        "badge.signature": "Signature",
+        "hint.prices": "1 to 3 sizes per dish. A single size = price shown alone, without mention. Comma or dot accepted — exported as « X,XX € ».",
+        "hint.allergens": "Select the allergens present in the dish (optional).",
+        "hint.photo": "Note: prefer an existing path or URL for performance; an upload is stored as a data URI (bloats the JSON file).",
+        "hint.slug": "Generated automatically from the FR label; editable by hand (unique, no spaces).",
+        "import.hint": "Paste the JSON content, or choose a file:",
+        "import.title": "Import menu.json",
+        "import.empty": "Please paste JSON or choose a file.",
+        "import.invalidJson": "Invalid JSON: {err}",
+        "import.invalidSchema": "Invalid schema — {err}",
+        "token.title": "Admin token",
+        "token.hint": "Enter the admin password to publish your changes. It is only kept for this session.",
+        "token.required": "Please enter a token.",
+        "gallery.title": "Choose an image",
+        "common.close": "Close",
+        "photo.preview": "Preview",
+        "size.none": "— no size —",
+        "status.saved": "✓ Saved",
+        "status.dirty": "● Modified (unpublished)",
+        "status.loading": "Reloading…",
+        "status.saving": "Saving…",
+        "status.error": "Error",
+        "status.network": "network (API unreachable)",
+        "toast.fileImage": "Image file required",
+        "toast.resized": "Image resized ({w}×{h})",
+        "toast.readImage": "Unable to read the image",
+        "toast.nameRequired": "The FR name is required",
+        "toast.priceRequired": "Price #{n} is required",
+        "toast.priceInvalid": "Price #{n} is invalid",
+        "toast.sizeRequired": "Choose a size for each row",
+        "toast.duplicateSize": "Duplicate sizes",
+        "toast.exported": "menu.json downloaded",
+        "toast.imported": "Menu imported ✓",
+        "toast.reloaded": "Menu reloaded from the server",
+        "toast.labelRequired": "The FR label is required",
+        "toast.duplicateId": "Identifier already in use: {id}",
+        "toast.published": "Menu published ✓",
+        "toast.network": "Network error — API unreachable",
+        "toast.tokenCleared": "Token cleared — it will be requested again on next publish.",
+        "confirm.deleteCategory": "Delete category « {name} » and its {n} dish(es)?",
+        "confirm.deleteDish": "Delete dish « {name} »?",
+        "confirm.reload": "Reload the published version from the server? Your unpublished changes will be lost.",
+        "empty.noItems": "No dishes.",
+        "empty.noCategory": "No categories. Click « + Add a category ».",
+        "dish.allergens": "Allergens",
+        "val.notObject": "Invalid format: expected a JSON object.",
+        "val.noCategories": "Field « categories » missing or not an array.",
+        "val.empty": "No category in the file.",
+        "val.catIdMissing": "Category #{n}: missing identifier (id).",
+        "val.catLabel": "Category « {id} »: FR/EN/CN labels required.",
+        "val.catItems": "Category « {id} »: field « items » missing.",
+        "val.itemObject": "Category « {id} », dish #{n}: expected an object.",
+        "val.itemName": "Category « {id} », dish #{n}: FR/EN/CN name required.",
+        "val.itemDesc": "Category « {id} », dish #{n}: FR/EN/CN description required.",
+        "val.itemPrices": "Category « {id} », dish #{n}: field « prices » (1 to 3 sizes) or legacy « price » missing.",
+        "val.pricesCount": "Category « {id} », dish #{n}: « prices » must contain between 1 and 3 entries.",
+        "val.priceMissing": "Category « {id} », dish #{n}: price #{k} missing.",
+        "val.sizeInvalid": "Category « {id} », dish #{n}: size #{k} invalid.",
+        "val.allergensArray": "Category « {id} », dish #{n}: « allergens » must be an array.",
+        "val.tagsArray": "Category « {id} », dish #{n}: « tags » must be an array.",
+        "val.photoSrc": "Category « {id} », dish #{n}: photo.src missing."
+      },
+      cn: {
+        title: "菜单管理 — 火焱山 Le 831",
+        "brand.admin": "管理",
+        "note.publish": "修改会立即发布到网站。",
+        "btn.save": "保存",
+        "btn.export": "导出 menu.json",
+        "btn.import": "导入",
+        "btn.reset": "重置",
+        "btn.logout": "退出登录",
+        "btn.addCat": "+ 添加分类",
+        "btn.addItem": "+ 添加菜品",
+        "btn.addSize": "+ 添加规格",
+        "btn.cancel": "取消",
+        "btn.saveDish": "保存菜品",
+        "btn.validate": "确认",
+        "btn.gallery": "🖼 从网站图片中选择",
+        "btn.removePhoto": "移除图片",
+        "btn.up": "上移",
+        "btn.down": "下移",
+        "btn.edit": "编辑",
+        "btn.delete": "删除",
+        "btn.rename": "重命名",
+        "btn.removeSize": "移除规格",
+        "list.categories": "分类",
+        "editor.add": "添加菜品",
+        "editor.edit": "编辑菜品",
+        "cat.title": "分类",
+        "cat.rename": "重命名分类",
+        "cat.new": "新建分类",
+        "field.name": "名称",
+        "field.desc": "描述",
+        "field.prices": "按规格定价",
+        "field.badges": "标签",
+        "field.allergens": "过敏原",
+        "field.photo": "图片",
+        "field.label": "名称",
+        "field.slug": "标识符（slug）",
+        "field.password": "密码",
+        "field.url": "外部链接",
+        "field.upload": "本地上传（自动缩放）",
+        "field.fr": "法语",
+        "field.en": "英语",
+        "field.cn": "中文",
+        "field.ar": "阿拉伯语",
+        "badge.spicy": "辣",
+        "badge.veggie": "素食",
+        "badge.signature": "招牌",
+        "hint.prices": "每道菜 1 到 3 个规格。只有一个规格时，价格单独显示，不标注规格。接受逗号或小数点 — 导出为「 X,XX € 」格式。",
+        "hint.allergens": "请选择菜品中含有的过敏原（可选）。",
+        "hint.photo": "提示：为提升性能，建议使用已有路径或外部链接；上传的图片会以 data URI 形式存储（会增大 JSON 文件）。",
+        "hint.slug": "根据法语名称自动生成；可手动修改（需唯一，不含空格）。",
+        "import.hint": "粘贴 JSON 内容，或选择文件：",
+        "import.title": "导入 menu.json",
+        "import.empty": "请粘贴 JSON 或选择一个文件。",
+        "import.invalidJson": "JSON 无效：{err}",
+        "import.invalidSchema": "结构无效 — {err}",
+        "token.title": "管理员令牌",
+        "token.hint": "请输入管理密码以发布您的修改。密码仅在本会话中保留。",
+        "token.required": "请输入令牌。",
+        "gallery.title": "选择图片",
+        "common.close": "关闭",
+        "photo.preview": "预览",
+        "size.none": "— 无规格 —",
+        "status.saved": "✓ 已保存",
+        "status.dirty": "● 已修改（未发布）",
+        "status.loading": "重新加载中…",
+        "status.saving": "保存中…",
+        "status.error": "错误",
+        "status.network": "网络（API 无法访问）",
+        "toast.fileImage": "需要图片文件",
+        "toast.resized": "图片已缩放（{w}×{h}）",
+        "toast.readImage": "无法读取图片",
+        "toast.nameRequired": "必须填写法语名称",
+        "toast.priceRequired": "第 {n} 个价格必填",
+        "toast.priceInvalid": "第 {n} 个价格无效",
+        "toast.sizeRequired": "请为每一行选择规格",
+        "toast.duplicateSize": "规格重复",
+        "toast.exported": "menu.json 已下载",
+        "toast.imported": "菜单已导入 ✓",
+        "toast.reloaded": "已从服务器重新加载菜单",
+        "toast.labelRequired": "必须填写法语名称",
+        "toast.duplicateId": "标识符已被使用：{id}",
+        "toast.published": "菜单已发布 ✓",
+        "toast.network": "网络错误 — API 无法访问",
+        "toast.tokenCleared": "令牌已清除 — 下次发布时会再次要求输入。",
+        "confirm.deleteCategory": "确定删除分类「{name}」及其 {n} 道菜吗？",
+        "confirm.deleteDish": "确定删除菜品「{name}」吗？",
+        "confirm.reload": "重新加载服务器上的已发布版本？未发布的修改将会丢失。",
+        "empty.noItems": "暂无菜品。",
+        "empty.noCategory": "暂无分类。点击「+ 添加分类」。",
+        "dish.allergens": "过敏原",
+        "val.notObject": "格式无效：应为 JSON 对象。",
+        "val.noCategories": "字段「categories」缺失或不是数组。",
+        "val.empty": "文件中没有任何分类。",
+        "val.catIdMissing": "分类 #{n}：缺少标识符（id）。",
+        "val.catLabel": "分类「{id}」：需要 FR/EN/CN 名称。",
+        "val.catItems": "分类「{id}」：字段「items」缺失。",
+        "val.itemObject": "分类「{id}」，菜品 #{n}：应为对象。",
+        "val.itemName": "分类「{id}」，菜品 #{n}：需要 FR/EN/CN 名称。",
+        "val.itemDesc": "分类「{id}」，菜品 #{n}：需要 FR/EN/CN 描述。",
+        "val.itemPrices": "分类「{id}」，菜品 #{n}：缺少字段「prices」（1 到 3 个规格）或旧的「price」。",
+        "val.pricesCount": "分类「{id}」，菜品 #{n}：「prices」必须包含 1 到 3 个条目。",
+        "val.priceMissing": "分类「{id}」，菜品 #{n}：第 {k} 个价格缺失。",
+        "val.sizeInvalid": "分类「{id}」，菜品 #{n}：第 {k} 个规格无效。",
+        "val.allergensArray": "分类「{id}」，菜品 #{n}：「allergens」必须是数组。",
+        "val.tagsArray": "分类「{id}」，菜品 #{n}：「tags」必须是数组。",
+        "val.photoSrc": "分类「{id}」，菜品 #{n}：缺少 photo.src。"
+      },
+      ar: {
+        title: "إدارة القائمة — Le 831",
+        "brand.admin": "الإدارة",
+        "note.publish": "تُنشر التعديلات فورًا على الموقع.",
+        "btn.save": "حفظ",
+        "btn.export": "تصدير menu.json",
+        "btn.import": "استيراد",
+        "btn.reset": "إعادة تعيين",
+        "btn.logout": "تسجيل الخروج",
+        "btn.addCat": "+ إضافة فئة",
+        "btn.addItem": "+ إضافة طبق",
+        "btn.addSize": "+ إضافة حجم",
+        "btn.cancel": "إلغاء",
+        "btn.saveDish": "حفظ الطبق",
+        "btn.validate": "تأكيد",
+        "btn.gallery": "🖼 اختر من صور الموقع",
+        "btn.removePhoto": "إزالة الصورة",
+        "btn.up": "نقل لأعلى",
+        "btn.down": "نقل لأسفل",
+        "btn.edit": "تعديل",
+        "btn.delete": "حذف",
+        "btn.rename": "إعادة تسمية",
+        "btn.removeSize": "إزالة الحجم",
+        "list.categories": "الفئات",
+        "editor.add": "إضافة طبق",
+        "editor.edit": "تعديل الطبق",
+        "cat.title": "فئة",
+        "cat.rename": "إعادة تسمية الفئة",
+        "cat.new": "فئة جديدة",
+        "field.name": "الاسم",
+        "field.desc": "الوصف",
+        "field.prices": "السعر حسب الحجم",
+        "field.badges": "الشارات",
+        "field.allergens": "مسببات الحساسية",
+        "field.photo": "الصورة",
+        "field.label": "التسمية",
+        "field.slug": "المعرّف (slug)",
+        "field.password": "كلمة المرور",
+        "field.url": "رابط خارجي",
+        "field.upload": "رفع محلي (مع تغيير الحجم)",
+        "field.fr": "الفرنسية",
+        "field.en": "الإنجليزية",
+        "field.cn": "الصينية",
+        "field.ar": "العربية",
+        "badge.spicy": "حار",
+        "badge.veggie": "نباتي",
+        "badge.signature": "توقيع",
+        "hint.prices": "من 1 إلى 3 أحجام لكل طبق. حجم واحد = يُعرض السعر وحده دون ذكر الحجم. تقبل الفاصلة أو النقطة — تُصدَّر بصيغة « X,XX € ».",
+        "hint.allergens": "حدد مسببات الحساسية الموجودة في الطبق (اختياري).",
+        "hint.photo": "ملاحظة: يُفضَّل استخدام مسار موجود أو رابط لأداء أفضل؛ يُخزَّن الرفع على شكل data URI (يكبر حجم ملف JSON).",
+        "hint.slug": "يُولَّد تلقائيًا من التسمية الفرنسية؛ قابل للتعديل يدويًا (فريد، بدون مسافات).",
+        "import.hint": "الصق محتوى JSON، أو اختر ملفًا:",
+        "import.title": "استيراد menu.json",
+        "import.empty": "الصق JSON أو اختر ملفًا.",
+        "import.invalidJson": "JSON غير صالح: {err}",
+        "import.invalidSchema": "مخطط غير صالح — {err}",
+        "token.title": "رمز المدير",
+        "token.hint": "أدخل كلمة مرور الإدارة لنشر تعديلاتك. تُحفظ فقط لهذه الجلسة.",
+        "token.required": "أدخل رمزًا من فضلك.",
+        "gallery.title": "اختر صورة",
+        "common.close": "إغلاق",
+        "photo.preview": "معاينة",
+        "size.none": "— بدون حجم —",
+        "status.saved": "✓ تم الحفظ",
+        "status.dirty": "● معدَّل (غير منشور)",
+        "status.loading": "جارٍ إعادة التحميل…",
+        "status.saving": "جارٍ الحفظ…",
+        "status.error": "خطأ",
+        "status.network": "الشبكة (تعذّر الوصول إلى API)",
+        "toast.fileImage": "ملف الصورة مطلوب",
+        "toast.resized": "تم تغيير حجم الصورة ({w}×{h})",
+        "toast.readImage": "تعذّرت قراءة الصورة",
+        "toast.nameRequired": "الاسم بالفرنسية مطلوب",
+        "toast.priceRequired": "السعر رقم {n} مطلوب",
+        "toast.priceInvalid": "السعر رقم {n} غير صالح",
+        "toast.sizeRequired": "اختر حجمًا لكل سطر",
+        "toast.duplicateSize": "أحجام مكررة",
+        "toast.exported": "تم تنزيل menu.json",
+        "toast.imported": "تم استيراد القائمة ✓",
+        "toast.reloaded": "تمت إعادة تحميل القائمة من الخادم",
+        "toast.labelRequired": "التسمية بالفرنسية مطلوبة",
+        "toast.duplicateId": "المعرّف مستخدم بالفعل: {id}",
+        "toast.published": "تم نشر القائمة ✓",
+        "toast.network": "خطأ في الشبكة — تعذّر الوصول إلى API",
+        "toast.tokenCleared": "تم مسح الرمز — سيُطلب مجددًا عند النشر التالي.",
+        "confirm.deleteCategory": "حذف الفئة « {name} » وأطباقها ({n})؟",
+        "confirm.deleteDish": "حذف الطبق « {name} »؟",
+        "confirm.reload": "إعادة تحميل النسخة المنشورة من الخادم؟ ستُفقد تعديلاتك غير المنشورة.",
+        "empty.noItems": "لا توجد أطباق.",
+        "empty.noCategory": "لا توجد فئات. انقر « + إضافة فئة ».",
+        "dish.allergens": "مسببات الحساسية",
+        "val.notObject": "صيغة غير صالحة: يجب أن يكون كائن JSON.",
+        "val.noCategories": "الحقل « categories » مفقود أو ليس مصفوفة.",
+        "val.empty": "لا توجد فئات في الملف.",
+        "val.catIdMissing": "الفئة #{n}: المعرّف (id) مفقود.",
+        "val.catLabel": "الفئة « {id} »: التسميات FR/EN/CN مطلوبة.",
+        "val.catItems": "الفئة « {id} »: الحقل « items » مفقود.",
+        "val.itemObject": "الفئة « {id} »، الطبق #{n}: يُتوقع كائن.",
+        "val.itemName": "الفئة « {id} »، الطبق #{n}: الاسم FR/EN/CN مطلوب.",
+        "val.itemDesc": "الفئة « {id} »، الطبق #{n}: الوصف FR/EN/CN مطلوب.",
+        "val.itemPrices": "الفئة « {id} »، الطبق #{n}: الحقل « prices » (من 1 إلى 3 أحجام) أو « price » القديم مفقود.",
+        "val.pricesCount": "الفئة « {id} »، الطبق #{n}: يجب أن يحتوي « prices » على 1 إلى 3 إدخالات.",
+        "val.priceMissing": "الفئة « {id} »، الطبق #{n}: السعر #{k} مفقود.",
+        "val.sizeInvalid": "الفئة « {id} »، الطبق #{n}: الحجم #{k} غير صالح.",
+        "val.allergensArray": "الفئة « {id} »، الطبق #{n}: يجب أن يكون « allergens » مصفوفة.",
+        "val.tagsArray": "الفئة « {id} »، الطبق #{n}: يجب أن يكون « tags » مصفوفة.",
+        "val.photoSrc": "الفئة « {id} »، الطبق #{n}: photo.src مفقود."
+      }
+    };
+
+    function t(key, params) {
+      var s = (I18N_ADMIN[lang] && I18N_ADMIN[lang][key]) || I18N_ADMIN.fr[key] || key;
+      if (params) {
+        Object.keys(params).forEach(function (k) {
+          s = s.split("{" + k + "}").join(params[k]);
+        });
+      }
+      return s;
+    }
+
+    /* ---------- Authentification ----------
+       Le token (x-admin-token) est demandé au premier enregistrement,
+       puis conservé en sessionStorage pour la session. La validation
+       réelle est faite côté serveur (server.js). */
+    const STORAGE_KEY = "le831-admin-menu";
+    const TOKEN_KEY = "le831-admin-token";
+    const TAG_KEYS = ["spicy", "veggie", "signature"];
+    const TAG_LABEL = { spicy: "🔥", veggie: "🌿", signature: "⭐" };
+
+    /* Liste fermée des allergènes (codes → libellés trilingues) */
+    const ALLERGEN_KEYS = ["gluten", "crustaces", "oeufs", "poisson", "arachides", "soja", "lait", "fruitscoque", "celeri", "moutarde", "sesame", "sulfites", "mollusques", "lupin"];
+    const ALLERGEN_LABELS = {
+      gluten: { fr: "Gluten", en: "Gluten", cn: "麸质", ar: "غلوتين" },
+      crustaces: { fr: "Crustacés", en: "Crustaceans", cn: "甲壳类", ar: "قشريات" },
+      oeufs: { fr: "Œufs", en: "Eggs", cn: "蛋类", ar: "بيض" },
+      poisson: { fr: "Poisson", en: "Fish", cn: "鱼类", ar: "سمك" },
+      arachides: { fr: "Arachides", en: "Peanuts", cn: "花生", ar: "فول سوداني" },
+      soja: { fr: "Soja", en: "Soy", cn: "大豆", ar: "صويا" },
+      lait: { fr: "Lait", en: "Milk", cn: "乳制品", ar: "حليب" },
+      fruitscoque: { fr: "Fruits à coque", en: "Tree nuts", cn: "坚果", ar: "مكسرات" },
+      celeri: { fr: "Céleri", en: "Celery", cn: "芹菜", ar: "كرفس" },
+      moutarde: { fr: "Moutarde", en: "Mustard", cn: "芥末", ar: "خردل" },
+      sesame: { fr: "Sésame", en: "Sesame", cn: "芝麻", ar: "سمسم" },
+      sulfites: { fr: "Sulfites", en: "Sulphites", cn: "亚硫酸盐", ar: "كبريتيتات" },
+      mollusques: { fr: "Mollusques", en: "Molluscs", cn: "软体动物", ar: "رخويات" },
+      lupin: { fr: "Lupin", en: "Lupin", cn: "羽扇豆", ar: "ترمس" }
+    };
+
+    /* Tailles standard (labels quadrilingues fixes) */
+    const SIZE_PRESETS = [
+      { fr: "Petite", en: "Small", cn: "小份", ar: "صغير" },
+      { fr: "Moyenne", en: "Medium", cn: "中份", ar: "متوسط" },
+      { fr: "Grande", en: "Large", cn: "大份", ar: "كبير" }
+    ];
+
+    /* ---------- Images existantes du site (chemins connus, en dur) ---------- */
+    const IMAGE_LIBRARY = [
+      { src: "assets/images/plat/nouilles-boeuf.jpg", label: "Plat · nouilles au bœuf" },
+      { src: "assets/images/salle/vue-ensemble-01.jpg", label: "Salle · vue d'ensemble 01" },
+      { src: "assets/images/salle/vue-ensemble-02.jpg", label: "Salle · vue d'ensemble 02" },
+      { src: "assets/images/salle/vue-ensemble-03.jpg", label: "Salle · vue d'ensemble 03" },
+      { src: "assets/images/salle/terrasse.jpg", label: "Salle · terrasse" },
+      { src: "assets/images/deco/comptoir.jpg", label: "Déco · comptoir" },
+      { src: "assets/images/deco/detail-comptoir.jpg", label: "Déco · détail comptoir" },
+      { src: "assets/images/deco/detail-deco-01.jpg", label: "Déco · détail 01" },
+      { src: "assets/images/deco/table-4pers.jpg", label: "Déco · table 4 pers." },
+      { src: "assets/images/deco/table-deco-01.jpg", label: "Déco · table dressée 01" },
+      { src: "assets/images/deco/table-deco-02.jpg", label: "Déco · table dressée 02" },
+      { src: "assets/images/cuisine/prepa-nouilles-01.jpg", label: "Cuisine · nouilles 01" },
+      { src: "assets/images/cuisine/prepa-nouilles-02.jpg", label: "Cuisine · nouilles 02" },
+      { src: "assets/images/cuisine/prepa-nouilles-03.jpg", label: "Cuisine · nouilles 03" },
+      { src: "assets/images/cuisine/prepa-nouilles-04.jpg", label: "Cuisine · nouilles 04" },
+      { src: "assets/images/cuisine/prepa-nouilles-05.jpg", label: "Cuisine · nouilles 05" },
+      { src: "assets/images/cuisine/prepa-nouilles-06.jpg", label: "Cuisine · nouilles 06" },
+      { src: "assets/images/cuisine/prepa-nouilles-07.jpg", label: "Cuisine · nouilles 07" },
+      { src: "assets/images/cuisine/prepa-nouilles-08.jpg", label: "Cuisine · nouilles 08" },
+      { src: "assets/images/cuisine/prepa-nouilles-09.jpg", label: "Cuisine · nouilles 09" },
+      { src: "assets/images/cuisine/prepa-nouilles-10.jpg", label: "Cuisine · nouilles 10" },
+      { src: "assets/images/cuisine/prepa-nouilles-11.jpg", label: "Cuisine · nouilles 11" },
+      { src: "assets/images/cuisine/prepa-nouilles-12.jpg", label: "Cuisine · nouilles 12" },
+      { src: "assets/images/fa\u00e7ade/fa\u00e7ade-01.jpg", label: "Façade 01" },
+      { src: "assets/images/fa\u00e7ade/fa\u00e7ade-02.jpg", label: "Façade 02" },
+      { src: "assets/images/fa\u00e7ade/logo-halal.jpg", label: "Façade · logo halal" },
+      { src: "assets/images/fa\u00e7ade/menu-affiche-01.jpg", label: "Façade · menu affiche 01" },
+      { src: "assets/images/fa\u00e7ade/menu-affiche-02.jpg", label: "Façade · menu affiche 02" }
+    ];
+
+    /* ---------- Valeurs par défaut (miroir de data/menu.json, secours hors-ligne) ---------- */
+    const DEFAULT_MENU = {
+      "version": 4,
+      "updatedAt": "2026-08-13T20:00:00Z",
+      "categories": [
+        { "id": "entrees", "label": {"fr":"Entrées & Salades","en":"Appetizers & Salads","cn":"前菜与沙拉","ar":"المقبلات والسلطات"}, "items": [
+          { "name": {"fr":"Salade de concombre pimenté","en":"Spicy Cucumber Salad","cn":"凉拌黄瓜","ar":"سلطة الخيار الحارة"}, "desc": {"fr":"Concombre frais, ail, piment, vinaigre et huile de sésame","en":"Fresh cucumber, garlic, chili, vinegar and sesame oil","cn":"新鲜黄瓜、蒜、辣椒、醋和芝麻油","ar":"خيار طازج، ثوم، فلفل حار، خل وزيت سمسم"}, "price": "5,50 €", "tags": ["veggie"], "allergens": [], "photo": null },
+          { "name": {"fr":"Nems de bœuf","en":"Beef Spring Rolls","cn":"牛肉春卷","ar":"نيمس اللحم البقري"}, "desc": {"fr":"Rouleaux croustillants farcis au bœuf épicé, sauce aigre-douce","en":"Crispy rolls filled with spiced beef, sweet and sour sauce","cn":"酥脆卷，内馅香辣牛肉，配酸甜酱","ar":"لفائف مقرمشة محشوة بلحم بقري حار، صلصة حلوة وحامضة"}, "price": "7,00 €", "tags": ["spicy"], "allergens": [], "photo": null },
+          { "name": {"fr":"Salade de chou épicée","en":"Spicy Cabbage Salad","cn":"辣拌卷心菜","ar":"سلطة الملفوف الحارة"}, "desc": {"fr":"Chou râpé, carotte, coriandre, vinaigrette pimentée","en":"Shredded cabbage, carrot, cilantro, spicy dressing","cn":"卷心菜丝、胡萝卜、香菜、辣味调料","ar":"ملفوف مبشور، جزر، كزبرة، صلصة حارة"}, "price": "5,00 €", "tags": ["veggie"], "allergens": [], "photo": null }
+        ]},
+        { "id": "grillades", "label": {"fr":"Grillades & Brochettes","en":"Grills & Skewers","cn":"烧烤与串","ar":"المشويات والأسياخ"}, "items": [
+          { "name": {"fr":"Brochettes d'agneau (5 pièces)","en":"Lamb Skewers (5 pcs)","cn":"羊肉串（5串）","ar":"أسياخ لحم الضأن (5 قطع)"}, "desc": {"fr":"Agneau mariné aux épices secrètes, grillé au feu de bois — notre spécialité","en":"Lamb marinated in secret spices, grilled over wood fire — our specialty","cn":"秘制香料腌制的羊肉，炭火烤制 — 我们的招牌","ar":"ضأن متبل ببهارات سرية، مشوي على نار الخشب — تخصصنا"}, "price": "12,00 €", "tags": ["spicy","signature"], "allergens": [], "photo": null },
+          { "name": {"fr":"Brochettes de poulet","en":"Chicken Skewers","cn":"鸡肉串","ar":"أسياخ الدجاج"}, "desc": {"fr":"Blanc de poulet mariné, grillé aux épices d'Asie Centrale","en":"Marinated chicken breast, grilled with Central Asian spices","cn":"腌制的鸡胸肉，配中亚香料烤制","ar":"صدر دجاج متبل، مشوي ببهارات آسيا الوسطى"}, "price": "10,00 €", "tags": ["spicy"], "allergens": [], "photo": null },
+          { "name": {"fr":"Poivrons et légumes grillés","en":"Grilled Peppers & Vegetables","cn":"烤蔬菜","ar":"فلفل وخضروات مشوية"}, "desc": {"fr":"Légumes de saison grillés, huile d'olive et épices","en":"Seasonal grilled vegetables, olive oil and spices","cn":"时令烤蔬菜，橄榄油和香料","ar":"خضروات موسمية مشوية، زيت زيتون وبهارات"}, "price": "7,00 €", "tags": ["veggie"], "allergens": [], "photo": null }
+        ]},
+        { "id": "plats", "label": {"fr":"Plats Principaux","en":"Main Courses","cn":"主菜","ar":"الأطباق الرئيسية"}, "items": [
+          { "name": {"fr":"Poulet aux pommes de terre (Dapanji)","en":"Chicken with Potatoes (Dapanji)","cn":"大盘鸡","ar":"دجاج مع البطاطس (دابانجي)"}, "desc": {"fr":"Ragoût de poulet mijoté, pommes de terre, poivrons, sauce épicée — notre plat signature","en":"Slow-cooked chicken stew, potatoes, peppers, spicy sauce — our signature dish","cn":"慢炖鸡肉、土豆、青椒、辣酱 — 我们的招牌菜","ar":"يخنة دجاج مطهوة ببطء، بطاطس، فلفل، صلصة حارة — طبقنا المميز"}, "price": "16,00 €", "tags": ["spicy","signature"], "allergens": [], "photo": null },
+          { "name": {"fr":"Nouilles tirées à la main sauté au bœuf","en":"Hand-Pulled Noodles with Beef","cn":"牛肉拉面","ar":"نودلز مشدودة باليد مقلية مع اللحم البقري"}, "desc": {"fr":"Nouilles fraîches faites maison, sauté au wok avec bœuf et légumes","en":"Fresh homemade hand-pulled noodles, wok-fried with beef and vegetables","cn":"新鲜手工拉面，与牛肉和蔬菜翻炒","ar":"نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع اللحم البقري والخضروات"}, "price": "14,00 €", "tags": ["signature"], "allergens": [], "photo": {"src":"assets/images/plat/nouilles-boeuf.jpg","alt":{"fr":"Nouilles tirées à la main sautées au bœuf, poivrons rouges et verts","en":"Hand-pulled noodles wok-fried with beef, red and green peppers","cn":"牛肉手工拉面，配红绿彩椒","ar":"نودلز مشدودة باليد مقلية مع اللحم البقري والفلفل الأحمر والأخضر"}} },
+          { "name": {"fr":"Nouilles tirées à la main sauté à l'agneau","en":"Hand-Pulled Noodles with Lamb","cn":"羊肉拉面","ar":"نودلز مشدودة باليد مقلية مع لحم الضأن"}, "desc": {"fr":"Nouilles fraîches maison sauté au wok avec agneau et oignons","en":"Fresh homemade hand-pulled noodles, wok-fried with lamb and onions","cn":"新鲜手工拉面，与羊肉和洋葱翻炒","ar":"نودلز طازجة محضّرة في المنزل، مقلية في المقلاة مع لحم الضأن والبصل"}, "price": "15,00 €", "tags": ["spicy"], "allergens": [], "photo": null },
+          { "name": {"fr":"Riz pilaf à l'agneau (Polo)","en":"Lamb Pilaf (Polo)","cn":"羊肉抓饭","ar":"أرز بيلاف مع لحم الضأن (بولو)"}, "desc": {"fr":"Riz parfumé cuit avec agneau, carottes et épices d'Asie Centrale","en":"Fragrant rice cooked with lamb, carrots and Central Asian spices","cn":"香米饭，配羊肉、胡萝卜和中亚香料","ar":"أرز معطّر مطبوخ مع لحم الضأن والجزر وبهارات آسيا الوسطى"}, "price": "13,00 €", "tags": [], "allergens": [], "photo": null },
+          { "name": {"fr":"Raviolis ouïghours (Manta)","en":"Uyghur Dumplings (Manta)","cn":"薄皮包子","ar":"مانتو (رافيولي الويغور)"}, "desc": {"fr":"Raviolis vapeur farcis à l'agneau et oignons, sauce vinaigre-piment","en":"Steamed dumplings filled with lamb and onions, vinegar-chili sauce","cn":"羊肉洋葱馅蒸饺，配醋辣酱","ar":"مانتو مطهو على البخار محشو بلحم الضأن والبصل، صلصة الخل والفلفل"}, "price": "11,00 €", "tags": ["signature"], "allergens": [], "photo": null }
+        ]},
+        { "id": "pains", "label": {"fr":"Pains","en":"Breads","cn":"馕","ar":"الخبز"}, "items": [
+          { "name": {"fr":"Pain traditionnel (Nan)","en":"Traditional Naan Bread","cn":"传统烤馕","ar":"خبز النان التقليدي"}, "desc": {"fr":"Pain plat cuit au four, graines de sésame et épices","en":"Oven-baked flatbread with sesame seeds and spices","cn":"烤箱烤制的扁平面包，配芝麻和香料","ar":"خبز مسطّح مخبوز في الفرن، حبات سمسم وبهارات"}, "price": "3,00 €", "tags": ["veggie"], "allergens": [], "photo": null },
+          { "name": {"fr":"Nan à l'agneau","en":"Lamb Naan","cn":"羊肉烤馕","ar":"نان بلحم الضأن"}, "desc": {"fr":"Pain farci à l'agneau haché épicé, cuit au four","en":"Bread stuffed with spiced minced lamb, oven-baked","cn":"辣味碎羊肉馅烤馕","ar":"خبز محشو بلحم ضأن مفروم حار، مخبوز في الفرن"}, "price": "6,00 €", "tags": ["spicy"], "allergens": [], "photo": null }
+        ]},
+        { "id": "boissons", "label": {"fr":"Boissons","en":"Drinks","cn":"饮品","ar":"المشروبات"}, "items": [
+          { "name": {"fr":"Thé d'Asie Centrale","en":"Central Asian Tea","cn":"中亚茶","ar":"شاي آسيا الوسطى"}, "desc": {"fr":"Thé noir parfumé importé directement d'Asie Centrale","en":"Fragrant black tea imported directly from Central Asia","cn":"从中亚直接进口的香浓红茶","ar":"شاي أسود معطّر مستورد مباشرة من آسيا الوسطى"}, "price": "3,50 €", "tags": ["signature"], "allergens": [], "photo": null },
+          { "name": {"fr":"Bière sans alcool au lait","en":"Non-Alcoholic Milk Beer","cn":"格瓦斯","ar":"مشروب الحليب الفوار"}, "desc": {"fr":"Boisson lactée pétillante traditionnelle — une spécialité unique","en":"Traditional sparkling milk drink — a unique specialty","cn":"传统气泡奶制饮品 — 独特特色","ar":"مشروب حليبي فوار تقليدي — تخصص فريد"}, "price": "4,00 €", "tags": [], "allergens": [], "photo": null }
+        ]}
+      ]
+    };
+
+    /* ---------- Utilitaires ---------- */
+    function $(id) { return document.getElementById(id); }
+    function esc(s) {
+      return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+    function slugify(s) {
+      return String(s == null ? "" : s).toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+    function formatPrice(raw) {
+      if (raw == null) return "";
+      var s = String(raw).trim();
+      if (!s) return "";
+      s = s.replace(/\s*€\s*$/, "").replace(/\s+/g, "").replace(/,/g, ".");
+      var n = parseFloat(s);
+      if (isNaN(n)) return "";
+      return n.toFixed(2).replace(".", ",") + " €";
+    }
+    function priceToInput(price) {
+      return String(price == null ? "" : price).replace(/\s*€\s*$/, "").trim();
+    }
+
+    /* ---------- Validation du schéma ---------- */
+    function validateMenu(data) {
+      if (!data || typeof data !== "object") return t("val.notObject");
+      if (!Array.isArray(data.categories)) return t("val.noCategories");
+      if (!data.categories.length) return t("val.empty");
+      for (var i = 0; i < data.categories.length; i++) {
+        var c = data.categories[i];
+        if (!c || typeof c.id !== "string" || !c.id) return t("val.catIdMissing", { n: i + 1 });
+        if (!c.label || typeof c.label.fr !== "string" || typeof c.label.en !== "string" || typeof c.label.cn !== "string")
+          return t("val.catLabel", { id: c.id });
+        if (!Array.isArray(c.items)) return t("val.catItems", { id: c.id });
+        for (var j = 0; j < c.items.length; j++) {
+          var it = c.items[j];
+          if (!it || typeof it !== "object") return t("val.itemObject", { id: c.id, n: j + 1 });
+          if (!it.name || typeof it.name.fr !== "string" || typeof it.name.en !== "string" || typeof it.name.cn !== "string")
+            return t("val.itemName", { id: c.id, n: j + 1 });
+          if (!it.desc || typeof it.desc.fr !== "string" || typeof it.desc.en !== "string" || typeof it.desc.cn !== "string")
+            return t("val.itemDesc", { id: c.id, n: j + 1 });
+          var hasPrices = Array.isArray(it.prices);
+          var hasLegacy = typeof it.price === "string";
+          if (!hasPrices && !hasLegacy)
+            return t("val.itemPrices", { id: c.id, n: j + 1 });
+          if (hasPrices) {
+            if (it.prices.length < 1 || it.prices.length > 3)
+              return t("val.pricesCount", { id: c.id, n: j + 1 });
+            for (var k = 0; k < it.prices.length; k++) {
+              var p = it.prices[k];
+              if (!p || typeof p !== "object" || typeof p.price !== "string" || !p.price.trim())
+                return t("val.priceMissing", { id: c.id, n: j + 1, k: k + 1 });
+              if (p.size !== null && p.size !== undefined &&
+                  (typeof p.size !== "object" || typeof p.size.fr !== "string" || typeof p.size.en !== "string" || typeof p.size.cn !== "string"))
+                return t("val.sizeInvalid", { id: c.id, n: j + 1, k: k + 1 });
+            }
+          }
+          if (it.allergens !== undefined && !Array.isArray(it.allergens))
+            return t("val.allergensArray", { id: c.id, n: j + 1 });
+          if (it.tags !== undefined && !Array.isArray(it.tags)) return t("val.tagsArray", { id: c.id, n: j + 1 });
+          if (it.photo !== undefined && it.photo !== null) {
+            if (typeof it.photo !== "object" || typeof it.photo.src !== "string" || !it.photo.src)
+              return t("val.photoSrc", { id: c.id, n: j + 1 });
+          }
+        }
+      }
+      return null;
+    }
+    function normalize(data) {
+      return {
+        version: 4,
+        updatedAt: data.updatedAt || new Date().toISOString(),
+        categories: (data.categories || []).map(function (c) {
+          return {
+            id: c.id || slugify(c.label && c.label.fr) || "categorie",
+            label: { fr: c.label.fr || "", en: c.label.en || "", cn: c.label.cn || "", ar: c.label.ar || "" },
+            items: (c.items || []).map(function (it) {
+              var prices;
+              if (Array.isArray(it.prices)) {
+                prices = it.prices.map(function (p) {
+                  var size = (p.size && typeof p.size.fr === "string" && typeof p.size.en === "string" && typeof p.size.cn === "string")
+                    ? { fr: p.size.fr, en: p.size.en, cn: p.size.cn, ar: (typeof p.size.ar === "string" ? p.size.ar : "") } : null;
+                  return { size: size, price: typeof p.price === "string" ? p.price : "" };
+                });
+              } else if (typeof it.price === "string") {
+                prices = [{ size: null, price: it.price }];
+              } else {
+                prices = [];
+              }
+              return {
+                name: { fr: it.name.fr || "", en: it.name.en || "", cn: it.name.cn || "", ar: it.name.ar || "" },
+                desc: { fr: (it.desc && it.desc.fr) || "", en: (it.desc && it.desc.en) || "", cn: (it.desc && it.desc.cn) || "", ar: (it.desc && it.desc.ar) || "" },
+                prices: prices,
+                tags: Array.isArray(it.tags) ? it.tags.filter(function (t) { return TAG_KEYS.indexOf(t) !== -1; }) : [],
+                allergens: Array.isArray(it.allergens) ? it.allergens.filter(function (a) { return ALLERGEN_KEYS.indexOf(a) !== -1; }) : [],
+                photo: (it.photo && it.photo.src)
+                  ? { src: it.photo.src, alt: { fr: (it.photo.alt && it.photo.alt.fr) || "", en: (it.photo.alt && it.photo.alt.en) || "", cn: (it.photo.alt && it.photo.alt.cn) || "", ar: (it.photo.alt && it.photo.alt.ar) || "" } }
+                  : null
+              };
+            })
+          };
+        })
+      };
+    }
+
+    /* ---------- État ---------- */
+    var state = null;          // copie de travail
+    var serverDefault = null;  // version du serveur (GET /api/menu) pour « Réinitialiser »
+    var dirty = false;
+    var editing = { ci: -1, ii: null };
+    var editorPrices = [];      // [{ size: null|index, price: "raw" }]
+    var editorAllergens = [];   // codes sélectionnés
+    var currentPhoto = null;
+    var catEditingCi = -1;     // -1 = nouvelle catégorie
+    var catIdTouched = false;
+
+    /* ---------- DOM refs ---------- */
+    var elApp = $("app");
+    var elCategories = $("categories");
+    var elStatus = $("status");
+    var elToast = $("toast");
+
+    function toast(msg) {
+      elToast.textContent = msg;
+      elToast.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(function () { elToast.classList.remove("show"); }, 2200);
+    }
+    function updateStatus(msg, isError) {
+      elStatus.classList.toggle("err", !!isError);
+      elStatus.textContent = msg || (dirty ? t("status.dirty") : t("status.saved"));
+    }
+    function saveLocal() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* quota / privé */ }
+    }
+    function markChanged() { dirty = true; saveLocal(); updateStatus(); }
+
+    /* ---------- Rendu ---------- */
+    function pricesSummary(it) {
+      var prices = it.prices || [];
+      if (!prices.length) return "";
+      if (prices.length === 1) return prices[0].price || "";
+      return prices.map(function (p) {
+        var s = p.size && p.size.fr ? p.size.fr : "";
+        return (s ? s + " " : "") + (p.price || "");
+      }).join(" · ");
+    }
+    function itemRow(cat, it, ci, ii) {
+      var tags = (it.tags || []).map(function (t) { return TAG_LABEL[t] || ""; }).join(" ");
+      var allergens = (it.allergens || []).map(function (a) {
+        var lab = ALLERGEN_LABELS[a];
+        return lab ? (lab[lang] || lab.fr) : "";
+      }).filter(Boolean);
+      var allergensHint = allergens.length ? '<span class="item-allergens">' + esc(t("dish.allergens") + " : " + allergens.join(", ")) + "</span>" : "";
+      return '<div class="item" data-ci="' + ci + '" data-ii="' + ii + '">' +
+        '<div class="item-thumb">' + (it.photo ? '<img src="' + esc(it.photo.src) + '" alt="">' : "·") + "</div>" +
+        '<div class="item-info">' +
+          '<span class="item-name">' + esc(it.name.fr) + ' <span class="item-name-en">' + esc(it.name.en) + "</span></span>" +
+          '<span class="item-cn" lang="zh">' + esc(it.name.cn) + "</span>" +
+          '<span class="item-tags">' + tags + "</span>" +
+          allergensHint +
+        "</div>" +
+        '<span class="item-price">' + esc(pricesSummary(it)) + "</span>" +
+        '<div class="item-actions">' +
+          '<button type="button" class="icon-btn" data-up-item title="' + esc(t("btn.up")) + '">↑</button>' +
+          '<button type="button" class="icon-btn" data-down-item title="' + esc(t("btn.down")) + '">↓</button>' +
+          '<button type="button" class="icon-btn" data-edit-item title="' + esc(t("btn.edit")) + '">✎</button>' +
+          '<button type="button" class="icon-btn danger" data-del-item title="' + esc(t("btn.delete")) + '">✕</button>' +
+        "</div>" +
+      "</div>";
+    }
+    function categoryCard(cat, ci) {
+      var items = cat.items.map(function (it, ii) { return itemRow(cat, it, ci, ii); }).join("");
+      return '<div class="cat-card" data-ci="' + ci + '">' +
+        '<div class="cat-head">' +
+          '<div class="cat-title">' +
+            '<span class="cat-name">' + esc(cat.label.fr) + '</span>' +
+            '<span class="cat-name-en">' + esc(cat.label.en) + '</span>' +
+            '<span class="cat-zh" lang="zh">' + esc(cat.label.cn) + "</span>" +
+            '<code class="cat-id">' + esc(cat.id) + "</code>" +
+          "</div>" +
+          '<div class="cat-actions">' +
+            '<button type="button" class="icon-btn" data-up title="' + esc(t("btn.up")) + '">↑</button>' +
+            '<button type="button" class="icon-btn" data-down title="' + esc(t("btn.down")) + '">↓</button>' +
+            '<button type="button" class="icon-btn" data-edit-cat title="' + esc(t("btn.rename")) + '">✎</button>' +
+            '<button type="button" class="icon-btn danger" data-del-cat title="' + esc(t("btn.delete")) + '">✕</button>' +
+          "</div>" +
+        "</div>" +
+        '<div class="items">' + (items || '<p class="empty">' + esc(t("empty.noItems")) + "</p>") + "</div>" +
+        '<button type="button" class="btn btn-gold btn-sm add-item" data-add-item>' + esc(t("btn.addItem")) + "</button>" +
+      "</div>";
+    }
+    function render() {
+      if (!state.categories.length) {
+        elCategories.innerHTML = '<p class="empty">' + esc(t("empty.noCategory")) + "</p>";
+      } else {
+        elCategories.innerHTML = state.categories.map(categoryCard).join("");
+      }
+      updateStatus();
+    }
+
+    /* ---------- Événements liste (délégation) ---------- */
+    elCategories.addEventListener("click", function (e) {
+      var card = e.target.closest(".cat-card");
+      if (!card) return;
+      var ci = parseInt(card.getAttribute("data-ci"), 10);
+      var cat = state.categories[ci];
+
+      if (e.target.closest("[data-up]")) {
+        if (ci > 0) { state.categories.splice(ci - 1, 0, state.categories.splice(ci, 1)[0]); markChanged(); render(); }
+        return;
+      }
+      if (e.target.closest("[data-down]")) {
+        if (ci < state.categories.length - 1) { state.categories.splice(ci + 1, 0, state.categories.splice(ci, 1)[0]); markChanged(); render(); }
+        return;
+      }
+      if (e.target.closest("[data-edit-cat]")) { openCatEditor(ci); return; }
+      if (e.target.closest("[data-del-cat]")) {
+        if (confirm(t("confirm.deleteCategory", { name: cat.label.fr, n: cat.items.length }))) {
+          state.categories.splice(ci, 1); markChanged(); render();
+        }
+        return;
+      }
+      if (e.target.closest("[data-add-item]")) { openEditor(ci, null); return; }
+
+      var itemEl = e.target.closest(".item");
+      if (!itemEl) return;
+      var ii = parseInt(itemEl.getAttribute("data-ii"), 10);
+
+      if (e.target.closest("[data-up-item]")) {
+        if (ii > 0) { cat.items.splice(ii - 1, 0, cat.items.splice(ii, 1)[0]); markChanged(); render(); }
+        return;
+      }
+      if (e.target.closest("[data-down-item]")) {
+        if (ii < cat.items.length - 1) { cat.items.splice(ii + 1, 0, cat.items.splice(ii, 1)[0]); markChanged(); render(); }
+        return;
+      }
+      if (e.target.closest("[data-edit-item]")) { openEditor(ci, ii); return; }
+      if (e.target.closest("[data-del-item]")) {
+        if (confirm(t("confirm.deleteDish", { name: cat.items[ii].name.fr }))) {
+          cat.items.splice(ii, 1); markChanged(); render();
+        }
+        return;
+      }
+    });
+
+    /* ---------- Éditeur de plat ---------- */
+    function renderPriceRows() {
+      var html = editorPrices.map(function (p, i) {
+        var options = '<option value="">' + esc(t("size.none")) + "</option>" +
+          SIZE_PRESETS.map(function (sp, si) {
+            return '<option value="' + si + '"' + (p.size === String(si) ? " selected" : "") + '>' +
+              sp.fr + " / " + sp.en + " / " + sp.cn + " / " + sp.ar + "</option>";
+          }).join("");
+        var single = editorPrices.length === 1;
+        return '<div class="price-row" data-pr="' + i + '">' +
+          '<select class="p-size-sel"' + (single ? " disabled" : "") + '>' + options + "</select>" +
+          '<input class="p-price-in" type="text" inputmode="decimal" placeholder="14,50" value="' + esc(p.price) + '">' +
+          '<button type="button" class="icon-btn danger p-del"' + (single ? " disabled" : "") + ' title="' + esc(t("btn.removeSize")) + '">−</button>' +
+        "</div>";
+      }).join("");
+      $("price-rows").innerHTML = html;
+      $("btn-add-size").disabled = editorPrices.length >= 3;
+    }
+    function readPriceRows() {
+      var rows = Array.from(document.querySelectorAll("#price-rows .price-row"));
+      return rows.map(function (row) {
+        var sel = row.querySelector(".p-size-sel");
+        var input = row.querySelector(".p-price-in");
+        return { size: (sel.value === "" ? null : sel.value), price: input.value };
+      });
+    }
+    function renderAllergenChips() {
+      $("allergen-chips").innerHTML = ALLERGEN_KEYS.map(function (code) {
+        var on = editorAllergens.indexOf(code) !== -1;
+        return '<button type="button" class="allergen-chip" data-allergen="' + code + '" aria-pressed="' + on + '">' +
+          esc(ALLERGEN_LABELS[code][lang] || ALLERGEN_LABELS[code].fr) + "</button>";
+      }).join("");
+    }
+    $("btn-add-size").addEventListener("click", function () {
+      if (editorPrices.length >= 3) return;
+      editorPrices.push({ size: null, price: "" });
+      renderPriceRows();
+    });
+    $("price-rows").addEventListener("click", function (e) {
+      var del = e.target.closest(".p-del");
+      if (!del) return;
+      if (editorPrices.length <= 1) return;
+      var row = del.closest(".price-row");
+      editorPrices.splice(parseInt(row.getAttribute("data-pr"), 10), 1);
+      renderPriceRows();
+    });
+    $("price-rows").addEventListener("change", function (e) {
+      var sel = e.target.closest(".p-size-sel");
+      if (!sel) return;
+      var row = sel.closest(".price-row");
+      editorPrices[parseInt(row.getAttribute("data-pr"), 10)].size = sel.value === "" ? null : sel.value;
+    });
+    $("price-rows").addEventListener("input", function (e) {
+      var input = e.target.closest(".p-price-in");
+      if (!input) return;
+      var row = input.closest(".price-row");
+      editorPrices[parseInt(row.getAttribute("data-pr"), 10)].price = input.value;
+    });
+    $("allergen-chips").addEventListener("click", function (e) {
+      var chip = e.target.closest(".allergen-chip");
+      if (!chip) return;
+      var code = chip.getAttribute("data-allergen");
+      var i = editorAllergens.indexOf(code);
+      if (i === -1) editorAllergens.push(code); else editorAllergens.splice(i, 1);
+      renderAllergenChips();
+    });
+    function openEditor(ci, ii) {
+      editing = { ci: ci, ii: ii };
+      var cat = state.categories[ci];
+      var it = ii == null ? null : cat.items[ii];
+      $("editor-title").textContent = it ? t("editor.edit") : t("editor.add");
+      $("f-name-fr").value = it ? it.name.fr : "";
+      $("f-name-en").value = it ? it.name.en : "";
+      $("f-name-cn").value = it ? it.name.cn : "";
+      $("f-name-ar").value = it ? (it.name.ar || "") : "";
+      $("f-desc-fr").value = it ? it.desc.fr : "";
+      $("f-desc-en").value = it ? it.desc.en : "";
+      $("f-desc-cn").value = it ? it.desc.cn : "";
+      $("f-desc-ar").value = it ? (it.desc.ar || "") : "";
+      var prices = (it && Array.isArray(it.prices) && it.prices.length)
+        ? it.prices
+        : [{ size: null, price: (it && typeof it.price === "string" ? it.price : "") }];
+      editorPrices = prices.map(function (p) {
+        var idx = -1;
+        if (p.size) {
+          for (var s = 0; s < SIZE_PRESETS.length; s++) {
+            if (SIZE_PRESETS[s].fr === p.size.fr) { idx = s; break; }
+          }
+        }
+        return { size: (idx === -1 ? null : String(idx)), price: priceToInput(p.price) };
+      });
+      editorAllergens = (it && Array.isArray(it.allergens)) ? it.allergens.slice() : [];
+      $("f-tag-spicy").checked = it ? it.tags.indexOf("spicy") !== -1 : false;
+      $("f-tag-veggie").checked = it ? it.tags.indexOf("veggie") !== -1 : false;
+      $("f-tag-signature").checked = it ? it.tags.indexOf("signature") !== -1 : false;
+      currentPhoto = (it && it.photo) ? { src: it.photo.src } : null;
+      $("f-photo-url").value = (currentPhoto && currentPhoto.src.indexOf("data:") !== 0) ? currentPhoto.src : "";
+      $("f-photo-file").value = "";
+      previewPhoto();
+      renderPriceRows();
+      renderAllergenChips();
+      $("editor").hidden = false;
+      $("f-name-fr").focus();
+    }
+    function closeEditor() { $("editor").hidden = true; }
+    function previewPhoto() {
+      $("photo-preview").innerHTML = currentPhoto
+        ? '<img src="' + esc(currentPhoto.src) + '" alt="' + esc(t("photo.preview")) + '">'
+        : "<span>—</span>";
+    }
+    function setPhoto(src) {
+      currentPhoto = src ? { src: src } : null;
+      $("f-photo-url").value = (currentPhoto && currentPhoto.src.indexOf("data:") !== 0) ? currentPhoto.src : "";
+      previewPhoto();
+    }
+    $("f-photo-url").addEventListener("input", function () {
+      var v = this.value.trim();
+      currentPhoto = v ? { src: v } : null;
+      previewPhoto();
+    });
+    $("btn-photo-clear").addEventListener("click", function () {
+      currentPhoto = null;
+      $("f-photo-url").value = "";
+      $("f-photo-file").value = "";
+      previewPhoto();
+    });
+    $("f-photo-file").addEventListener("change", function () {
+      var file = this.files && this.files[0];
+      if (file) processUpload(file);
+      this.value = "";
+    });
+    function processUpload(file) {
+      if (!file.type || file.type.indexOf("image/") !== 0) { toast(t("toast.fileImage")); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var img = new Image();
+        img.onload = function () {
+          var MAX = 900;
+          var w = img.naturalWidth, h = img.naturalHeight;
+          var scale = Math.min(1, MAX / Math.max(w, h));
+          var cw = Math.max(1, Math.round(w * scale));
+          var ch = Math.max(1, Math.round(h * scale));
+          var canvas = document.createElement("canvas");
+          canvas.width = cw; canvas.height = ch;
+          canvas.getContext("2d").drawImage(img, 0, 0, cw, ch);
+          var dataUri = canvas.toDataURL("image/jpeg", 0.82);
+          setPhoto(dataUri);
+          toast(t("toast.resized", { w: cw, h: ch }));
+        };
+        img.onerror = function () { toast(t("toast.readImage")); };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    $("btn-gallery").addEventListener("click", openGallery);
+    $("btn-editor-save").addEventListener("click", function () {
+      var name = { fr: $("f-name-fr").value.trim(), en: $("f-name-en").value.trim(), cn: $("f-name-cn").value.trim(), ar: $("f-name-ar").value.trim() };
+      if (!name.fr) { toast(t("toast.nameRequired")); $("f-name-fr").focus(); return; }
+      var rows = readPriceRows();
+      var prices = [];
+      for (var pi = 0; pi < rows.length; pi++) {
+        var raw = rows[pi].price;
+        var formatted = formatPrice(raw);
+        if (!raw.trim()) { toast(t("toast.priceRequired", { n: pi + 1 })); $("price-rows .price-row:nth-child(" + (pi + 1) + ") .p-price-in").focus(); return; }
+        if (!formatted) { toast(t("toast.priceInvalid", { n: pi + 1 })); $("price-rows .price-row:nth-child(" + (pi + 1) + ") .p-price-in").focus(); return; }
+        var size = null;
+        if (rows.length > 1) {
+          if (rows[pi].size == null) { toast(t("toast.sizeRequired")); return; }
+          size = SIZE_PRESETS[parseInt(rows[pi].size, 10)];
+        }
+        prices.push({ size: size ? { fr: size.fr, en: size.en, cn: size.cn, ar: size.ar } : null, price: formatted });
+      }
+      if (rows.length > 1) {
+        var seen = {};
+        for (var u = 0; u < prices.length; u++) {
+          var key = prices[u].size.fr + "|" + prices[u].size.en + "|" + prices[u].size.cn;
+          if (seen[key]) { toast(t("toast.duplicateSize")); return; }
+          seen[key] = true;
+        }
+      }
+      var tags = [];
+      if ($("f-tag-spicy").checked) tags.push("spicy");
+      if ($("f-tag-veggie").checked) tags.push("veggie");
+      if ($("f-tag-signature").checked) tags.push("signature");
+      var photo = currentPhoto && currentPhoto.src
+        ? { src: currentPhoto.src, alt: { fr: name.fr, en: name.en, cn: name.cn, ar: name.ar } }
+        : null;
+      var item = {
+        name: name,
+        desc: { fr: $("f-desc-fr").value, en: $("f-desc-en").value, cn: $("f-desc-cn").value, ar: $("f-desc-ar").value },
+        prices: prices,
+        tags: tags,
+        allergens: editorAllergens.slice(),
+        photo: photo
+      };
+      var cat = state.categories[editing.ci];
+      if (editing.ii == null) cat.items.push(item); else cat.items[editing.ii] = item;
+      markChanged(); render(); closeEditor();
+    });
+    document.querySelectorAll("[data-close-editor]").forEach(function (b) { b.addEventListener("click", closeEditor); });
+
+    /* ---------- Galerie d'images ---------- */
+    function openGallery() {
+      $("gallery-grid-admin").innerHTML = IMAGE_LIBRARY.map(function (img) {
+        return '<button type="button" class="gallery-thumb" data-src="' + esc(img.src) + '">' +
+          '<img src="' + esc(img.src) + '" alt="' + esc(img.label) + '" loading="lazy">' +
+          "<span>" + esc(img.label) + "</span></button>";
+      }).join("");
+      $("gallery-picker").hidden = false;
+    }
+    $("gallery-grid-admin").addEventListener("click", function (e) {
+      var btn = e.target.closest(".gallery-thumb");
+      if (!btn) return;
+      setPhoto(btn.getAttribute("data-src"));
+      $("gallery-picker").hidden = true;
+    });
+    document.querySelectorAll("[data-close-gallery]").forEach(function (b) { b.addEventListener("click", function () { $("gallery-picker").hidden = true; }); });
+
+    /* ---------- Éditeur de catégorie ---------- */
+    function uniqueCatId(base, excludeCi) {
+      var id = base || "categorie";
+      var n = 2, candidate = id;
+      while (state.categories.some(function (c, idx) {
+        return idx !== excludeCi && c.id === candidate;
+      })) {
+        candidate = id + "-" + n++;
+      }
+      return candidate;
+    }
+    function openCatEditor(ci) {
+      catEditingCi = ci;
+      catIdTouched = false;
+      var cat = ci >= 0 ? state.categories[ci] : null;
+      $("cat-editor-title").textContent = cat ? t("cat.rename") : t("cat.new");
+      $("c-label-fr").value = cat ? cat.label.fr : "";
+      $("c-label-en").value = cat ? cat.label.en : "";
+      $("c-label-cn").value = cat ? cat.label.cn : "";
+      $("c-label-ar").value = cat ? (cat.label.ar || "") : "";
+      $("c-id").value = cat ? cat.id : "";
+      $("cat-editor").hidden = false;
+      $("c-label-fr").focus();
+    }
+    function closeCatEditor() { $("cat-editor").hidden = true; }
+    $("c-label-fr").addEventListener("input", function () {
+      if (!catIdTouched) $("c-id").value = uniqueCatId(slugify(this.value), catEditingCi);
+    });
+    $("c-id").addEventListener("input", function () { catIdTouched = true; });
+    $("btn-cat-save").addEventListener("click", function () {
+      var fr = $("c-label-fr").value.trim();
+      if (!fr) { toast(t("toast.labelRequired")); return; }
+      var id = slugify($("c-id").value) || slugify(fr) || "categorie";
+      var dup = state.categories.some(function (c, idx) { return idx !== catEditingCi && c.id === id; });
+      if (dup) { toast(t("toast.duplicateId", { id: id })); return; }
+      var label = { fr: fr, en: $("c-label-en").value.trim(), cn: $("c-label-cn").value.trim(), ar: $("c-label-ar").value.trim() };
+      if (catEditingCi >= 0) {
+        state.categories[catEditingCi].id = id;
+        state.categories[catEditingCi].label = label;
+      } else {
+        state.categories.push({ id: id, label: label, items: [] });
+      }
+      markChanged(); render(); closeCatEditor();
+    });
+    document.querySelectorAll("[data-close-cat]").forEach(function (b) { b.addEventListener("click", closeCatEditor); });
+    $("btn-add-cat").addEventListener("click", function () { openCatEditor(-1); });
+
+    /* ---------- Export / Import / Reset ---------- */
+    function buildExport() {
+      var out = deepClone(state);
+      out.version = 4;
+      out.updatedAt = new Date().toISOString();
+      return out;
+    }
+    $("btn-export").addEventListener("click", function () {
+      var data = buildExport();
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "menu.json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+      toast(t("toast.exported"));
+    });
+
+    function openImport() {
+      $("import-text").value = "";
+      $("import-file").value = "";
+      $("import-msg").hidden = true;
+      $("import-panel").hidden = false;
+    }
+    function applyImportText(text) {
+      var msg = $("import-msg");
+      if (!text.trim()) { msg.className = "err"; msg.textContent = t("import.empty"); msg.hidden = false; return; }
+      var data;
+      try { data = JSON.parse(text); }
+      catch (e) { msg.className = "err"; msg.textContent = t("import.invalidJson", { err: e.message }); msg.hidden = false; return; }
+      var err = validateMenu(data);
+      if (err) { msg.className = "err"; msg.textContent = t("import.invalidSchema", { err: err }); msg.hidden = false; return; }
+      state = normalize(data);
+      dirty = false; saveLocal(); render();
+      $("import-panel").hidden = true;
+      toast(t("toast.imported"));
+    }
+    $("btn-import").addEventListener("click", openImport);
+    $("btn-import-apply").addEventListener("click", function () { applyImportText($("import-text").value); });
+    $("import-file").addEventListener("change", function () {
+      var file = this.files && this.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () { applyImportText(String(reader.result)); };
+      reader.readAsText(file);
+    });
+    document.querySelectorAll("[data-close-import]").forEach(function (b) { b.addEventListener("click", function () { $("import-panel").hidden = true; }); });
+
+    $("btn-reset").addEventListener("click", function () {
+      if (!confirm(t("confirm.reload"))) return;
+      updateStatus(t("status.loading"));
+      loadServerMenu().then(function () {
+        state = deepClone(serverDefault);
+        dirty = false; saveLocal(); render(); updateStatus();
+        toast(t("toast.reloaded"));
+      });
+    });
+
+    /* ---------- Barre : enregistrer / déconnexion ---------- */
+    function getToken() {
+      try { return sessionStorage.getItem(TOKEN_KEY) || ""; } catch (e) { return ""; }
+    }
+    function setToken(t) {
+      try { sessionStorage.setItem(TOKEN_KEY, t); } catch (e) {}
+    }
+    var tokenResolve = null;
+    function openTokenModal(onSubmit) {
+      $("token-input").value = getToken();
+      $("token-error").hidden = true;
+      tokenResolve = onSubmit;
+      $("token-modal").hidden = false;
+      $("token-input").focus();
+    }
+    $("btn-token-save").addEventListener("click", function () {
+      var v = $("token-input").value.trim();
+      if (!v) { $("token-error").textContent = t("token.required"); $("token-error").hidden = false; return; }
+      setToken(v);
+      $("token-modal").hidden = true;
+      if (tokenResolve) { var cb = tokenResolve; tokenResolve = null; cb(); }
+    });
+    document.querySelectorAll("[data-close-token]").forEach(function (b) {
+      b.addEventListener("click", function () { $("token-modal").hidden = true; tokenResolve = null; });
+    });
+
+    function doSaveToServer(token) {
+      updateStatus(t("status.saving"));
+      fetch("/api/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-admin-token": token || "" },
+        body: JSON.stringify(buildExport())
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return {}; }).then(function (body) {
+            return { ok: res.ok, status: res.status, body: body };
+          });
+        })
+        .then(function (r) {
+          if (r.ok) {
+            if (r.body && r.body.categories) state = normalize(r.body);
+            dirty = false; saveLocal(); updateStatus();
+            toast(t("toast.published"));
+          } else {
+            var msg = (r.body && r.body.error) ? r.body.error : ("HTTP " + r.status);
+            updateStatus(t("status.error") + " : " + msg, true);
+            toast(t("status.error") + " : " + msg);
+            if (r.status === 401) {
+              setToken("");
+              openTokenModal(function () { saveToServer(); });
+            }
+          }
+        })
+        .catch(function () {
+          updateStatus(t("status.error") + " : " + t("status.network"), true);
+          toast(t("toast.network"));
+        });
+    }
+    function saveToServer() {
+      var token = getToken();
+      if (!token) { openTokenModal(function () { saveToServer(); }); return; }
+      doSaveToServer(token);
+    }
+    $("btn-save").addEventListener("click", saveToServer);
+    $("btn-logout").addEventListener("click", function () {
+      try { sessionStorage.removeItem(TOKEN_KEY); } catch (e) {}
+      toast(t("toast.tokenCleared"));
+    });
+
+    /* ---------- Fermeture des overlays (fond + Échap) ---------- */
+    document.querySelectorAll(".overlay").forEach(function (ov) {
+      ov.addEventListener("click", function (e) {
+        if (e.target === ov) ov.hidden = true;
+      });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      if (!$("editor").hidden) closeEditor();
+      if (!$("cat-editor").hidden) closeCatEditor();
+      if (!$("gallery-picker").hidden) $("gallery-picker").hidden = true;
+      if (!$("import-panel").hidden) $("import-panel").hidden = true;
+      if (!$("token-modal").hidden) { $("token-modal").hidden = true; tokenResolve = null; }
+    });
+
+    /* ---------- Langue ---------- */
+    function refreshDynamic() {
+      if (!state) return;
+      render();
+      if (!$("editor").hidden) {
+        $("editor-title").textContent = editing.ii == null ? t("editor.add") : t("editor.edit");
+        renderPriceRows();
+        renderAllergenChips();
+        previewPhoto();
+      }
+      if (!$("cat-editor").hidden) {
+        $("cat-editor-title").textContent = catEditingCi >= 0 ? t("cat.rename") : t("cat.new");
+      }
+    }
+    function applyAdminLang(next) {
+      lang = next;
+      var dict = I18N_ADMIN[lang];
+
+      document.documentElement.lang = lang === "cn" ? "zh-CN" : lang === "ar" ? "ar" : lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+      document.title = dict.title;
+
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var k = el.getAttribute("data-i18n");
+        if (dict[k] !== undefined) el.innerHTML = dict[k];
+      });
+      document.querySelectorAll("[data-i18n-attr]").forEach(function (el) {
+        el.getAttribute("data-i18n-attr").split(",").forEach(function (pair) {
+          var parts = pair.split(":").map(function (s) { return s.trim(); });
+          var attr = parts[0], key = parts[1];
+          if (attr && key && dict[key] !== undefined) el.setAttribute(attr, dict[key]);
+        });
+      });
+      document.querySelectorAll(".lang-switch button").forEach(function (btn) {
+        btn.setAttribute("aria-pressed", String(btn.getAttribute("data-lang") === lang));
+      });
+
+      try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* stockage indisponible */ }
+
+      refreshDynamic();
+    }
+    document.querySelectorAll(".lang-switch button").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var next = btn.getAttribute("data-lang");
+        if (next !== lang) applyAdminLang(next);
+      });
+    });
+
+    /* ---------- Chargement du menu : API → localStorage → DEFAULT ---------- */
+    function loadServerMenu() {
+      return fetch("/api/menu?v=" + Date.now())
+        .then(function (res) { if (!res.ok) throw new Error("HTTP " + res.status); return res.json(); })
+        .then(function (data) {
+          if (!validateMenu(data)) { serverDefault = normalize(data); return; }
+          throw new Error("schema invalide");
+        })
+        .catch(function () {
+          var saved = null;
+          try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+          if (saved) {
+            try {
+              var parsed = JSON.parse(saved);
+              if (!validateMenu(parsed)) { serverDefault = normalize(parsed); return; }
+            } catch (e) { /* ignore */ }
+          }
+          serverDefault = normalize(deepClone(DEFAULT_MENU));
+        });
+    }
+    function init() {
+      applyAdminLang(lang);
+      loadServerMenu().then(function () {
+        state = deepClone(serverDefault);
+        elApp.hidden = false;
+        render();
+      });
+    }
+    init();
+  })();
+  </script>
+</body>
+</html>
